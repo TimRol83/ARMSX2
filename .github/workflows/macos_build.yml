@@ -135,7 +135,7 @@ jobs:
           cmake -DCMAKE_PREFIX_PATH="$HOME/deps" \
                 -DCMAKE_BUILD_TYPE=Release \
                 -DCMAKE_OSX_ARCHITECTURES="arm64" \
-                -DDISABLE_ADVANCE_SIMD=ON \
+                -DDISABLE_ADVANCE_SIMD=OFF \
                 -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=OFF \
                 -DCMAKE_C_COMPILER_LAUNCHER=ccache \
                 -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
