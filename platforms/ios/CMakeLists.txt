@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(ARMSX2iOS LANGUAGES C CXX OBJC OBJCXX Swift)
+project(ARMSX2iOS LANGUAGES C CXX OBJC OBJCXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -38,6 +38,8 @@ add_custom_target(armsx2_core_libs DEPENDS PCSX2 common)
 if(ARMSX2_CORE_ONLY)
   return()
 endif()
+
+enable_language(Swift)
 
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Info.plist.in" "${CMAKE_CURRENT_BINARY_DIR}/Info.plist" @ONLY)
 
