@@ -46,7 +46,7 @@ jobs:
   # ---- iOS .app ----------------------------------------------------------
   ios:
     name: iOS (arm64, unsigned device IPA)
-    runs-on: xcode-27
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v7
         with:
@@ -175,7 +175,7 @@ jobs:
   # emails the pusher natively; this adds a Discord ping to the shared channel.
   notify-failure:
     name: Notify on master build failure
-    needs: [pc-macos-arm64, pc-linux-arm64, pc-windows-arm64]
+    needs: [ios]
     if: ${{ failure() && github.event_name == 'push' }}
     runs-on: ubuntu-latest
     # Job-level so the step's `if: env.HOOK != ''` guard can see it.
