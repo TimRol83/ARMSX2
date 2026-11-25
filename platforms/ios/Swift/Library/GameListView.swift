@@ -5,7 +5,7 @@ import SwiftUI
 import PhotosUI
 import UniformTypeIdentifiers
 import UIKit
-import Observation
+import Combine
 
 struct GameListView: View {
     let embeddedInMenuNavigation: Bool
@@ -25,12 +25,12 @@ struct GameListView: View {
         self.onRenamePresentationChanged = onRenamePresentationChanged
     }
 
-    @State private var appState = AppState.shared
-	@State private var settings = SettingsStore.shared
-	@State private var logoStore = ARMSX2LogoStore.shared
-	@State private var fileImporter = FileImportHandler.shared
-	@State private var coverStore = CoverStore.shared
-	@State private var externalLibrary = ExternalGameLibrary.shared
+    @ObservedObject private var appState = AppState.shared
+	@ObservedObject private var settings = SettingsStore.shared
+	@ObservedObject private var logoStore = ARMSX2LogoStore.shared
+	@ObservedObject private var fileImporter = FileImportHandler.shared
+	@ObservedObject private var coverStore = CoverStore.shared
+	@ObservedObject private var externalLibrary = ExternalGameLibrary.shared
     @Environment(\.menuTabIsActive) private var menuTabIsActive
     // controllerInput is nil under touch; this shared one only arbitrates the L2/R2 backdrop gesture.
     @Environment(\.menuControllerInputRouter)
@@ -42,10 +42,10 @@ struct GameListView: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.uiAccentColour) private var accentColour
     @State private var stopConfirmationAnchor: StopConfirmationAnchor?
-    @State private var tabBar = MenuTabBarAppearance.shared
-    @State private var appearance = GameLibraryAppearance.shared
-    @State private var library = GameLibraryModel.shared
-    @State private var controller = GameLibraryControllerCoordinator()
+    @ObservedObject private var tabBar = MenuTabBarAppearance.shared
+    @ObservedObject private var appearance = GameLibraryAppearance.shared
+    @ObservedObject private var library = GameLibraryModel.shared
+    @StateObject private var controller = GameLibraryControllerCoordinator()
     // SettingsStore owns background configuration; the shared container renders it.
     private var hasCustomBackground: Bool {
         settings.appearance.dynamicBackgroundsEnabled

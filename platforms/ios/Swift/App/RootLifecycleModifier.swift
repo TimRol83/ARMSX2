@@ -14,9 +14,9 @@ struct RootLifecycleModifier: ViewModifier {
     let scheduleGameplayControllerHelpIfReady: @MainActor () -> Void
     let handleMenuScreenActiveChange: @MainActor (Bool) -> Void
 
-    @State private var appState = AppState.shared
-    @State private var settings = SettingsStore.shared
-    @State private var session = GameSession.shared
+    @ObservedObject private var appState = AppState.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var session = GameSession.shared
 
     func body(content: Content) -> some View {
         content

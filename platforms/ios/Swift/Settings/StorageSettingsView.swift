@@ -264,8 +264,8 @@ private enum StorageCleaner {
 }
 
 struct StorageSettingsView: View {
-    @State private var settings = SettingsStore.shared
-    @State private var externalLibrary = ExternalGameLibrary.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var externalLibrary = ExternalGameLibrary.shared
     @State private var report = StorageReport()
     @State private var isWorking = false
     @State private var pendingAction: StorageClearAction?

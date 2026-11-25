@@ -11,8 +11,8 @@ struct VirtualPadLayoutSection: View {
     @Binding var layoutRenameDraft: String
     @Binding var layoutPendingDelete: PadLayoutPreset?
 
-    @State private var settings = SettingsStore.shared
-    @State private var layoutPresets = PadLayoutPresetStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var layoutPresets = PadLayoutPresetStore.shared
 
     var body: some View {
         Section(settings.localized("Layout")) {

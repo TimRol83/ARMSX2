@@ -1,7 +1,7 @@
 // ThemeGalleryStore.swift — Persistent, versioned appearance snapshots.
 // SPDX-License-Identifier: GPL-3.0+
 import SwiftUI
-import Observation
+import Combine
 import Foundation
 
 /// Game Library View Options are stored outside SettingsStore so the large

@@ -45,7 +45,7 @@ private struct ControllerNavigationMovingOrbOverlay: View {
     let target: ControllerNavigationResolvedOrbTarget?
     let controllerInput: MenuControllerInputRouter?
 
-    @State private var settings = SettingsStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
     @State private var displayedTarget: ControllerNavigationResolvedOrbTarget?
     @State private var isVisible = false
     @State private var removalTask: Task<Void, Never>?

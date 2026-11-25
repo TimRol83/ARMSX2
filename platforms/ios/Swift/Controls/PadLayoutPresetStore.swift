@@ -278,13 +278,12 @@ private struct PadLayoutPresetLibrary: Codable {
 }
 
 @MainActor
-@Observable
-final class PadLayoutPresetStore {
+final class PadLayoutPresetStore : ObservableObject {
     static let shared = PadLayoutPresetStore()
     static let schemaVersion = 2
 
     private let libraryURL: URL
-    private(set) var presets: [PadLayoutPreset] = []
+    private(set) @Published var presets: [PadLayoutPreset] = []
     var globalPresetID: String? {
         didSet {
             if globalPresetID != oldValue {
@@ -292,7 +291,7 @@ final class PadLayoutPresetStore {
             }
         }
     }
-    private var gameAssignments: [String: VPadGameAssignment] = [:]
+    private @Published var gameAssignments: [String: VPadGameAssignment] = [:]
 
     init(
         libraryURL: URL? = nil,

@@ -5,8 +5,7 @@ import Foundation
 
 extension SettingsStore {
     @MainActor
-    @Observable
-    final class DynamicThumbsticks {
+    final class DynamicThumbsticks : ObservableObject {
         private static let section = "ARMSX2iOS/DynamicThumbsticks"
 
         var legacyThumbsticks: Bool { didSet { setBool("LegacyThumbsticks", legacyThumbsticks) } }

@@ -85,7 +85,7 @@ private struct ControllerAccessibilityFocusOverlay: View {
     let controllerInput: MenuControllerInputRouter?
     let style: ControllerNavigationOrbStyle
     let focusNeonExclusionLabels: [String]
-    @State private var settings = SettingsStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
 
     var body: some View {
         if controllerInput?.navigationZone != .tabBar,
@@ -138,7 +138,7 @@ private struct ControllerAccessibilityWindowFocusOverlay: View {
     let controllerInput: MenuControllerInputRouter?
     let style: ControllerNavigationOrbStyle
     let includedLabels: [String]
-    @State private var settings = SettingsStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -318,7 +318,7 @@ private struct ControllerAccessibilityNavigationModifier: ViewModifier {
     let declaredTargetOrder: [String]?
 
     @State private var registrationID = UUID()
-    @State private var session = ControllerAccessibilityNavigationSession()
+    @StateObject private var session = ControllerAccessibilityNavigationSession()
 
     func body(content: Content) -> some View {
         ScrollViewReader { proxy in

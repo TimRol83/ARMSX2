@@ -89,9 +89,9 @@ struct BIOSListView: View {
         self.onControllerBoundary = onControllerBoundary
     }
 
-    @State private var library = BIOSLibraryState.shared
-    @State private var settings = SettingsStore.shared
-    @State private var fileImporter = FileImportHandler.shared
+    @ObservedObject private var library = BIOSLibraryState.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var fileImporter = FileImportHandler.shared
     @State private var showBIOSImporter = false
     @State private var showBIOSCompatibilityImporter = false
     @State private var showBIOSReplacementAlert = false
@@ -100,7 +100,7 @@ struct BIOSListView: View {
     @State private var pendingBIOSImportURLs: [URL] = []
     @State private var existingBIOSImportFileNames: [String] = []
     @State private var BIOSRefreshTask: Task<Void, Never>?
-    @State private var session = GameSession.shared
+    @ObservedObject private var session = GameSession.shared
     @State private var focusedToolbarTargetID: String?
     @Environment(\.menuTabIsActive) private var menuTabIsActive
     @Environment(\.verticalSizeClass) private var verticalSizeClass

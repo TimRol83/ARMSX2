@@ -1,7 +1,7 @@
 // UIFrameRateSettings.swift — user-selectable UI and effect frame pacing
 // SPDX-License-Identifier: GPL-3.0+
 
-import Observation
+import Combine
 import QuartzCore
 import SwiftUI
 import UIKit
@@ -205,8 +205,7 @@ struct UIFrameRateConfiguration: Equatable, Sendable {
 }
 
 @MainActor
-@Observable
-final class UIFrameRateSettings {
+final class UIFrameRateSettings : ObservableObject {
     static let shared = UIFrameRateSettings()
 
     static let displayRefreshRateRange: ClosedRange<Double> = 30...120

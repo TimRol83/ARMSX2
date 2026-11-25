@@ -73,13 +73,12 @@ final class GameLibraryActivityState {
 }
 
 @MainActor
-@Observable
-final class GameLibraryModel {
+final class GameLibraryModel : ObservableObject {
     static let shared = GameLibraryModel()
 
-    var games: [ISOEntry] = []
-    @ObservationIgnored var externalCoverAutoDownloadAttemptedIDs = Set<String>()
-    @ObservationIgnored var coverWorkTask: Task<Void, Never>?
+    @Published var games: [ISOEntry] = []
+    var externalCoverAutoDownloadAttemptedIDs = Set<String>()
+    var coverWorkTask: Task<Void, Never>?
     let gameLibraryActivity = GameLibraryActivityState()
     private var session: GameSession { .shared }
     private var settings: SettingsStore { .shared }

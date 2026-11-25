@@ -51,9 +51,9 @@ struct ControllerNavigationAnimatedOrbField: View {
     var neonShape: ControllerFocusBoxShape = .pill
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @State private var settings = SettingsStore.shared
-    @State private var frameRates = UIFrameRateSettings.shared
-    @State private var gameCoverThemePreview = GameCoverThemePreviewStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var frameRates = UIFrameRateSettings.shared
+    @ObservedObject private var gameCoverThemePreview = GameCoverThemePreviewStore.shared
     @State private var lastTargetID: String?
     @State private var lastResolvedTargetFrame: CGRect?
     @State private var frameTransitions: [ControllerNavigationOrbFrameTransition] = []

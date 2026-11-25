@@ -37,8 +37,8 @@ struct CheatsPatchesManagerView: View {
     let onClose: (() -> Void)?
     let session: CheatsPatchesSession?
 
-    @State private var settings = SettingsStore.shared
-    @State private var store = PatchStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var store = PatchStore.shared
     @State private var showImportPicker = false
     @State private var importAsCheat = false
     @State private var patchSourcesDraft: [String] = []

@@ -8,7 +8,7 @@ struct BIOSRow: View {
     let isDefault: Bool
     let backgroundActive: Bool
     let onSelect: () -> Void
-    @State private var settings = SettingsStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
     @Environment(\.uiAccentColour) private var accentColour
     @Environment(\.uiCardTitleColour) private var contentTextColour
     @Environment(\.uiCardSubtitleColour) private var secondaryTextColour

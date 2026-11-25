@@ -5,7 +5,7 @@ import SwiftUI
 
 struct AppearanceColourSections: View, AppearanceSettingsEditing {
     typealias PresentedControllerColour = AppearanceSettingsView.PresentedControllerColour
-    @State private var settings = SettingsStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
     @Binding var presentedControllerColour: PresentedControllerColour?
 
     var body: some View {
@@ -468,7 +468,7 @@ struct AppearanceColourSections: View, AppearanceSettingsEditing {
 private struct NavigationFocusAnimationPreview: View {
     let animation: ControllerNavigationFocusTravelStyle
     @State private var isAtDestination = false
-    @State private var settings = SettingsStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
 
     var body: some View {
         Button {

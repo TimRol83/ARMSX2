@@ -2,14 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0+
 
 import SwiftUI
-import Observation
+import Combine
 import GameController
 
 /// A question any screen can ask through RootView's prompt window. SwiftUI's own
 /// `.confirmationDialog` is a UIAlertController, which a controller cannot reach.
 @MainActor
-@Observable
-final class ControllerPrompt {
+final class ControllerPrompt : ObservableObject {
     struct Action {
         let title: String
         var isDestructive = false
@@ -25,7 +24,7 @@ final class ControllerPrompt {
     }
 
     static let shared = ControllerPrompt()
-    private(set) var request: Request?
+    private(set) @Published var request: Request?
 
     func ask(_ title: String, message: String, actions: [Action]) {
         request = Request(title: title, message: message, actions: actions)

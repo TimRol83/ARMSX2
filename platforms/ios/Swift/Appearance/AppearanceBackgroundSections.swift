@@ -4,7 +4,7 @@
 import SwiftUI
 
 struct AppearanceBackgroundSections: View, AppearanceSettingsEditing {
-    @State private var settings = SettingsStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
     @State private var showPrimaryPicker = false
     @State private var showLandscapePicker = false
 

@@ -4,8 +4,7 @@
 import SwiftUI
 
 @MainActor
-@Observable
-final class GameplayFeedback {
+final class GameplayFeedback : ObservableObject {
     // A status banner replaces the one showing. Achievement banners queue, so a burst of
     // unlocks plays one at a time.
     let statusBanner = TransientBannerController<String>(defaultDisplayDuration: GameplayFeedback.briefStatusDisplayDuration)

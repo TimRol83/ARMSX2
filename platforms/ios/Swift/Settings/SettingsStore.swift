@@ -5,19 +5,18 @@ import Foundation
 import SwiftUI
 
 @MainActor
-@Observable
-final class SettingsStore {
+final class SettingsStore : ObservableObject {
     static let shared = SettingsStore()
 
-    @ObservationIgnored private(set) var suppressINIWrites = false
-    @ObservationIgnored var isProgrammaticOsdFlagChange = false
-    @ObservationIgnored var isAutoMarkingCustom = false
-    @ObservationIgnored var isProgrammaticFramePacingFlagChange = false
-    @ObservationIgnored var isAutoMarkingFramePacingCustom = false
-    @ObservationIgnored var graphicsApplyWorkItem: DispatchWorkItem?
-    @ObservationIgnored var visualSliderDragCount = 0
-    @ObservationIgnored var graphicsApplyDeferred = false
-    @ObservationIgnored var visualSliderWatchdog: DispatchWorkItem?
+    private(set) var suppressINIWrites = false
+    var isProgrammaticOsdFlagChange = false
+    var isAutoMarkingCustom = false
+    var isProgrammaticFramePacingFlagChange = false
+    var isAutoMarkingFramePacingCustom = false
+    var graphicsApplyWorkItem: DispatchWorkItem?
+    var visualSliderDragCount = 0
+    var graphicsApplyDeferred = false
+    var visualSliderWatchdog: DispatchWorkItem?
 
     // ── Emulator / CPU ──
     var eeCoreType: Int {
@@ -27,9 +26,9 @@ final class SettingsStore {
             ARMSX2Bridge.setINIBool("EmuCore/CPU", key: "UseArm64Dynarec", value: eeCoreType == 2)
         }
     }
-    var iopRecompiler: Bool = true { didSet { commit(Self._iopRecompilerConfig, iopRecompiler) } }
-    var vu0Recompiler: Bool = true { didSet { commit(Self._vu0RecompilerConfig, vu0Recompiler) } }
-    var vu1Recompiler: Bool = true { didSet { commit(Self._vu1RecompilerConfig, vu1Recompiler) } }
+    @Published var iopRecompiler: Bool = true { didSet { commit(Self._iopRecompilerConfig, iopRecompiler) } }
+    @Published var vu0Recompiler: Bool = true { didSet { commit(Self._vu0RecompilerConfig, vu0Recompiler) } }
+    @Published var vu1Recompiler: Bool = true { didSet { commit(Self._vu1RecompilerConfig, vu1Recompiler) } }
     var fastBoot: Bool {
         didSet {
             guard !suppressINIWrites else { return }
@@ -65,34 +64,34 @@ final class SettingsStore {
             ARMSX2Bridge.setINIBool("EmuCore/CPU/Recompiler", key: "EnableFastmem", value: fastmem)
         }
     }
-    var emulationOnlyModeEnabled: Bool = false { didSet { commit(Self._emulationOnlyModeConfig, emulationOnlyModeEnabled) } }
-    var emulationOnlyDisablePatches: Bool = true {
+    @Published var emulationOnlyModeEnabled: Bool = false { didSet { commit(Self._emulationOnlyModeConfig, emulationOnlyModeEnabled) } }
+    @Published var emulationOnlyDisablePatches: Bool = true {
         didSet { commit(Self._emulationOnlyDisablePatchesConfig, emulationOnlyDisablePatches) }
     }
     // Discord presence is always released by Emulation-Only Mode.
     let emulationOnlyDisableDiscordPresence = true
-    var emulationOnlyDisablePINE: Bool = true {
+    @Published var emulationOnlyDisablePINE: Bool = true {
         didSet { commit(Self._emulationOnlyDisablePINEConfig, emulationOnlyDisablePINE) }
     }
-    var emulationOnlyDisableRetroAchievements: Bool = true {
+    @Published var emulationOnlyDisableRetroAchievements: Bool = true {
         didSet { commit(Self._emulationOnlyDisableRetroAchievementsConfig, emulationOnlyDisableRetroAchievements) }
     }
-    var emulationOnlyDisableInputRecording: Bool = true {
+    @Published var emulationOnlyDisableInputRecording: Bool = true {
         didSet { commit(Self._emulationOnlyDisableInputRecordingConfig, emulationOnlyDisableInputRecording) }
     }
-    var emulationOnlyDisableOSD: Bool = true {
+    @Published var emulationOnlyDisableOSD: Bool = true {
         didSet { commit(Self._emulationOnlyDisableOSDConfig, emulationOnlyDisableOSD) }
     }
-    var emulationOnlyDisableFramePacing: Bool = true {
+    @Published var emulationOnlyDisableFramePacing: Bool = true {
         didSet { commit(Self._emulationOnlyDisableFramePacingConfig, emulationOnlyDisableFramePacing) }
     }
-    var emulationOnlyDisableVirtualControls: Bool = true {
+    @Published var emulationOnlyDisableVirtualControls: Bool = true {
         didSet { commit(Self._emulationOnlyDisableVirtualControlsConfig, emulationOnlyDisableVirtualControls) }
     }
-    var emulationOnlyDisableQuickMenu: Bool = true {
+    @Published var emulationOnlyDisableQuickMenu: Bool = true {
         didSet { commit(Self._emulationOnlyDisableQuickMenuConfig, emulationOnlyDisableQuickMenu) }
     }
-    var emulationOnlyClearNetworkCache: Bool = true {
+    @Published var emulationOnlyClearNetworkCache: Bool = true {
         didSet { commit(Self._emulationOnlyClearNetworkCacheConfig, emulationOnlyClearNetworkCache) }
     }
     var emulationOnlyModeDelaySeconds = SettingsStore.defaultEmulationOnlyModeDelaySeconds { didSet {
@@ -105,9 +104,9 @@ final class SettingsStore {
     }}
 
     // ── CPU Rounding & Clamping ──
-    var eeFpuRoundMode: Int = 3 { didSet { commit(Self._eeFpuRoundModeConfig, eeFpuRoundMode) } }
-    var vu0RoundMode: Int = 3 { didSet { commit(Self._vu0RoundModeConfig, vu0RoundMode) } }
-    var vu1RoundMode: Int = 3 { didSet { commit(Self._vu1RoundModeConfig, vu1RoundMode) } }
+    @Published var eeFpuRoundMode: Int = 3 { didSet { commit(Self._eeFpuRoundModeConfig, eeFpuRoundMode) } }
+    @Published var vu0RoundMode: Int = 3 { didSet { commit(Self._vu0RoundModeConfig, vu0RoundMode) } }
+    @Published var vu1RoundMode: Int = 3 { didSet { commit(Self._vu1RoundModeConfig, vu1RoundMode) } }
     var eeClampMode: Int {
         didSet {
             guard !suppressINIWrites else { return }
@@ -164,17 +163,17 @@ final class SettingsStore {
     }
 
     // ── Audio Output (SPU2/Output) ── applied live by the SPU2 stream.
-    var audioTimeStretch: Bool = true { didSet { commit(Self._audioTimeStretchConfig, audioTimeStretch) } }
-    var audioBufferMs: Int = 50 { didSet {
+    @Published var audioTimeStretch: Bool = true { didSet { commit(Self._audioTimeStretchConfig, audioTimeStretch) } }
+    @Published var audioBufferMs: Int = 50 { didSet {
         commit(Self._audioBufferMsConfig, audioBufferMs)
         if audioBufferMs != oldValue { markFramePacingCustom() }
     }}
-    var audioOutputLatencyMs: Int = 20 { didSet {
+    @Published var audioOutputLatencyMs: Int = 20 { didSet {
         commit(Self._audioOutputLatencyMsConfig, audioOutputLatencyMs)
         if audioOutputLatencyMs != oldValue { markFramePacingCustom() }
     }}
-    var audioFastForwardVolume: Int = 100 { didSet { commit(Self._audioFastForwardVolumeConfig, audioFastForwardVolume) } }
-    var audioSwapChannels: Bool = false { didSet { commit(Self._audioSwapChannelsConfig, audioSwapChannels) } }
+    @Published var audioFastForwardVolume: Int = 100 { didSet { commit(Self._audioFastForwardVolumeConfig, audioFastForwardVolume) } }
+    @Published var audioSwapChannels: Bool = false { didSet { commit(Self._audioSwapChannelsConfig, audioSwapChannels) } }
     var ntscFramerate: Float {
         didSet {
             guard !suppressINIWrites else { return }
@@ -183,13 +182,13 @@ final class SettingsStore {
             requestGraphicsApplyGuarded()
         }
     }
-    var palFramerate: Float = 50.0 { didSet { commit(Self._palFramerateConfig, palFramerate) } }
+    @Published var palFramerate: Float = 50.0 { didSet { commit(Self._palFramerateConfig, palFramerate) } }
 
-    var fastCDVD: Bool = false { didSet { commit(Self._fastCDVDConfig, fastCDVD) } }
+    @Published var fastCDVD: Bool = false { didSet { commit(Self._fastCDVDConfig, fastCDVD) } }
 
     // ── Advanced Speedhacks ──
-    var eeCycleRate: Int = 0 { didSet { commit(Self._eeCycleRateConfig, eeCycleRate) } }
-    var vu1Instant: Bool = true { didSet { commit(Self._vu1InstantConfig, vu1Instant) } }
+    @Published var eeCycleRate: Int = 0 { didSet { commit(Self._eeCycleRateConfig, eeCycleRate) } }
+    @Published var vu1Instant: Bool = true { didSet { commit(Self._vu1InstantConfig, vu1Instant) } }
     var mtvu: Bool {
         didSet {
             guard !suppressINIWrites else { return }
@@ -198,60 +197,60 @@ final class SettingsStore {
             ARMSX2Bridge.setINIBool("EmuCore/Speedhacks", key: "vuThread", value: mtvu)
         }
     }
-    var waitLoop: Bool = true { didSet { commit(Self._waitLoopConfig, waitLoop) } }
-    var intcStat: Bool = true { didSet { commit(Self._intcStatConfig, intcStat) } }
-    var eeCycleSkip: Int = 0 { didSet { commit(Self._eeCycleSkipConfig, eeCycleSkip) } }
-    var vuFlagHack: Bool = true { didSet { commit(Self._vuFlagHackConfig, vuFlagHack) } }
-    var enableCheats: Bool = false { didSet { commit(Self._enableCheatsConfig, enableCheats) } }
-    var enablePatches: Bool = true { didSet { commit(Self._enablePatchesConfig, enablePatches) } }
-    var enableGameFixes: Bool = true { didSet { commit(Self._enableGameFixesConfig, enableGameFixes) } }
-    var enableGameDBHardwareFixes: Bool = true {
+    @Published var waitLoop: Bool = true { didSet { commit(Self._waitLoopConfig, waitLoop) } }
+    @Published var intcStat: Bool = true { didSet { commit(Self._intcStatConfig, intcStat) } }
+    @Published var eeCycleSkip: Int = 0 { didSet { commit(Self._eeCycleSkipConfig, eeCycleSkip) } }
+    @Published var vuFlagHack: Bool = true { didSet { commit(Self._vuFlagHackConfig, vuFlagHack) } }
+    @Published var enableCheats: Bool = false { didSet { commit(Self._enableCheatsConfig, enableCheats) } }
+    @Published var enablePatches: Bool = true { didSet { commit(Self._enablePatchesConfig, enablePatches) } }
+    @Published var enableGameFixes: Bool = true { didSet { commit(Self._enableGameFixesConfig, enableGameFixes) } }
+    @Published var enableGameDBHardwareFixes: Bool = true {
         didSet { commit(Self._enableGameDBHardwareFixesConfig, enableGameDBHardwareFixes) }
     }
-    var enableWidescreenPatches: Bool = false {
+    @Published var enableWidescreenPatches: Bool = false {
         didSet { commit(Self._enableWidescreenPatchesConfig, enableWidescreenPatches) }
     }
-    var enableNoInterlacingPatches: Bool = false {
+    @Published var enableNoInterlacingPatches: Bool = false {
         didSet { commit(Self._enableNoInterlacingPatchesConfig, enableNoInterlacingPatches) }
     }
-    var hostFilesystem: Bool = false { didSet { commit(Self._hostFilesystemConfig, hostFilesystem) } }
-    var autoTune: Bool = false { didSet { commit(Self._autoTuneConfig, autoTune) } }
+    @Published var hostFilesystem: Bool = false { didSet { commit(Self._hostFilesystemConfig, hostFilesystem) } }
+    @Published var autoTune: Bool = false { didSet { commit(Self._autoTuneConfig, autoTune) } }
 
     // ── Manual Game Fixes (EmuCore/Gamefixes/<key>) ──
     // Dictionary-backed because the 17 fixes are alike; each writes only its own INI key,
     // and they apply only while GameDB Core Fixes (enableGameFixes) is on.
-    var gameFixes: [String: Bool] = [:]
+    @Published var gameFixes: [String: Bool] = [:]
 
-    var renderer: Int = 17 { didSet { commit(Self._rendererConfig, renderer) } }
-    var upscaleMultiplier: Float = 1.0 { didSet { commit(Self._upscaleMultiplierConfig, upscaleMultiplier) } }
-    var vsyncQueueSize: Int = 8 { didSet {
+    @Published var renderer: Int = 17 { didSet { commit(Self._rendererConfig, renderer) } }
+    @Published var upscaleMultiplier: Float = 1.0 { didSet { commit(Self._upscaleMultiplierConfig, upscaleMultiplier) } }
+    @Published var vsyncQueueSize: Int = 8 { didSet {
         commit(Self._vsyncQueueSizeConfig, vsyncQueueSize)
         if vsyncQueueSize != oldValue { markFramePacingCustom() }
     }}
-    var textureFiltering: Int = 2 { didSet { commit(Self._textureFilteringConfig, textureFiltering) } }
-    var backThreadMode: Int = 0 { didSet { commit(Self._backThreadModeConfig, backThreadMode) } }
-    var hardwareMipmapping: Bool = true { didSet { commit(Self._hardwareMipmappingConfig, hardwareMipmapping) } }
-    var fxaa: Bool = false { didSet { commit(Self._fxaaConfig, fxaa) } }
-    var casMode: Int = 0 { didSet { commit(Self._casModeConfig, casMode) } }
-    var casSharpness: Int = 50 { didSet { commit(Self._casSharpnessConfig, casSharpness) } }
-    var shaderChainEnabled: Bool = false { didSet {
+    @Published var textureFiltering: Int = 2 { didSet { commit(Self._textureFilteringConfig, textureFiltering) } }
+    @Published var backThreadMode: Int = 0 { didSet { commit(Self._backThreadModeConfig, backThreadMode) } }
+    @Published var hardwareMipmapping: Bool = true { didSet { commit(Self._hardwareMipmappingConfig, hardwareMipmapping) } }
+    @Published var fxaa: Bool = false { didSet { commit(Self._fxaaConfig, fxaa) } }
+    @Published var casMode: Int = 0 { didSet { commit(Self._casModeConfig, casMode) } }
+    @Published var casSharpness: Int = 50 { didSet { commit(Self._casSharpnessConfig, casSharpness) } }
+    @Published var shaderChainEnabled: Bool = false { didSet {
         commit(Self._shaderChainEnabledConfig, shaderChainEnabled)
         ARMSX2Bridge.retryShaderChain()
     }}
-    var shaderChainPresetRef: String = "" { didSet {
+    @Published var shaderChainPresetRef: String = "" { didSet {
         commit(Self._shaderChainPresetRefConfig, shaderChainPresetRef)
         applyShaderChainSelection()
     }}
-    var interlaceMode: Int = 0 { didSet { commit(Self._interlaceModeConfig, interlaceMode) } }
-    var aspectRatio: Int = 1 { didSet { commit(Self._aspectRatioConfig, aspectRatio) } }
-    var blendingAccuracy: Int = 1 { didSet { commit(Self._blendingAccuracyConfig, blendingAccuracy) } }
-    var dithering: Int = 2 { didSet { commit(Self._ditheringConfig, dithering) } }
-    var trilinearFiltering: Int = -1 { didSet { commit(Self._trilinearFilteringConfig, trilinearFiltering) } }
-    var halfPixelOffset: Int = 0 { didSet { commit(Self._halfPixelOffsetConfig, halfPixelOffset) } }
-    var roundSprite: Int = 0 { didSet { commit(Self._roundSpriteConfig, roundSprite) } }
-    var alignSprite: Bool = false { didSet { commit(Self._alignSpriteConfig, alignSprite) } }
-    var mergeSprite: Bool = false { didSet { commit(Self._mergeSpriteConfig, mergeSprite) } }
-    var wildArmsOffset: Bool = false { didSet { commit(Self._wildArmsOffsetConfig, wildArmsOffset) } }
+    @Published var interlaceMode: Int = 0 { didSet { commit(Self._interlaceModeConfig, interlaceMode) } }
+    @Published var aspectRatio: Int = 1 { didSet { commit(Self._aspectRatioConfig, aspectRatio) } }
+    @Published var blendingAccuracy: Int = 1 { didSet { commit(Self._blendingAccuracyConfig, blendingAccuracy) } }
+    @Published var dithering: Int = 2 { didSet { commit(Self._ditheringConfig, dithering) } }
+    @Published var trilinearFiltering: Int = -1 { didSet { commit(Self._trilinearFilteringConfig, trilinearFiltering) } }
+    @Published var halfPixelOffset: Int = 0 { didSet { commit(Self._halfPixelOffsetConfig, halfPixelOffset) } }
+    @Published var roundSprite: Int = 0 { didSet { commit(Self._roundSpriteConfig, roundSprite) } }
+    @Published var alignSprite: Bool = false { didSet { commit(Self._alignSpriteConfig, alignSprite) } }
+    @Published var mergeSprite: Bool = false { didSet { commit(Self._mergeSpriteConfig, mergeSprite) } }
+    @Published var wildArmsOffset: Bool = false { didSet { commit(Self._wildArmsOffsetConfig, wildArmsOffset) } }
     var textureOffsetX: Int {
         didSet {
             let normalized = Self.clampedTextureOffset(textureOffsetX)
@@ -296,70 +295,70 @@ final class SettingsStore {
             requestGraphicsApplyGuarded()
         }
     }
-    var loadTextureReplacements: Bool = false {
+    @Published var loadTextureReplacements: Bool = false {
         didSet { commit(Self._loadTextureReplacementsConfig, loadTextureReplacements) }
     }
-    var loadTextureReplacementsAsync: Bool = true {
+    @Published var loadTextureReplacementsAsync: Bool = true {
         didSet { commit(Self._loadTextureReplacementsAsyncConfig, loadTextureReplacementsAsync) }
     }
-    var precacheTextureReplacements: Bool = false {
+    @Published var precacheTextureReplacements: Bool = false {
         didSet { commit(Self._precacheTextureReplacementsConfig, precacheTextureReplacements) }
     }
-    var texturePreloading: Int = 2 { didSet { commit(Self._texturePreloadingConfig, texturePreloading) } }
-    var dumpReplaceableTextures: Bool = false {
+    @Published var texturePreloading: Int = 2 { didSet { commit(Self._texturePreloadingConfig, texturePreloading) } }
+    @Published var dumpReplaceableTextures: Bool = false {
         didSet { commit(Self._dumpReplaceableTexturesConfig, dumpReplaceableTextures) }
     }
-    var dumpReplaceableMipmaps: Bool = false {
+    @Published var dumpReplaceableMipmaps: Bool = false {
         didSet { commit(Self._dumpReplaceableMipmapsConfig, dumpReplaceableMipmaps) }
     }
-    var dumpTexturesWithFMVActive: Bool = false {
+    @Published var dumpTexturesWithFMVActive: Bool = false {
         didSet { commit(Self._dumpTexturesWithFMVActiveConfig, dumpTexturesWithFMVActive) }
     }
-    var dumpDirectTextures: Bool = true { didSet { commit(Self._dumpDirectTexturesConfig, dumpDirectTextures) } }
-    var dumpPaletteTextures: Bool = true { didSet { commit(Self._dumpPaletteTexturesConfig, dumpPaletteTextures) } }
+    @Published var dumpDirectTextures: Bool = true { didSet { commit(Self._dumpDirectTexturesConfig, dumpDirectTextures) } }
+    @Published var dumpPaletteTextures: Bool = true { didSet { commit(Self._dumpPaletteTexturesConfig, dumpPaletteTextures) } }
 
     // ── GS Hardware Fixes (EmuCore/GS) ──
-    var hwAccurateAlphaTest: Bool = false { didSet { commit(Self._hwAccurateAlphaTestConfig, hwAccurateAlphaTest) } }
-    var textureInsideRt: Int = 0 { didSet { commit(Self._textureInsideRtConfig, textureInsideRt) } }
-    var limit24BitDepth: Int = 0 { didSet { commit(Self._limit24BitDepthConfig, limit24BitDepth) } }
-    var nativeScaling: Int = 0 { didSet { commit(Self._nativeScalingConfig, nativeScaling) } }
-    var cpuClutRender: Int = 0 { didSet { commit(Self._cpuClutRenderConfig, cpuClutRender) } }
-    var cpuSpriteRenderBw: Int = 0 { didSet { commit(Self._cpuSpriteRenderBwConfig, cpuSpriteRenderBw) } }
-    var cpuSpriteRenderLevel: Int = 0 { didSet { commit(Self._cpuSpriteRenderLevelConfig, cpuSpriteRenderLevel) } }
-    var gpuTargetClut: Int = 0 { didSet { commit(Self._gpuTargetClutConfig, gpuTargetClut) } }
-    var bilinearUpscaleHack: Int = 0 { didSet { commit(Self._bilinearUpscaleHackConfig, bilinearUpscaleHack) } }
-    var maxAnisotropy: Int = 0 { didSet { commit(Self._maxAnisotropyConfig, maxAnisotropy) } }
-    var hardwareDownloadMode: Int = 0 { didSet { commit(Self._hardwareDownloadModeConfig, hardwareDownloadMode) } }
-    var tvShader: Int = 0 { didSet { commit(Self._tvShaderConfig, tvShader) } }
-    var upscaler: Int = 0 { didSet { commit(Self._upscalerConfig, upscaler) } }
+    @Published var hwAccurateAlphaTest: Bool = false { didSet { commit(Self._hwAccurateAlphaTestConfig, hwAccurateAlphaTest) } }
+    @Published var textureInsideRt: Int = 0 { didSet { commit(Self._textureInsideRtConfig, textureInsideRt) } }
+    @Published var limit24BitDepth: Int = 0 { didSet { commit(Self._limit24BitDepthConfig, limit24BitDepth) } }
+    @Published var nativeScaling: Int = 0 { didSet { commit(Self._nativeScalingConfig, nativeScaling) } }
+    @Published var cpuClutRender: Int = 0 { didSet { commit(Self._cpuClutRenderConfig, cpuClutRender) } }
+    @Published var cpuSpriteRenderBw: Int = 0 { didSet { commit(Self._cpuSpriteRenderBwConfig, cpuSpriteRenderBw) } }
+    @Published var cpuSpriteRenderLevel: Int = 0 { didSet { commit(Self._cpuSpriteRenderLevelConfig, cpuSpriteRenderLevel) } }
+    @Published var gpuTargetClut: Int = 0 { didSet { commit(Self._gpuTargetClutConfig, gpuTargetClut) } }
+    @Published var bilinearUpscaleHack: Int = 0 { didSet { commit(Self._bilinearUpscaleHackConfig, bilinearUpscaleHack) } }
+    @Published var maxAnisotropy: Int = 0 { didSet { commit(Self._maxAnisotropyConfig, maxAnisotropy) } }
+    @Published var hardwareDownloadMode: Int = 0 { didSet { commit(Self._hardwareDownloadModeConfig, hardwareDownloadMode) } }
+    @Published var tvShader: Int = 0 { didSet { commit(Self._tvShaderConfig, tvShader) } }
+    @Published var upscaler: Int = 0 { didSet { commit(Self._upscalerConfig, upscaler) } }
 
     /// What the running game really has, keyed by INI key. The INI is what the player
     /// asked for; between the two sit the two mask passes and the GameDB, and only the
     /// core can see the result. Empty until a game is running.
-    var graphicsHackStatus: [String: GraphicsHackStatus] = [:]
+    @Published var graphicsHackStatus: [String: GraphicsHackStatus] = [:]
 
-    var gsBoolHacks: [String: Bool] = [:]
+    @Published var gsBoolHacks: [String: Bool] = [:]
 
     // ── Screen / PCRTC (EmuCore/GS) ── display-output options, applied live.
-    var pcrtcOffsets: Bool = false { didSet { commit(Self._pcrtcOffsetsConfig, pcrtcOffsets) } }
-    var pcrtcOverscan: Bool = false { didSet { commit(Self._pcrtcOverscanConfig, pcrtcOverscan) } }
-    var pcrtcAntiBlur: Bool = true { didSet { commit(Self._pcrtcAntiBlurConfig, pcrtcAntiBlur) } }
-    var disableInterlaceOffset: Bool = false {
+    @Published var pcrtcOffsets: Bool = false { didSet { commit(Self._pcrtcOffsetsConfig, pcrtcOffsets) } }
+    @Published var pcrtcOverscan: Bool = false { didSet { commit(Self._pcrtcOverscanConfig, pcrtcOverscan) } }
+    @Published var pcrtcAntiBlur: Bool = true { didSet { commit(Self._pcrtcAntiBlurConfig, pcrtcAntiBlur) } }
+    @Published var disableInterlaceOffset: Bool = false {
         didSet { commit(Self._disableInterlaceOffsetConfig, disableInterlaceOffset) }
     }
-    var skipDuplicateFrames: Bool = true { didSet { commit(Self._skipDuplicateFramesConfig, skipDuplicateFrames) } }
-    var syncToHostRefresh: Bool = false { didSet {
+    @Published var skipDuplicateFrames: Bool = true { didSet { commit(Self._skipDuplicateFramesConfig, skipDuplicateFrames) } }
+    @Published var syncToHostRefresh: Bool = false { didSet {
         commit(Self._syncToHostRefreshConfig, syncToHostRefresh)
         if syncToHostRefresh != oldValue { markFramePacingCustom() }
     }}
-    var integerScaling: Bool = false { didSet { commit(Self._integerScalingConfig, integerScaling) } }
+    @Published var integerScaling: Bool = false { didSet { commit(Self._integerScalingConfig, integerScaling) } }
 
     // ── Shade Boost (EmuCore/GS) ── post-process color adjustment, applied live.
-    var shadeBoost: Bool = false { didSet { commit(Self._shadeBoostConfig, shadeBoost) } }
-    var shadeBoostBrightness: Int = 50 { didSet { commit(Self._shadeBoostBrightnessConfig, shadeBoostBrightness) } }
-    var shadeBoostContrast: Int = 50 { didSet { commit(Self._shadeBoostContrastConfig, shadeBoostContrast) } }
-    var shadeBoostSaturation: Int = 50 { didSet { commit(Self._shadeBoostSaturationConfig, shadeBoostSaturation) } }
-    var shadeBoostGamma: Int = 50 { didSet { commit(Self._shadeBoostGammaConfig, shadeBoostGamma) } }
+    @Published var shadeBoost: Bool = false { didSet { commit(Self._shadeBoostConfig, shadeBoost) } }
+    @Published var shadeBoostBrightness: Int = 50 { didSet { commit(Self._shadeBoostBrightnessConfig, shadeBoostBrightness) } }
+    @Published var shadeBoostContrast: Int = 50 { didSet { commit(Self._shadeBoostContrastConfig, shadeBoostContrast) } }
+    @Published var shadeBoostSaturation: Int = 50 { didSet { commit(Self._shadeBoostSaturationConfig, shadeBoostSaturation) } }
+    @Published var shadeBoostGamma: Int = 50 { didSet { commit(Self._shadeBoostGammaConfig, shadeBoostGamma) } }
 
     // ── OSD Overlay ──
     var osdPreset: OsdPreset {
@@ -384,7 +383,7 @@ final class SettingsStore {
         }
     }
     // Frame Pacing — consolidated EmuCore/GS + SPU2/Output + Framerate surface.
-    var framePacingPreset: FramePacingPreset = .optimal {
+    @Published var framePacingPreset: FramePacingPreset = .optimal {
         didSet {
             // Only a user change cascades into the pacing keys, so a bulk reload keeps them.
             guard !suppressINIWrites else { return }
@@ -398,82 +397,82 @@ final class SettingsStore {
             }
         }
     }
-    var adaptiveResolutionEnabled: Bool = false { didSet {
+    @Published var adaptiveResolutionEnabled: Bool = false { didSet {
         commit(Self._adaptiveResolutionEnabledConfig, adaptiveResolutionEnabled)
         // Not while the INI is loading: setEnabled reads SettingsStore.shared, and we are inside
         // that very initializer. init starts the controller itself once it has finished.
         guard !suppressINIWrites else { return }
         FrameTimeDynamicResolutionController.shared.setEnabled(adaptiveResolutionEnabled)
     }}
-    var lastActiveOsdPreset: OsdPreset = .simple { didSet { commit(Self._lastActiveOsdPresetConfig, lastActiveOsdPreset) } }
+    @Published var lastActiveOsdPreset: OsdPreset = .simple { didSet { commit(Self._lastActiveOsdPresetConfig, lastActiveOsdPreset) } }
     var osdPerformancePosition = SettingsStore.defaultOsdPerformancePosition {
         didSet { commit(Self._osdPerformancePositionConfig, osdPerformancePosition) }
     }
-    var osdShowMessages: Bool = true { didSet { commit(Self._osdShowMessagesConfig, osdShowMessages) } }
-    var osdShowFPS: Bool = false { didSet {
+    @Published var osdShowMessages: Bool = true { didSet { commit(Self._osdShowMessagesConfig, osdShowMessages) } }
+    @Published var osdShowFPS: Bool = false { didSet {
         commit(Self._osdShowFPSConfig, osdShowFPS)
         markOsdCustom()
     }}
-    var osdShowVPS: Bool = false { didSet {
+    @Published var osdShowVPS: Bool = false { didSet {
         commit(Self._osdShowVPSConfig, osdShowVPS)
         markOsdCustom()
     }}
-    var osdShowSpeed: Bool = false { didSet {
+    @Published var osdShowSpeed: Bool = false { didSet {
         commit(Self._osdShowSpeedConfig, osdShowSpeed)
         markOsdCustom()
     }}
-    var osdShowCPU: Bool = false { didSet {
+    @Published var osdShowCPU: Bool = false { didSet {
         commit(Self._osdShowCPUConfig, osdShowCPU)
         markOsdCustom()
     }}
-    var osdShowGPU: Bool = false { didSet {
+    @Published var osdShowGPU: Bool = false { didSet {
         commit(Self._osdShowGPUConfig, osdShowGPU)
         markOsdCustom()
     }}
-    var osdShowResolution: Bool = false { didSet {
+    @Published var osdShowResolution: Bool = false { didSet {
         commit(Self._osdShowResolutionConfig, osdShowResolution)
         markOsdCustom()
     }}
-    var osdShowGSStats: Bool = false { didSet {
+    @Published var osdShowGSStats: Bool = false { didSet {
         commit(Self._osdShowGSStatsConfig, osdShowGSStats)
         markOsdCustom()
     }}
-    var osdShowIndicators: Bool = false { didSet {
+    @Published var osdShowIndicators: Bool = false { didSet {
         commit(Self._osdShowIndicatorsConfig, osdShowIndicators)
         markOsdCustom()
     }}
-    var osdShowSettings: Bool = false { didSet {
+    @Published var osdShowSettings: Bool = false { didSet {
         commit(Self._osdShowSettingsConfig, osdShowSettings)
         markOsdCustom()
     }}
-    var osdShowInputs: Bool = false { didSet {
+    @Published var osdShowInputs: Bool = false { didSet {
         commit(Self._osdShowInputsConfig, osdShowInputs)
         markOsdCustom()
     }}
-    var osdShowFrameTimes: Bool = false { didSet {
+    @Published var osdShowFrameTimes: Bool = false { didSet {
         commit(Self._osdShowFrameTimesConfig, osdShowFrameTimes)
         markOsdCustom()
     }}
-    var osdShowVersion: Bool = false { didSet {
+    @Published var osdShowVersion: Bool = false { didSet {
         commit(Self._osdShowVersionConfig, osdShowVersion)
         markOsdCustom()
     }}
-    var osdShowHardwareInfo: Bool = false { didSet {
+    @Published var osdShowHardwareInfo: Bool = false { didSet {
         commit(Self._osdShowHardwareInfoConfig, osdShowHardwareInfo)
         markOsdCustom()
     }}
-    var osdShowTextureReplacements: Bool = false {
+    @Published var osdShowTextureReplacements: Bool = false {
         didSet { commit(Self._osdShowTextureReplacementsConfig, osdShowTextureReplacements) }
     }
-    var osdShowDeviceStats: Bool = false { didSet {
+    @Published var osdShowDeviceStats: Bool = false { didSet {
         commit(Self._osdShowDeviceStatsConfig, osdShowDeviceStats)
         markOsdCustom()
     }}
 
     let controller: Controller
-    var appLanguage: AppLanguage = .system { didSet { commit(Self._appLanguageConfig, appLanguage) } }
+    @Published var appLanguage: AppLanguage = .system { didSet { commit(Self._appLanguageConfig, appLanguage) } }
 
-    var autoOpenStikDebug: Bool = false { didSet { commit(Self._autoOpenStikDebugConfig, autoOpenStikDebug) } }
+    @Published var autoOpenStikDebug: Bool = false { didSet { commit(Self._autoOpenStikDebugConfig, autoOpenStikDebug) } }
     var jitScriptProtocol = JITScriptProtocol.defaultValue {
         didSet { commit(Self._jitScriptProtocolConfig, jitScriptProtocol) }
     }

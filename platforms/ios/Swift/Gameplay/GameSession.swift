@@ -58,29 +58,28 @@ private enum EmulationOnlyNativeReleaseFlag {
 }
 
 @MainActor
-@Observable
-final class GameSession {
+final class GameSession : ObservableObject {
     static let shared = GameSession()
 
-    var runningGameName: String? = nil
+    @Published var runningGameName: String? = nil
     private(set) var vmShutdownPending = false
-    var bootDisclaimerMessage: String?
+    @Published var bootDisclaimerMessage: String?
     var bootDisclaimerTitle = "BIOS"
-    var pendingJITGameBoot: PendingJITGameBoot?
-    var pendingRestartGame: String?
-    private(set) var automaticGameStartupPending: Bool
-    @ObservationIgnored private var automaticGameStartupStarted = false
-    var gameplayLaunchTransition: GameplayLaunchTransition?
+    @Published var pendingJITGameBoot: PendingJITGameBoot?
+    @Published var pendingRestartGame: String?
+    private(set) @Published var automaticGameStartupPending: Bool
+    private var automaticGameStartupStarted = false
+    @Published var gameplayLaunchTransition: GameplayLaunchTransition?
     var gameplayLaunchControlsVisible = true
     var gameplayLaunchBackgroundVisible = false
     /// Serial supplied by the library before the VM has published its CRC.
     /// This lets gameplay resolve a serial-scoped automatic pad assignment on
     /// its very first SwiftUI frame instead of briefly drawing Global Default.
-    private(set) var gameplayPadSerial: String?
+    private(set) @Published var gameplayPadSerial: String?
     /// Library-resolved identity available before the VM publishes its own
     /// settings identity. This prevents the first virtual-pad frame from
     /// falling back to the default layout.
-    private(set) var gameplayPadIdentity: PadLayoutGameIdentity?
+    private(set) @Published var gameplayPadIdentity: PadLayoutGameIdentity?
     /// Changes only when a new VM boot begins. The root gameplay overlay uses
     /// this identity to show startup guidance once per emulation session,
     /// rather than every time GameScreenView remounts after visiting the menu.
@@ -92,20 +91,20 @@ final class GameSession {
     }
     /// The pad toggle and the speed shortcut outlive GameScreenView, which the menu unmounts.
     var userVirtualPadVisible = true
-    var runtimeShortcutSpeedPercent: Int?
-    var isEmulationOnlyMode: Bool = false
+    @Published var runtimeShortcutSpeedPercent: Int?
+    @Published var isEmulationOnlyMode: Bool = false
     var emulationOnlyPresentation = EmulationOnlyPresentation.minimal
-    private(set) var emulationOnlyStartupReady: Bool = false
-    private var emulationOnlyTransitionTask: Task<Void, Never>?
+    private(set) @Published var emulationOnlyStartupReady: Bool = false
+    private @Published var emulationOnlyTransitionTask: Task<Void, Never>?
     private var emulationOnlyActivationInFlight = false
-    private var pendingEmulationOnlyPresentation: EmulationOnlyPresentation?
+    private @Published var pendingEmulationOnlyPresentation: EmulationOnlyPresentation?
 
-    @ObservationIgnored private var pendingBootAction: (() -> Void)?
-    @ObservationIgnored private var leaveSave = 0
-    @ObservationIgnored private var shutdownObserver: NSObjectProtocol?
+    private var pendingBootAction: (() -> Void)?
+    private var leaveSave = 0
+    private var shutdownObserver: NSObjectProtocol?
 
-    @ObservationIgnored private var autoBootObserver: NSObjectProtocol?
-    @ObservationIgnored private var emulationOnlyStartupReadyObserver: NSObjectProtocol?
+    private var autoBootObserver: NSObjectProtocol?
+    private var emulationOnlyStartupReadyObserver: NSObjectProtocol?
 
     private var currentScreen: AppState.Screen {
         get { AppState.shared.currentScreen }

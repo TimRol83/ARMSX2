@@ -4,7 +4,7 @@
 import SwiftUI
 
 struct LanguageSettingsView: View {
-    @State private var settings = SettingsStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
 
     var body: some View {
         Form {

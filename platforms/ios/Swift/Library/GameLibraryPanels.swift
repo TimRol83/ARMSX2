@@ -98,7 +98,7 @@ struct GameLibraryForegroundPanel<Content: View>: View {
 
 struct GameInfoPanel: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var settings = SettingsStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
 
     let game: ISOEntry
 
@@ -182,7 +182,7 @@ struct GameInfoPanel: View {
 
 struct DiscLinkPicker: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var settings = SettingsStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
 
     let discs: [ISOEntry]
     let hasLinkedDisc: Bool

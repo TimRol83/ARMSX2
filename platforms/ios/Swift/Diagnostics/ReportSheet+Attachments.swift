@@ -11,9 +11,8 @@ enum FilePickMode {
 }
 
 // The copies are deleted when the sheet's state goes away, however the sheet is dismissed.
-@Observable
-final class CrashCopies {
-    var urls: [URL] = []
+final class CrashCopies : ObservableObject {
+    @Published var urls: [URL] = []
 
     deinit {
         for url in urls { try? FileManager.default.removeItem(at: url) }

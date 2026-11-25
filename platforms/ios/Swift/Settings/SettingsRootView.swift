@@ -53,7 +53,7 @@ struct SettingsRootView: View {
     let onPreviousControllerTab: @MainActor () -> Bool
     let onNextControllerTab: @MainActor () -> Bool
     let onControllerBoundary: @MainActor (MenuControllerCommand) -> Bool
-    @State private var settings = SettingsStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
     @State private var controllerDestinationEntryTask: Task<Void, Never>?
     @State private var rootNeedsControllerReentry = false
     @State private var jitAvailable = false

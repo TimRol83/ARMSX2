@@ -14,7 +14,7 @@ struct ReportSheet: View {
     let request: ReportSheetRequest
     var onClose: (() -> Void)? = nil
     // Owned here so the presenting closure never reads it.
-    @State var settings = SettingsStore.shared
+    @ObservedObject var settings = SettingsStore.shared
     @State private var form = ReportForm()
     @State var working = false
     @State private var copied = false
@@ -25,7 +25,7 @@ struct ReportSheet: View {
     @State var photoJPEG: Data?
     @State var photoThumb: UIImage?
     @State var frameThumb: UIImage?
-    @State var crashCopies = CrashCopies()
+    @StateObject var crashCopies = CrashCopies()
     @State var hasCrashPayload: Bool?
     @State var attachmentLoading = false
     @State var pickMode: FilePickMode?

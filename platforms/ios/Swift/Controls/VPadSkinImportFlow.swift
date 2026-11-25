@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0+
 
 import Foundation
-import Observation
+import Combine
 
 struct SkinReplacePrompt: Identifiable {
     let id = UUID()
@@ -38,12 +38,11 @@ private final class SkinReplaceGate {
 }
 
 @MainActor
-@Observable
-final class VPadSkinImportFlow {
-    var skinReplacePrompt: SkinReplacePrompt?
-    @ObservationIgnored private var skinReplaceGate = SkinReplaceGate()
-    @ObservationIgnored private let skinLibrary = VPadSkinLibraryStore.shared
-    @ObservationIgnored private let layoutPresets = PadLayoutPresetStore.shared
+final class VPadSkinImportFlow : ObservableObject {
+    @Published var skinReplacePrompt: SkinReplacePrompt?
+    private var skinReplaceGate = SkinReplaceGate()
+    private let skinLibrary = VPadSkinLibraryStore.shared
+    private let layoutPresets = PadLayoutPresetStore.shared
 
     func importCustomSkins(_ urls: [URL]) async -> (message: String, importResult: VPadSkinImportResult?) {
         let stagingDirectory = FileManager.default.temporaryDirectory

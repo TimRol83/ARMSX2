@@ -4,11 +4,10 @@
 import SwiftUI
 import PhotosUI
 import UIKit
-import Observation
+import Combine
 
 @MainActor
-@Observable
-final class GameLibraryControllerCoordinator {
+final class GameLibraryControllerCoordinator : ObservableObject {
     var showGameImporter = false
     var showCoverImporter = false
     var showCoverPhotoPicker = false
@@ -16,70 +15,70 @@ final class GameLibraryControllerCoordinator {
     var showStopAlert = false
     var showCoverTemplateEditor = false
     var showGameReplacementAlert = false
-    var catalogSkinInstallTask: Task<Void, Never>?
-    var pendingAutomaticCustomSkinLaunch: PendingAutomaticCustomSkinLaunch?
+    @Published var catalogSkinInstallTask: Task<Void, Never>?
+    @Published var pendingAutomaticCustomSkinLaunch: PendingAutomaticCustomSkinLaunch?
     var coverTemplateDraft = CoverStore.defaultCoverURLTemplate
-    var pendingGameName: String = ""
-    var pendingGameplayLaunchTransition: GameplayLaunchTransition?
-    var pendingGameplayPadSerial: String?
-    var pendingGameplayPadCRC: String?
-    var pendingGameImportURLs: [URL] = []
-    var existingGameImportFileNames: [String] = []
-    var pendingCoverGameName: String?
-    var pendingCoverPhotoGameName: String?
-    var selectedCoverPhotoItem: PhotosPickerItem?
-    var gameInfoTarget: ISOEntry?
-    var gameSettingsTarget: ISOEntry?
+    @Published var pendingGameName: String = ""
+    @Published var pendingGameplayLaunchTransition: GameplayLaunchTransition?
+    @Published var pendingGameplayPadSerial: String?
+    @Published var pendingGameplayPadCRC: String?
+    @Published var pendingGameImportURLs: [URL] = []
+    @Published var existingGameImportFileNames: [String] = []
+    @Published var pendingCoverGameName: String?
+    @Published var pendingCoverPhotoGameName: String?
+    @Published var selectedCoverPhotoItem: PhotosPickerItem?
+    @Published var gameInfoTarget: ISOEntry?
+    @Published var gameSettingsTarget: ISOEntry?
     var gameSettingsStartsInShaders = false
-    var preparedGameSettingsID: String?
-    var preparedGameSettings: [ARMSX2PerGameKey: Any]?
-    var renameTarget: ISOEntry?
-    var discLinkTarget: ISOEntry?
-    var cheatsManagerTarget: ISOEntry?
-    var pendingDeleteGame: ISOEntry?
-    var pendingDeleteDataGame: ISOEntry?
+    @Published var preparedGameSettingsID: String?
+    @Published var preparedGameSettings: [ARMSX2PerGameKey: Any]?
+    @Published var renameTarget: ISOEntry?
+    @Published var discLinkTarget: ISOEntry?
+    @Published var cheatsManagerTarget: ISOEntry?
+    @Published var pendingDeleteGame: ISOEntry?
+    @Published var pendingDeleteDataGame: ISOEntry?
     var gameActionTitle = ""
-    var gameActionMessage: String?
+    @Published var gameActionMessage: String?
     var showBackgroundAssetError = false
     let gameplayLaunchCardRegistry = GameplayLaunchCardRegistry()
-    var favoriteAnimationValues: [String: Int] = [:]
+    @Published var favoriteAnimationValues: [String: Int] = [:]
     var nowRunningRemovalAnimationActive = false
-    var nowRunningRemovalResetTask: Task<Void, Never>?
-    var departingRunningGameName: String?
+    @Published var nowRunningRemovalResetTask: Task<Void, Never>?
+    @Published var departingRunningGameName: String?
     var nowRunningCardOpacity = 1.0
     var nowRunningCardScale = 1.0
     var nowRunningStatusOpacity = 1.0
     let controllerFocusState = GameLibraryControllerFocusState()
     let controllerScrollAvailability = GameLibraryControllerScrollAvailability()
     let libraryScrollRestoreState = GameLibraryScrollRestoreState()
-    var favoriteScrollRequest: GameLibraryFavoriteScrollRequest?
-    var favoriteScrollSequence: UInt64 = 0
+    @Published var favoriteScrollRequest: GameLibraryFavoriteScrollRequest?
+    @Published var favoriteScrollSequence: UInt64 = 0
     let focusScrollCoordinator = GameLibraryFocusScrollCoordinator()
     let coverFlowPreheater = GameLibraryCoverFlowPreheater()
-    var libraryContainerSize: CGSize = .zero
-    @ObservationIgnored private var seededContainerSize: CGSize = .zero
+    @Published var libraryContainerSize: CGSize = .zero
+    private var seededContainerSize: CGSize = .zero
     var landscapeControllerAutofocusPending = false
-    var landscapeControllerAutofocusTask: Task<Void, Never>?
+    @Published var landscapeControllerAutofocusTask: Task<Void, Never>?
     var runningGameControllerFocusPending = false
     let controllerContextMenuState = GameLibraryControllerContextMenuState()
-    var deferredControllerContextMenuSelection: DeferredControllerContextMenuSelection?
+    @Published var deferredControllerContextMenuSelection: DeferredControllerContextMenuSelection?
     let controllerToolbarFocusState = GameLibraryControllerToolbarFocusState()
     let controllerNowRunningFocusState = GameLibraryNowRunningControllerFocusState()
     var controllerAlertSelectedIndex = 0
     var controllerLayoutMenuPresented = false
     var controllerLayoutMenuSelectedIndex = 0
     var gameLibraryViewOptionsPresented = false
-    var gameLibraryViewOptionsPreview: GameLibraryViewOptionsPreview?
-    var gameLibraryViewOptionsBaseline: GameLibraryViewOptionsValues?
+    @Published var gameLibraryViewOptionsPreview: GameLibraryViewOptionsPreview?
+    @Published var gameLibraryViewOptionsBaseline: GameLibraryViewOptionsValues?
     var controllerMoreMenuPresented = false
     var controllerMoreMenuSelectedIndex = 0
     var controllerFocusReleased = false
 
-    @ObservationIgnored var controllerInput: MenuControllerInputRouter?
-    @ObservationIgnored var menuTabIsActive = true
-    @ObservationIgnored var reduceMotion = false
-    @ObservationIgnored var layoutDirection: LayoutDirection = .leftToRight
-    @ObservationIgnored var sharedMenuControllerInput: MenuControllerInputRouter?
+    var controllerInput: MenuControllerInputRouter?
+    var menuTabIsActive = true
+    var reduceMotion = false
+    var layoutDirection: LayoutDirection = .leftToRight
+    var sharedMenuControllerInput: MenuControllerInputRouter?
 
     var appState: AppState { .shared }
     var session: GameSession { .shared }

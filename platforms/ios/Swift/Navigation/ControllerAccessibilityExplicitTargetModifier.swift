@@ -212,7 +212,7 @@ private struct ControllerAccessibilityExplicitTargetModifier: ViewModifier {
     @Environment(\.controllerAccessibilityInheritedTargetID) private var inheritedID
     @Environment(\.isEnabled) private var isEnabled
     @State private var registrationID = UUID()
-    @State private var focusState = ControllerAccessibilityTargetFocusState()
+    @StateObject private var focusState = ControllerAccessibilityTargetFocusState()
 
     private var trimmedID: String? {
         guard let source = navigationID ?? inheritedID else { return nil }

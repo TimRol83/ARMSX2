@@ -8,7 +8,7 @@ struct PerGameCategoryList: View {
     let controllerInput: MenuControllerInputRouter?
     let showsRail: Bool
     @Environment(\.uiAccentColour) private var accentColour
-    @State private var settings = SettingsStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
 
     var body: some View {
         if showsRail {

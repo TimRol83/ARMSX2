@@ -3,7 +3,7 @@
 
 import SwiftUI
 import UIKit
-import Observation
+import Combine
 
 private struct MenuTabControllerCommandListener: View {
     let controllerInput: MenuControllerInputRouter
@@ -22,8 +22,7 @@ private struct MenuTabControllerCommandListener: View {
 }
 
 @MainActor
-@Observable
-final class MenuControllerTabFocusState {
+final class MenuControllerTabFocusState : ObservableObject {
     var focusedIndex = 0
 
     init(focusedIndex: Int = 0) {
@@ -40,8 +39,8 @@ struct MenuBottomTabBarLayout {
 }
 
 struct MenuTabView: View {
-    @State private var settings = SettingsStore.shared
-    @State private var logoStore = ARMSX2LogoStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var logoStore = ARMSX2LogoStore.shared
     @Binding var selectedTab: Int
     @Binding var settingsNavigationPath: [SettingsPane]
     @State private var titleMorphSelection = 0
@@ -51,10 +50,10 @@ struct MenuTabView: View {
     @State private var menuLargeTitleMorphResetTask: Task<Void, Never>?
     @State private var controllerTabEntryTask: Task<Void, Never>?
     @State private var gameRenamePresented = false
-    @State private var controllerTabFocusState: MenuControllerTabFocusState
+    @StateObject private var controllerTabFocusState: MenuControllerTabFocusState
     @State private var menuViewportSize = CGSize.zero
-    @State private var tabBar = MenuTabBarAppearance.shared
-    @State private var appearance = GameLibraryAppearance.shared
+    @ObservedObject private var tabBar = MenuTabBarAppearance.shared
+    @ObservedObject private var appearance = GameLibraryAppearance.shared
     let backgroundHost: PersistentMenuBackgroundHost
     let controllerInput: MenuControllerInputRouter
     @Namespace private var largeTitleNamespace

@@ -19,16 +19,15 @@ struct ShaderWorkspaceHost {
 }
 
 @MainActor
-@Observable
-final class ShaderWorkspaceModel {
-    var workspaceLayers: [ShaderWorkspaceLayerConfiguration] = []
+final class ShaderWorkspaceModel : ObservableObject {
+    @Published var workspaceLayers: [ShaderWorkspaceLayerConfiguration] = []
     var hiddenLayerIDs = Set<String>()
     var expandedLayerIDs = Set<String>()
     var expandedPassIDs = Set<String>()
-    var layerScrollRequest: ShaderLayerScrollRequest?
+    @Published var layerScrollRequest: ShaderLayerScrollRequest?
     var layerScrollSequence = 0
-    @ObservationIgnored private let settings = SettingsStore.shared
-    @ObservationIgnored private var host: ShaderWorkspaceHost?
+    private let settings = SettingsStore.shared
+    private var host: ShaderWorkspaceHost?
 
     private var enabled: Bool {
         get { host?.enabled ?? false }

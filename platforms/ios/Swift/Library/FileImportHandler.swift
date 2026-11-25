@@ -7,8 +7,7 @@ import UniformTypeIdentifiers
 import UIKit
 
 @MainActor
-@Observable
-final class FileImportHandler {
+final class FileImportHandler : ObservableObject {
     static let shared = FileImportHandler()
 
     struct ImportedGame: Sendable {
@@ -23,7 +22,7 @@ final class FileImportHandler {
         case pnachCheat
     }
 
-    var lastImportMessage: String?
+    @Published var lastImportMessage: String?
     var showImportAlert = false
 
     private static let biosExtensionList = ["bin", "rom"]

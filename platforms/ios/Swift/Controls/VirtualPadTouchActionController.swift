@@ -68,8 +68,7 @@ func pulseVirtualPadActionButton(
 }
 
 @MainActor
-@Observable
-final class DynamicCrosshairRuntimeState {
+final class DynamicCrosshairRuntimeState : ObservableObject {
     private(set) var isAiming = false
     private(set) var isSwipeCrosshairVisible = false
     private(set) var isCameraMoving = false
@@ -81,13 +80,13 @@ final class DynamicCrosshairRuntimeState {
     private(set) var movementStartedAt = 0.0
     private(set) var movementEndedAt = 0.0
     private(set) var shotStartedAt = 0.0
-    private(set) var shotTiltRadians: CGFloat = 0
+    private(set) @Published var shotTiltRadians: CGFloat = 0
     private(set) var rapidFireStartedAt = 0.0
 
-    @ObservationIgnored private var sourceMotion: [DynamicCrosshairMotionSource: DynamicThumbstickVector] = [:]
-    @ObservationIgnored private var settlingTask: Task<Void, Never>?
-    @ObservationIgnored private var shotTask: Task<Void, Never>?
-    @ObservationIgnored private var swipeHideTask: Task<Void, Never>?
+    private var sourceMotion: [DynamicCrosshairMotionSource: DynamicThumbstickVector] = [:]
+    private var settlingTask: Task<Void, Never>?
+    private var shotTask: Task<Void, Never>?
+    private var swipeHideTask: Task<Void, Never>?
 
     func setAiming(_ aiming: Bool) {
         isAiming = aiming

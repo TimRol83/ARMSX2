@@ -4,7 +4,7 @@
 import SwiftUI
 
 struct DiagnosticsView: View {
-    @State private var settings = SettingsStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
     @State private var rows: [SessionRow] = []
     @State private var pending: Set<String> = []
     @State private var reportRequest: ReportSheetRequest?

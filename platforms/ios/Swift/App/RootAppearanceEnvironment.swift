@@ -4,9 +4,9 @@
 import SwiftUI
 
 struct RootAppearanceEnvironment: ViewModifier {
-    @State private var settings = SettingsStore.shared
-    @State private var frameRates = UIFrameRateSettings.shared
-    @State private var gameCoverThemePreview = GameCoverThemePreviewStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var frameRates = UIFrameRateSettings.shared
+    @ObservedObject private var gameCoverThemePreview = GameCoverThemePreviewStore.shared
 
     private var coverPreviewAccentColor: Color {
         gameCoverThemePreview.preview?.accentColor

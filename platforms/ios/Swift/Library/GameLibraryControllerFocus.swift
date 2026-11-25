@@ -4,9 +4,8 @@
 import SwiftUI
 
 @MainActor
-@Observable
-final class GameLibraryControllerCardFocusState {
-    var isFocused: Bool
+final class GameLibraryControllerCardFocusState : ObservableObject {
+    @Published var isFocused: Bool
 
     init(isFocused: Bool) {
         self.isFocused = isFocused
@@ -41,9 +40,8 @@ enum GameLibraryNowRunningControllerAction: Int, CaseIterable {
 }
 
 @MainActor
-@Observable
-final class GameLibraryNowRunningControllerFocusState {
-    var selectedAction: GameLibraryNowRunningControllerAction?
+final class GameLibraryNowRunningControllerFocusState : ObservableObject {
+    @Published var selectedAction: GameLibraryNowRunningControllerAction?
 }
 
 struct GameLibraryNowRunningControllerFocusModifier: ViewModifier {
@@ -104,18 +102,17 @@ struct GameLibraryNowRunningControllerFocusModifier: ViewModifier {
 }
 
 @MainActor
-@Observable
-final class GameLibraryControllerFocusState {
-    @ObservationIgnored private var storedSelectedGameID: String?
-    @ObservationIgnored private var storedIsActive = false
-    @ObservationIgnored private var isLibraryZone = true
-    @ObservationIgnored private var isLibraryVisible = true
-    @ObservationIgnored private var cardStates: [String: GameLibraryControllerCardFocusState] = [:]
-    @ObservationIgnored private var gameIndexByID: [String: Int] = [:]
-    @ObservationIgnored private var scrollSequence: UInt64 = 0
-    @ObservationIgnored private var suppressNextSelectionScroll = false
+final class GameLibraryControllerFocusState : ObservableObject {
+    private var storedSelectedGameID: String?
+    private var storedIsActive = false
+    private var isLibraryZone = true
+    private var isLibraryVisible = true
+    private var cardStates: [String: GameLibraryControllerCardFocusState] = [:]
+    private var gameIndexByID: [String: Int] = [:]
+    private var scrollSequence: UInt64 = 0
+    private var suppressNextSelectionScroll = false
 
-    var selectionScrollRequest: GameLibrarySelectionScrollRequest?
+    @Published var selectionScrollRequest: GameLibrarySelectionScrollRequest?
 
     var selectedGameID: String? {
         get { storedSelectedGameID }
@@ -276,8 +273,7 @@ struct GameLibraryControllerCommandListener: View {
 }
 
 @MainActor
-@Observable
-final class GameLibraryControllerScrollAvailability {
+final class GameLibraryControllerScrollAvailability : ObservableObject {
     var isEnabled = false
 }
 
@@ -302,10 +298,9 @@ struct GameLibraryControllerRightStickTarget: View {
 }
 
 @MainActor
-@Observable
-final class GameLibraryScrollRestoreState {
-    var topRequestSequence: UInt64 = 0
-    @ObservationIgnored private var consumedTopRequestSequence: UInt64 = 0
+final class GameLibraryScrollRestoreState : ObservableObject {
+    @Published var topRequestSequence: UInt64 = 0
+    private var consumedTopRequestSequence: UInt64 = 0
 
     func requestTopRestore() {
         topRequestSequence &+= 1
@@ -442,9 +437,8 @@ enum GameLibraryControllerToolbarAction: Int, CaseIterable {
 }
 
 @MainActor
-@Observable
-final class GameLibraryControllerToolbarFocusState {
-    var selectedAction: GameLibraryControllerToolbarAction = .importGames
+final class GameLibraryControllerToolbarFocusState : ObservableObject {
+    @Published var selectedAction: GameLibraryControllerToolbarAction = .importGames
 }
 
 enum GameLibraryControllerAlertKind: String, Equatable {
@@ -505,11 +499,10 @@ struct DeferredControllerContextMenuSelection {
 }
 
 @MainActor
-@Observable
-final class GameLibraryControllerContextMenuState {
-    var gameID: String?
-    var section: GameLibraryControllerMenuSection = .root
-    var selectedAction: GameLibraryControllerMenuAction?
+final class GameLibraryControllerContextMenuState : ObservableObject {
+    @Published var gameID: String?
+    @Published var section: GameLibraryControllerMenuSection = .root
+    @Published var selectedAction: GameLibraryControllerMenuAction?
 }
 
 struct GameLibraryControllerContextMenuPresenter<Content: View>: View {

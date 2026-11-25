@@ -107,4 +107,47 @@ public extension View {
     @ViewBuilder
     func toolbarBackground(_ visibility: Visibility, for bars: Any...) -> some View { self }
 }
+
+@available(iOS, deprecated: 17.0)
+public extension View {
+    @ViewBuilder
+    func onChange<V: Equatable>(
+        of value: V,
+        initial: Bool = false,
+        _ action: @escaping (_ oldValue: V, _ newValue: V) -> Void
+    ) -> some View {
+        self.modifier(OnChangeTwoArgModifier(value: value, initial: initial, action: action))
+    }
+}
+
+private struct OnChangeTwoArgModifier<V: Equatable>: ViewModifier {
+    let value: V
+    let initial: Bool
+    let action: (V, V) -> Void
+    @State private var oldValue: V
+    @State private var didAppear = false
+
+    init(value: V, initial: Bool, action: @escaping (V, V) -> Void) {
+        self.value = value
+        self.initial = initial
+        self.action = action
+        _oldValue = State(initialValue: value)
+    }
+
+    func body(content: Content) -> some View {
+        content
+            .onAppear {
+                if initial && !didAppear {
+                    didAppear = true
+                    action(value, value)
+                }
+            }
+            .onChange(of: value) { newValue in
+                let prev = oldValue
+                oldValue = newValue
+                action(prev, newValue)
+            }
+    }
+}
+
 #endif

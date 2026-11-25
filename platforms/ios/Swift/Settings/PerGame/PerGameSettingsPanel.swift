@@ -11,9 +11,9 @@ struct PerGameSettingsPanel: View {
     @Environment(\.uiAccentColour) private var accentColour
     @Environment(\.uiContextMenuColour) private var panelTextColour
     @Environment(\.uiContextMenuSecondaryColour) private var panelSecondaryTextColour
-    @State private var settings = SettingsStore.shared
-    @State private var layoutPresets = PadLayoutPresetStore.shared
-    @State private var skinLibrary = VPadSkinLibraryStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var layoutPresets = PadLayoutPresetStore.shared
+    @ObservedObject private var skinLibrary = VPadSkinLibraryStore.shared
 
     private struct SaveButtonStyle: ButtonStyle {
         let compact: Bool
@@ -51,9 +51,9 @@ struct PerGameSettingsPanel: View {
     /// Zero in the library, where this is a sheet and the system does its own avoidance.
     @Environment(\.overlayKeyboardOverlap) private var keyboardOverlap
 
-    @State private var draft: PerGameSettingsDraft
-    @State private var livePreview: PerGameLivePreviewSession
-    @State private var controller: PerGameSettingsControllerCoordinator
+    @StateObject private var draft: PerGameSettingsDraft
+    @StateObject private var livePreview: PerGameLivePreviewSession
+    @StateObject private var controller: PerGameSettingsControllerCoordinator
     @State private var showPadLayoutEditor = false
     @State private var shaderPresetRequest: ShaderPresetBrowserRequest?
     @State private var showCheatsManager = false

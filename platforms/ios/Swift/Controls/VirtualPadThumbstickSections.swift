@@ -4,8 +4,8 @@
 import SwiftUI
 
 struct VirtualPadThumbstickSections: View {
-    @State private var settings = SettingsStore.shared
-    @State private var dynamicSettings = SettingsStore.shared.dynamicThumbsticks
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var dynamicSettings = SettingsStore.shared.dynamicThumbsticks
 
     var body: some View {
         if dynamicSettings.dynamicThumbsticks {

@@ -2,13 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0+
 
 import SwiftUI
-import Observation
+import Combine
 
 @MainActor
-@Observable
-final class MenuTabBarAppearance {
+final class MenuTabBarAppearance : ObservableObject {
     static let shared = MenuTabBarAppearance()
-    @ObservationIgnored private let defaults = UserDefaults.standard
+    private let defaults = UserDefaults.standard
 
     var portraitBottomNavigationTabBarHeight: Double {
         didSet { defaults.set(portraitBottomNavigationTabBarHeight, forKey: "ARMSX2iOSPortraitBottomNavigationTabBarHeight") }

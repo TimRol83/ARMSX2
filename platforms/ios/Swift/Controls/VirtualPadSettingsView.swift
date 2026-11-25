@@ -35,10 +35,10 @@ func controllerPicker<Value: Hashable>(
 struct VirtualPadSettingsView: View {
     let onOpenPane: (SettingsPane) -> Void
 
-    @State private var settings = SettingsStore.shared
-    @State private var dynamicSettings = SettingsStore.shared.dynamicThumbsticks
-    @State private var layoutPresets = PadLayoutPresetStore.shared
-    @State private var skinLibrary = VPadSkinLibraryStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var dynamicSettings = SettingsStore.shared.dynamicThumbsticks
+    @ObservedObject private var layoutPresets = PadLayoutPresetStore.shared
+    @ObservedObject private var skinLibrary = VPadSkinLibraryStore.shared
     @State private var showLayoutEditor = false
     @State private var showSkinImporter = false
     @State private var showSkinImportAlert = false
@@ -54,7 +54,7 @@ struct VirtualPadSettingsView: View {
     @State private var skinPendingDelete: VPadSkinDescriptor?
     @State private var skinPendingRename: VPadSkinDescriptor?
     @State private var skinRenameDraft = ""
-    @State private var skinImport = VPadSkinImportFlow()
+    @StateObject private var skinImport = VPadSkinImportFlow()
     @State private var automaticFireBlockedByHardcore = false
 
     init(onOpenPane: @escaping (SettingsPane) -> Void = { _ in }) {

@@ -42,7 +42,7 @@ struct DraggableGroup: View {
     let isOverlapping: Bool
     let onBeginEdit: () -> Void
 
-    @State private var layout = PadLayoutStore.shared
+    @ObservedObject private var layout = PadLayoutStore.shared
     @State private var dragOffset: CGSize = .zero
     @State private var currentScale: CGFloat = 1.0
     @State private var hasPushedSnapshot = false
@@ -223,7 +223,7 @@ struct DraggableButton: View {
     let isOverlapping: Bool
     let onBeginEdit: () -> Void
 
-    @State private var layout = PadLayoutStore.shared
+    @ObservedObject private var layout = PadLayoutStore.shared
     @State private var dragOffset: CGSize = .zero
     @State private var currentScale: CGFloat = 1.0
     @State private var hasPushedSnapshot = false

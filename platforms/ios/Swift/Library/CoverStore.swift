@@ -27,8 +27,7 @@ struct CoverDownloadSummary: Sendable {
 }
 
 @MainActor
-@Observable
-final class CoverStore {
+final class CoverStore : ObservableObject {
     static let shared = CoverStore()
 
     static let defaultCoverURLTemplate = "https://raw.githubusercontent.com/xlenore/ps2-covers/main/covers/default/${serial}.jpg"
@@ -46,7 +45,7 @@ final class CoverStore {
 
     private let fileManager = FileManager.default
 
-    var lastCoverMessage: String?
+    @Published var lastCoverMessage: String?
     var showCoverAlert = false
     var coverURLTemplate: String {
         get {

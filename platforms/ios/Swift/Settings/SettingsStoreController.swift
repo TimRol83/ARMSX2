@@ -6,23 +6,22 @@ import SwiftUI
 
 extension SettingsStore {
     @MainActor
-    @Observable
-    final class Controller {
-        @ObservationIgnored private(set) var suppressINIWrites = false
+    final class Controller : ObservableObject {
+        private(set) var suppressINIWrites = false
 
         // ── Gamepad / UI ──
-        var padOpacity: Float = 0.6 { didSet { commit(Self._padOpacityConfig, padOpacity) } }
-        var phoneRumbleStrength: Float = 0.25 { didSet { commit(Self._phoneRumbleStrengthConfig, phoneRumbleStrength) } }
-        var increaseRumbleDurationAndInterpolation: Bool = true {
+        @Published var padOpacity: Float = 0.6 { didSet { commit(Self._padOpacityConfig, padOpacity) } }
+        @Published var phoneRumbleStrength: Float = 0.25 { didSet { commit(Self._phoneRumbleStrengthConfig, phoneRumbleStrength) } }
+        @Published var increaseRumbleDurationAndInterpolation: Bool = true {
             didSet { commit(Self._increaseRumbleDurationAndInterpolationConfig, increaseRumbleDurationAndInterpolation) }
         }
-        var hapticFeedback: Bool = true {
+        @Published var hapticFeedback: Bool = true {
             didSet {
                 commit(Self._hapticFeedbackConfig, hapticFeedback)
                 ARMSX2Bridge.setRuntimeHapticFeedback(hapticFeedback)
             }
         }
-        var gameRumbleStrength: Float = 1 {
+        @Published var gameRumbleStrength: Float = 1 {
             didSet {
                 let clamped = min(max(gameRumbleStrength, 0), 2)
                 guard clamped == gameRumbleStrength else {
@@ -32,7 +31,7 @@ extension SettingsStore {
                 commit(Self._gameRumbleStrengthConfig, gameRumbleStrength)
             }
         }
-        var uiRumbleStrength: Float = 0.5 {
+        @Published var uiRumbleStrength: Float = 0.5 {
             didSet {
                 let clamped = min(max(uiRumbleStrength, 0), 1)
                 guard clamped == uiRumbleStrength else {
@@ -42,17 +41,17 @@ extension SettingsStore {
                 commit(Self._uiRumbleStrengthConfig, uiRumbleStrength)
             }
         }
-        var dpadDiagonalsEnabled: Bool = true { didSet { commit(Self._dpadDiagonalsEnabledConfig, dpadDiagonalsEnabled) } }
-        var faceComboZonesEnabled: Bool = true { didSet { commit(Self._faceComboZonesEnabledConfig, faceComboZonesEnabled) } }
-        var virtualPadSkin: VirtualPadSkin = .armsx2Refresh { didSet { commit(Self._virtualPadSkinConfig, virtualPadSkin) } }
-        var automaticDownloadCustomSkin: Bool = false {
+        @Published var dpadDiagonalsEnabled: Bool = true { didSet { commit(Self._dpadDiagonalsEnabledConfig, dpadDiagonalsEnabled) } }
+        @Published var faceComboZonesEnabled: Bool = true { didSet { commit(Self._faceComboZonesEnabledConfig, faceComboZonesEnabled) } }
+        @Published var virtualPadSkin: VirtualPadSkin = .armsx2Refresh { didSet { commit(Self._virtualPadSkinConfig, virtualPadSkin) } }
+        @Published var automaticDownloadCustomSkin: Bool = false {
             didSet { commit(Self._automaticDownloadCustomSkinConfig, automaticDownloadCustomSkin) }
         }
-        var autoHideVirtualPadWhenControllerConnected: Bool = true {
+        @Published var autoHideVirtualPadWhenControllerConnected: Bool = true {
             didSet { commit(Self._autoHideVirtualPadWhenControllerConnectedConfig, autoHideVirtualPadWhenControllerConnected) }
         }
-        var autoFullscreen: Bool = true { didSet { commit(Self._autoFullscreenConfig, autoFullscreen) } }
-        var hideMenuButton: Bool = false { didSet { commit(Self._hideMenuButtonConfig, hideMenuButton) } }
+        @Published var autoFullscreen: Bool = true { didSet { commit(Self._autoFullscreenConfig, autoFullscreen) } }
+        @Published var hideMenuButton: Bool = false { didSet { commit(Self._hideMenuButtonConfig, hideMenuButton) } }
         var analogStickScale: Float {
             didSet {
                 let clamped = SettingsStore.clampedAnalogStickScale(analogStickScale)
@@ -64,7 +63,7 @@ extension SettingsStore {
                 ARMSX2Bridge.setINIFloat("ARMSX2iOS/UI", key: "AnalogStickScale", value: analogStickScale)
             }
         }
-        var gameControllerDeadZone: Float = 0.15 {
+        @Published var gameControllerDeadZone: Float = 0.15 {
             didSet {
                 let clamped = min(max(gameControllerDeadZone, 0), 0.25)
                 guard clamped == gameControllerDeadZone else {
@@ -74,10 +73,10 @@ extension SettingsStore {
                 commit(Self._gameControllerDeadZoneConfig, gameControllerDeadZone)
             }
         }
-        var gameControllerLeftInstantDeadzoneEnabled: Bool = false {
+        @Published var gameControllerLeftInstantDeadzoneEnabled: Bool = false {
             didSet { commit(Self._gameControllerLeftInstantDeadzoneConfig, gameControllerLeftInstantDeadzoneEnabled) }
         }
-        var gameControllerLeftNegativeDeadzone: Float = -0.08 {
+        @Published var gameControllerLeftNegativeDeadzone: Float = -0.08 {
             didSet {
                 let clamped = min(max(gameControllerLeftNegativeDeadzone, -0.25), 0)
                 guard clamped == gameControllerLeftNegativeDeadzone else {
@@ -87,10 +86,10 @@ extension SettingsStore {
                 commit(Self._gameControllerLeftNegativeDeadzoneConfig, gameControllerLeftNegativeDeadzone)
             }
         }
-        var gameControllerRightInstantDeadzoneEnabled: Bool = false {
+        @Published var gameControllerRightInstantDeadzoneEnabled: Bool = false {
             didSet { commit(Self._gameControllerRightInstantDeadzoneConfig, gameControllerRightInstantDeadzoneEnabled) }
         }
-        var gameControllerRightNegativeDeadzone: Float = -0.08 {
+        @Published var gameControllerRightNegativeDeadzone: Float = -0.08 {
             didSet {
                 let clamped = min(max(gameControllerRightNegativeDeadzone, -0.25), 0)
                 guard clamped == gameControllerRightNegativeDeadzone else {
@@ -101,16 +100,16 @@ extension SettingsStore {
             }
         }
         private static let stickInversionSection = "ARMSX2iOS/UI"
-        var invertLeftStickX: Bool = false { didSet { commit(Self._invertLeftStickXConfig, invertLeftStickX) } }
-        var invertLeftStickY: Bool = false { didSet { commit(Self._invertLeftStickYConfig, invertLeftStickY) } }
-        var invertRightStickX: Bool = false { didSet { commit(Self._invertRightStickXConfig, invertRightStickX) } }
-        var invertRightStickY: Bool = false { didSet { commit(Self._invertRightStickYConfig, invertRightStickY) } }
+        @Published var invertLeftStickX: Bool = false { didSet { commit(Self._invertLeftStickXConfig, invertLeftStickX) } }
+        @Published var invertLeftStickY: Bool = false { didSet { commit(Self._invertLeftStickYConfig, invertLeftStickY) } }
+        @Published var invertRightStickX: Bool = false { didSet { commit(Self._invertRightStickXConfig, invertRightStickX) } }
+        @Published var invertRightStickY: Bool = false { didSet { commit(Self._invertRightStickYConfig, invertRightStickY) } }
 
         static let stickInversionKeys = ["InvertLeftStickX", "InvertLeftStickY", "InvertRightStickX", "InvertRightStickY"]
         /// Per-game overrides for the game the cache was built from. Only the overridden keys
         /// are stored, so a change to a global still takes effect without rebuilding.
-        @ObservationIgnored private var stickInversionOverrides: [String: Bool] = [:]
-        @ObservationIgnored private var stickInversionOverridesGame = ""
+        private var stickInversionOverrides: [String: Bool] = [:]
+        private var stickInversionOverridesGame = ""
 
         /// Effective axis inversion for a stick: the per-game override if there is one, else the
         /// global. Called once per stick sample, so it must not touch the filesystem — the
@@ -144,7 +143,7 @@ extension SettingsStore {
             }
             return overrides
         }
-        var controllerMultitapMode: Int = 0 { didSet { commit(Self._controllerMultitapModeConfig, controllerMultitapMode) } }
+        @Published var controllerMultitapMode: Int = 0 { didSet { commit(Self._controllerMultitapModeConfig, controllerMultitapMode) } }
         var controllerMacroQuickMenu = ControllerMacroAction.quickMenu.defaultBinding {
             didSet { commit(Self._controllerMacroQuickMenuConfig, controllerMacroQuickMenu) }
         }

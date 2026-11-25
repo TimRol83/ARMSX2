@@ -100,15 +100,15 @@ private enum RootControllerAlertKind: Equatable {
 }
 
 struct RootView: View {
-    @State private var appState = AppState.shared
-    @State private var session = GameSession.shared
-    @State private var settings = SettingsStore.shared
-    @State private var frameRates = UIFrameRateSettings.shared
-    @State private var fileImporter = FileImportHandler.shared
-    @State private var showBootSplash = !GameSession.shared.automaticGameStartupPending
+    @ObservedObject private var appState = AppState.shared
+    @ObservedObject private var session = GameSession.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var frameRates = UIFrameRateSettings.shared
+    @ObservedObject private var fileImporter = FileImportHandler.shared
+    @ObservedObject private var showBootSplash = !GameSession.shared.automaticGameStartupPending
     @State private var showNoJITFinalConfirmation = false
     @State private var rootControllerAlertSelection = 0
-    @State private var menuControllerInput = MenuControllerInputRouter()
+    @StateObject private var menuControllerInput = MenuControllerInputRouter()
     @State private var bootSplashInputReleaseTask: Task<Void, Never>?
     @State private var presentedGameplayHelpSessionID: UUID?
     // Theme/background renderer changes are allowed to rebuild MenuTabView,

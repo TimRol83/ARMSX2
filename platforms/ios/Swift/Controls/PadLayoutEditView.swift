@@ -55,10 +55,10 @@ private enum PadLayoutNameAction: Identifiable {
 struct PadLayoutEditView: View {
     let onDismiss: () -> Void
     let context: PadLayoutEditorContext
-    @State private var settings = SettingsStore.shared
-    @State private var layout = PadLayoutStore.shared
-    @State private var layoutPresets = PadLayoutPresetStore.shared
-    @State private var skinLibrary = VPadSkinLibraryStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var layout = PadLayoutStore.shared
+    @ObservedObject private var layoutPresets = PadLayoutPresetStore.shared
+    @ObservedObject private var skinLibrary = VPadSkinLibraryStore.shared
     @State private var editLandscape = false
     @State private var undoStack: [PadLayoutEditorUndoSnapshot] = []
     @State private var originalSnapshot: PadLayoutEditorUndoSnapshot? = nil

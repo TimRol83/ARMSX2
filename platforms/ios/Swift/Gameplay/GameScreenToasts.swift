@@ -16,9 +16,8 @@ struct RetroAchievementsToast: Equatable {
 /// the only view which observes this object, so holding Left/Right no longer invalidates Metal,
 /// virtual-pad, Quick Menu, and overlay layout on every repeated percentage step.
 @MainActor
-@Observable
-final class PerGameLivePreviewToastState {
-    private(set) var status: PerGameLivePreviewStatus?
+final class PerGameLivePreviewToastState : ObservableObject {
+    private(set) @Published var status: PerGameLivePreviewStatus?
 
     func present(_ next: PerGameLivePreviewStatus) {
         guard status?.value != next.value else { return }

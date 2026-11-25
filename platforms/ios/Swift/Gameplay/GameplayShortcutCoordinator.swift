@@ -4,8 +4,7 @@
 import SwiftUI
 
 @MainActor
-@Observable
-final class GameplayShortcutCoordinator {
+final class GameplayShortcutCoordinator : ObservableObject {
     private var saveStateShortcutOperationActive = false
     private let saveStateUndo = SaveStateUndoModel.shared
     private let session = GameSession.shared

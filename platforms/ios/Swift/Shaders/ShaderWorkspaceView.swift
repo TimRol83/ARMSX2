@@ -29,7 +29,7 @@ struct ShaderWorkspaceView: View, ShaderWorkspaceTargetIDs {
     @State private var addLayerRequest: ShaderLayerBrowserRequest?
     @State private var shareItem: ShareSheetItem?
     @State private var saveRequest: ShaderPresetSaveRequest?
-    @State private var model = ShaderWorkspaceModel()
+    @StateObject private var model = ShaderWorkspaceModel()
     @State private var showsExtra = false
     @AppStorage("shaderWorkspace.showFilenames")
     private var showsFilenames = false

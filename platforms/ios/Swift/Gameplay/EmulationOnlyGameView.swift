@@ -47,10 +47,10 @@ func landscapePadInsets(_ geo: GeometryProxy, screen: CGSize) -> EdgeInsets {
 /// Gameplay presentation used after Emulation-Only Mode finishes startup cleanup.
 /// With every release switch enabled, this keeps only the existing Metal surface.
 struct EmulationOnlyGameView: View {
-    @State private var appState = AppState.shared
-    @State private var session = GameSession.shared
-    @State private var settings = SettingsStore.shared
-    @State private var dynamicSettings = SettingsStore.shared.dynamicThumbsticks
+    @ObservedObject private var appState = AppState.shared
+    @ObservedObject private var session = GameSession.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var dynamicSettings = SettingsStore.shared.dynamicThumbsticks
     @State private var touchActionSession = VirtualPadTouchActionSession()
 
     @ViewBuilder

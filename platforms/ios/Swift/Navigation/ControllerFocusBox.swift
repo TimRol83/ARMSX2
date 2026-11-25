@@ -41,8 +41,8 @@ struct ControllerFocusBox: View {
     var animatesArtwork = true
     var shape: ControllerFocusBoxShape = .pill
 
-    @State private var settings = SettingsStore.shared
-    @State private var gameCoverThemePreview = GameCoverThemePreviewStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var gameCoverThemePreview = GameCoverThemePreviewStore.shared
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
@@ -86,8 +86,8 @@ struct ControllerFocusBox: View {
 struct ControllerBottomNavigationFocusGlow: View {
     var cornerRadius: CGFloat = 18
 
-    @State private var settings = SettingsStore.shared
-    @State private var gameCoverThemePreview = GameCoverThemePreviewStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var gameCoverThemePreview = GameCoverThemePreviewStore.shared
 
     var body: some View {
         GeometryReader { proxy in

@@ -15,10 +15,10 @@ struct ThemeGalleryView: View {
 
     let controllerInput: MenuControllerInputRouter?
     @Environment(\.dismiss) private var dismiss
-    @State private var settings = SettingsStore.shared
-    @State private var gallery = ThemeGalleryStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var gallery = ThemeGalleryStore.shared
     @State private var page: Page = .themes
-    @State private var preferences = SettingsStore.shared.appearance.dynamicAppearancePreferences
+    @ObservedObject private var preferences = SettingsStore.shared.appearance.dynamicAppearancePreferences
     @State private var paletteTarget: ThemePaletteTarget = .shared
     @State private var original: AppearanceThemeSnapshot?
     @State private var originalSelection: AppearanceThemeSelection?

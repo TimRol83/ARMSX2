@@ -5,15 +5,15 @@ import SwiftUI
 
 struct PerGameCategoryDetail: View {
     let category: PerGameSettingsCategory
-    @Bindable var draft: PerGameSettingsDraft
-    @Bindable var controller: PerGameSettingsControllerCoordinator
+    @ObservedObject var draft: PerGameSettingsDraft
+    @ObservedObject var controller: PerGameSettingsControllerCoordinator
     let initiallySelectsShaders: Bool
     @Binding var showPadLayoutEditor: Bool
     @Binding var showCheatsManager: Bool
     @Binding var shaderPresetRequest: ShaderPresetBrowserRequest?
-    @State private var settings = SettingsStore.shared
-    @State private var layoutPresets = PadLayoutPresetStore.shared
-    @State private var skinLibrary = VPadSkinLibraryStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var layoutPresets = PadLayoutPresetStore.shared
+    @ObservedObject private var skinLibrary = VPadSkinLibraryStore.shared
 
     private var game: ISOEntry { draft.game }
 

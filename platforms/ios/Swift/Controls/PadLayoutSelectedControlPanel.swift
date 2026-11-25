@@ -11,7 +11,7 @@ struct PadLayoutSelectedControlPanel: View {
     @Binding var unlinkedControls: Set<String>
     let pushSnapshot: () -> Void
 
-    @State private var layout = PadLayoutStore.shared
+    @ObservedObject private var layout = PadLayoutStore.shared
 
     var body: some View {
         selectedControlPanel(id: id, areaW: areaW, areaH: areaH, isLandscape: isLandscape)

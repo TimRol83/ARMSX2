@@ -5,9 +5,8 @@ import Foundation
 
 extension SettingsStore {
     @MainActor
-    @Observable
-    final class Network {
-        @ObservationIgnored private(set) var suppressINIWrites = false
+    final class Network : ObservableObject {
+        private(set) var suppressINIWrites = false
 
         // DEV9 / Network
         var dev9HddEnabled: Bool {
@@ -21,7 +20,7 @@ extension SettingsStore {
                 }
             }
         }
-        var dev9HddFile: String = "DEV9hdd.raw" { didSet { commit(Self._dev9HddFileConfig, dev9HddFile) } }
+        @Published var dev9HddFile: String = "DEV9hdd.raw" { didSet { commit(Self._dev9HddFileConfig, dev9HddFile) } }
         var dev9EthernetEnabled: Bool {
             didSet {
                 guard !suppressINIWrites else { return }
@@ -39,14 +38,14 @@ extension SettingsStore {
                 ARMSX2Bridge.setINIString("DEV9/Eth", key: "EthDevice", value: dev9EthDevice.isEmpty ? "Auto" : dev9EthDevice)
             }
         }
-        var dev9InterceptDHCP: Bool = false { didSet { commit(Self._dev9InterceptDHCPConfig, dev9InterceptDHCP) } }
-        var dev9EthLogDHCP: Bool = false { didSet { commit(Self._dev9EthLogDHCPConfig, dev9EthLogDHCP) } }
-        var dev9EthLogDNS: Bool = false { didSet { commit(Self._dev9EthLogDNSConfig, dev9EthLogDNS) } }
-        var dev9DNS1Mode: String = "Auto" { didSet { commit(Self._dev9DNS1ModeConfig, dev9DNS1Mode) } }
-        var dev9DNS1: String = "0.0.0.0" { didSet { commit(Self._dev9DNS1Config, dev9DNS1) } }
-        var dev9DNS2Mode: String = "Auto" { didSet { commit(Self._dev9DNS2ModeConfig, dev9DNS2Mode) } }
-        var dev9DNS2: String = "0.0.0.0" { didSet { commit(Self._dev9DNS2Config, dev9DNS2) } }
-        var dev9Hosts: [DEV9Host] = []
+        @Published var dev9InterceptDHCP: Bool = false { didSet { commit(Self._dev9InterceptDHCPConfig, dev9InterceptDHCP) } }
+        @Published var dev9EthLogDHCP: Bool = false { didSet { commit(Self._dev9EthLogDHCPConfig, dev9EthLogDHCP) } }
+        @Published var dev9EthLogDNS: Bool = false { didSet { commit(Self._dev9EthLogDNSConfig, dev9EthLogDNS) } }
+        @Published var dev9DNS1Mode: String = "Auto" { didSet { commit(Self._dev9DNS1ModeConfig, dev9DNS1Mode) } }
+        @Published var dev9DNS1: String = "0.0.0.0" { didSet { commit(Self._dev9DNS1Config, dev9DNS1) } }
+        @Published var dev9DNS2Mode: String = "Auto" { didSet { commit(Self._dev9DNS2ModeConfig, dev9DNS2Mode) } }
+        @Published var dev9DNS2: String = "0.0.0.0" { didSet { commit(Self._dev9DNS2Config, dev9DNS2) } }
+        @Published var dev9Hosts: [DEV9Host] = []
 
         init() {
             suppressINIWrites = true

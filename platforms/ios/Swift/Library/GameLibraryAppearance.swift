@@ -2,13 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0+
 
 import SwiftUI
-import Observation
+import Combine
 
 @MainActor
-@Observable
-final class GameLibraryAppearance {
+final class GameLibraryAppearance : ObservableObject {
     static let shared = GameLibraryAppearance()
-    @ObservationIgnored private let defaults = UserDefaults.standard
+    private let defaults = UserDefaults.standard
 
     var libraryLayout: String {
         didSet { defaults.set(libraryLayout, forKey: "ARMSX2iOSGameLibraryLayout") }

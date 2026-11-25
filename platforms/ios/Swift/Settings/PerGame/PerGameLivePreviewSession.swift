@@ -26,15 +26,14 @@ struct PerGameLivePreviewStatus: Equatable {
 }
 
 @MainActor
-@Observable
-final class PerGameLivePreviewSession {
+final class PerGameLivePreviewSession : ObservableObject {
     let draft: PerGameSettingsDraft
     let settings = SettingsStore.shared
-    var livePreviewToken: String?
-    var livePreviewTask: Task<Void, Never>?
-    var livePreviewPendingFingerprint: Int?
-    var livePreviewChangeSequence: UInt64 = 0
-    var livePreviewInitialization: Task<String?, Never>?
+    @Published var livePreviewToken: String?
+    @Published var livePreviewTask: Task<Void, Never>?
+    @Published var livePreviewPendingFingerprint: Int?
+    @Published var livePreviewChangeSequence: UInt64 = 0
+    @Published var livePreviewInitialization: Task<String?, Never>?
     var livePreviewSessionIsFinishing = false
     var lastPreviewedFingerprint = 0
     var suppressNextLivePreviewChange = false

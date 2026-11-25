@@ -37,8 +37,8 @@ struct MenuThemePresetShortcutOverlay: View {
         let canSaveCustomTheme: Bool
     }
 
-    @State private var settings = SettingsStore.shared
-    @State private var themeGallery = ThemeGalleryStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var themeGallery = ThemeGalleryStore.shared
     @State private var presentation: Presentation?
     @State private var pendingChange: PendingChange?
     @State private var selectedActionIndex = 0

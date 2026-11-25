@@ -21,9 +21,9 @@ struct GameplayOverlayHost: View {
     let applyControllerSkin: (VPadSkinDescriptor) -> Void
     let finishRuntimePadLayoutEditing: () -> Void
 
-    @State private var appState = AppState.shared
-    @State private var session = GameSession.shared
-    @State private var settings = SettingsStore.shared
+    @ObservedObject private var appState = AppState.shared
+    @ObservedObject private var session = GameSession.shared
+    @ObservedObject private var settings = SettingsStore.shared
     @Environment(\.menuControllerInputRouter) private var controllerInput
     private let saveStateUndo = SaveStateUndoModel.shared
 

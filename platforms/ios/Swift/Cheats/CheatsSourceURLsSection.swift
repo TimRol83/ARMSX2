@@ -10,8 +10,8 @@ struct CheatsSourceURLsSection: View {
     @Binding var patchSourcesDraft: [String]
     @Binding var cheatSourcesDraft: [String]
 
-    @State private var settings = SettingsStore.shared
-    @State private var store = PatchStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var store = PatchStore.shared
 
     private typealias ControllerTarget = CheatsPatchesManagerView.ControllerTarget
 

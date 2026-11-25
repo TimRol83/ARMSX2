@@ -7,7 +7,7 @@ import UIKit
 #endif
 
 struct NetworkSettingsView: View {
-    @State private var settings = SettingsStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
     @State private var hosts: [DEV9Host] = []
     @State private var lastPersistedHosts: [DEV9Host] = []
     @State private var networkAdapters: [String] = []

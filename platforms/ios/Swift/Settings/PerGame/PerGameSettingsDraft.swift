@@ -4,8 +4,7 @@
 import SwiftUI
 
 @MainActor
-@Observable
-final class PerGameSettingsDraft {
+final class PerGameSettingsDraft : ObservableObject {
     private static let useGlobalSentinel = -1
     private static let upscaleUseGlobalSentinel: Float = -1.0
     private static let aspectUseGlobalSentinel = ""
@@ -43,108 +42,108 @@ final class PerGameSettingsDraft {
     let savesToRunningGame: Bool
     let settings = SettingsStore.shared
 
-    var enabled: Bool
-    var upscaleMultiplier: Float
-    var aspectRatio: String
-    var textureFiltering: Int
+    @Published var enabled: Bool
+    @Published var upscaleMultiplier: Float
+    @Published var aspectRatio: String
+    @Published var textureFiltering: Int
     /// Tri-state: useGlobalSentinel, 0 off, 1 on. Was a Bool, which had no room to say "inherit".
-    var hardwareMipmapping: Int
-    var blendingAccuracy: Int
-    var interlaceMode: Int
-    var trilinearFiltering: Int
-    var halfPixelOffset: Int
-    var roundSprite: Int
-    var alignSprite: Int
-    var mergeSprite: Int
-    var wildArmsOffset: Int
-    var textureOffsetXOverride: Bool
-    var textureOffsetX: Int
-    var textureOffsetYOverride: Bool
-    var textureOffsetY: Int
-    var skipDrawStartOverride: Bool
-    var skipDrawStart: Int
-    var skipDrawEndOverride: Bool
-    var skipDrawEnd: Int
+    @Published var hardwareMipmapping: Int
+    @Published var blendingAccuracy: Int
+    @Published var interlaceMode: Int
+    @Published var trilinearFiltering: Int
+    @Published var halfPixelOffset: Int
+    @Published var roundSprite: Int
+    @Published var alignSprite: Int
+    @Published var mergeSprite: Int
+    @Published var wildArmsOffset: Int
+    @Published var textureOffsetXOverride: Bool
+    @Published var textureOffsetX: Int
+    @Published var textureOffsetYOverride: Bool
+    @Published var textureOffsetY: Int
+    @Published var skipDrawStartOverride: Bool
+    @Published var skipDrawStart: Int
+    @Published var skipDrawEndOverride: Bool
+    @Published var skipDrawEnd: Int
     let globalVolumePercent: Int
-    var volumeOverride: Bool
-    var volumePercent: Int
-    var padLayoutIdentity: PadLayoutGameIdentity?
-    var eeCoreType: Int
-    var mtvu: Bool
+    @Published var volumeOverride: Bool
+    @Published var volumePercent: Int
+    @Published var padLayoutIdentity: PadLayoutGameIdentity?
+    @Published var eeCoreType: Int
+    @Published var mtvu: Bool
     let globalEECycleRate: Int
-    var eeCycleRate: Int
+    @Published var eeCycleRate: Int
     let globalEECycleSkip: Int
-    var eeCycleSkip: Int
+    @Published var eeCycleSkip: Int
     let globalFastBoot: Bool
-    var fastBoot: Int
-    var hasGameSettingsIdentity: Bool
-    var enableCheats: Bool
-    var enablePatches: Bool
-    var enableGameFixes: Bool
-    var enableGameDBHardwareFixes: Bool
+    @Published var fastBoot: Int
+    @Published var hasGameSettingsIdentity: Bool
+    @Published var enableCheats: Bool
+    @Published var enablePatches: Bool
+    @Published var enableGameFixes: Bool
+    @Published var enableGameDBHardwareFixes: Bool
     // Per-game compatibility overrides (-1 = use global). Driven by the generic
     // per-game INI helper; -1 clears the per-game key so the global value applies.
-    var perGameFixes: [String: Int]
-    var perGameAAT: Int
-    var perGameTextureInsideRt: Int
-    var perGameDisableDepth: Int
-    var perGameRenderer: Int
-    var perGameFXAA: Int
-    var perGameUpscaler: Int
-    var perGameShadeBoost: Int
-    var perGameTVShader: Int
-    var perGameCASMode: Int
-    var perGameMaxAnisotropy: Int
-    var perGameCASSharpness: Int
-    var perGamePCRTCOffsets: Int
-    var perGameIntegerScaling: Int
-    var perGameSkipDupFrames: Int
-    var perGamePCRTCOverscan: Int
-    var perGamePCRTCAntiBlur: Int
-    var perGameDisableInterlaceOffset: Int
-    var perGameWidescreen: Int
-    var perGameNoInterlace: Int
-    var perGameShadeBoostBrightness: Int
-    var perGameShadeBoostContrast: Int
-    var perGameShadeBoostSaturation: Int
-    var perGameShadeBoostGamma: Int
-    var perGameShaderChain: Int
-    var perGameShaderPresetRef: String
-    var perGameDithering: Int
-    var perGameFastForwardVolume: Int
-    var perGameIOP: Int
-    var perGameVU0: Int
-    var perGameVU1: Int
-    var perGameEEFpuRound: Int
-    var perGameVU0Round: Int
-    var perGameVU1Round: Int
-    var perGameEEClamp: Int
-    var perGameVUClamp: Int
+    @Published var perGameFixes: [String: Int]
+    @Published var perGameAAT: Int
+    @Published var perGameTextureInsideRt: Int
+    @Published var perGameDisableDepth: Int
+    @Published var perGameRenderer: Int
+    @Published var perGameFXAA: Int
+    @Published var perGameUpscaler: Int
+    @Published var perGameShadeBoost: Int
+    @Published var perGameTVShader: Int
+    @Published var perGameCASMode: Int
+    @Published var perGameMaxAnisotropy: Int
+    @Published var perGameCASSharpness: Int
+    @Published var perGamePCRTCOffsets: Int
+    @Published var perGameIntegerScaling: Int
+    @Published var perGameSkipDupFrames: Int
+    @Published var perGamePCRTCOverscan: Int
+    @Published var perGamePCRTCAntiBlur: Int
+    @Published var perGameDisableInterlaceOffset: Int
+    @Published var perGameWidescreen: Int
+    @Published var perGameNoInterlace: Int
+    @Published var perGameShadeBoostBrightness: Int
+    @Published var perGameShadeBoostContrast: Int
+    @Published var perGameShadeBoostSaturation: Int
+    @Published var perGameShadeBoostGamma: Int
+    @Published var perGameShaderChain: Int
+    @Published var perGameShaderPresetRef: String
+    @Published var perGameDithering: Int
+    @Published var perGameFastForwardVolume: Int
+    @Published var perGameIOP: Int
+    @Published var perGameVU0: Int
+    @Published var perGameVU1: Int
+    @Published var perGameEEFpuRound: Int
+    @Published var perGameVU0Round: Int
+    @Published var perGameVU1Round: Int
+    @Published var perGameEEClamp: Int
+    @Published var perGameVUClamp: Int
     let globalEEFpuRound: Int
     let globalVU0Round: Int
     let globalVU1Round: Int
     let globalEEClamp: Int
     let globalVUClamp: Int
-    var perGameHWDownloadMode: Int
-    var perGameCPUCLUT: Int
-    var perGameGPUTargetCLUT: Int
-    var perGameVsyncQueue: Int
-    var perGameLoadTextureReplacements: Int
-    var perGameLoadTextureReplacementsAsync: Int
-    var perGamePrecacheTextureReplacements: Int
-    var perGameSyncToHostRefresh: Int
-    var perGameBufferMS: Int
-    var perGameOutputLatencyMS: Int
+    @Published var perGameHWDownloadMode: Int
+    @Published var perGameCPUCLUT: Int
+    @Published var perGameGPUTargetCLUT: Int
+    @Published var perGameVsyncQueue: Int
+    @Published var perGameLoadTextureReplacements: Int
+    @Published var perGameLoadTextureReplacementsAsync: Int
+    @Published var perGamePrecacheTextureReplacements: Int
+    @Published var perGameSyncToHostRefresh: Int
+    @Published var perGameBufferMS: Int
+    @Published var perGameOutputLatencyMS: Int
     // Frame Pacing per-game overrides (-1 = use global). Limiter state remains
     // in Framerate/NominalScalar while presentation cadence has its own key.
-    var perGameFramePacingPreset: Int
-    var perGameFrameLimiter: Int
-    var perGameTargetFPS: Float
-    var statusMessage: String?
+    @Published var perGameFramePacingPreset: Int
+    @Published var perGameFrameLimiter: Int
+    @Published var perGameTargetFPS: Float
+    @Published var statusMessage: String?
     var savedFingerprint = 0
-    var shaderParameterPreviewSequence: UInt64 = 0
-    var raEnabledOverride: Int
-    var raHardcoreOverride: Int
+    @Published var shaderParameterPreviewSequence: UInt64 = 0
+    @Published var raEnabledOverride: Int
+    @Published var raHardcoreOverride: Int
 
     init(
         game: ISOEntry,

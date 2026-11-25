@@ -8,8 +8,8 @@ struct CheatsAvailableSection: View {
     let controllerTarget: CheatsPatchesManagerView.ControllerTarget
     let onDownload: (_ asCheat: Bool) -> Void
 
-    @State private var settings = SettingsStore.shared
-    @State private var store = PatchStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var store = PatchStore.shared
 
     private typealias ControllerTarget = CheatsPatchesManagerView.ControllerTarget
 

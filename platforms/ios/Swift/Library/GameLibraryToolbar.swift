@@ -6,7 +6,7 @@ import SwiftUI
 struct GameLibraryToolbar: ToolbarContent {
     let coordinator: GameLibraryControllerCoordinator
     let library: GameLibraryModel
-    @Bindable var appearance: GameLibraryAppearance
+    @ObservedObject var appearance: GameLibraryAppearance
     let coverStore: CoverStore
     let settings: SettingsStore
     let logoStore: ARMSX2LogoStore

@@ -10,8 +10,7 @@ import Foundation
 import SwiftUI
 
 @MainActor
-@Observable
-final class PatchStore {
+final class PatchStore : ObservableObject {
     static let shared = PatchStore()
 
     static let cheatsSection = "Cheats"
@@ -60,21 +59,21 @@ final class PatchStore {
     private let fileManager = FileManager.default
 
     // Current game (manager UI context)
-    private(set) var isoName: String = ""
-    private(set) var launchContext: CheatsPatchesLaunchContext = .library
-    private(set) var identityState: PatchIdentityState = .libraryAwaitingFirstLaunch
-    private(set) var hasGameIdentity: Bool = false
-    private(set) var canManageInstalledFiles: Bool = false
-    private(set) var installed: [PatchEntry] = []
-    private(set) var lastMessage: String?
-    private(set) var lastMessageKind: PatchFeedbackKind = .information
+    private(set) @Published var isoName: String = ""
+    private(set) @Published var launchContext: CheatsPatchesLaunchContext = .library
+    private(set) @Published var identityState: PatchIdentityState = .libraryAwaitingFirstLaunch
+    private(set) @Published var hasGameIdentity: Bool = false
+    private(set) @Published var canManageInstalledFiles: Bool = false
+    private(set) @Published var installed: [PatchEntry] = []
+    private(set) @Published var lastMessage: String?
+    private(set) @Published var lastMessageKind: PatchFeedbackKind = .information
     private(set) var showMessage = false
     var isDownloading = false
 
     var currentSerial = ""
     var currentCRC = ""
     var currentTitle = ""
-    var presentationGeneration: UInt64 = 0
+    @Published var presentationGeneration: UInt64 = 0
 
     var patchDatabaseURLTemplates: [String] {
         get {

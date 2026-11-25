@@ -13,7 +13,7 @@ struct ShaderLayerCard: View, ShaderWorkspaceTargetIDs {
     let parameters: (ShaderPassDescriptor) -> [ShaderParam]
     let onShare: (ShaderPresetLayerDescriptor) -> Void
 
-    @State private var settings = SettingsStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
     @Environment(\.uiAccentColour) private var accentColour
     @Environment(\.uiContextMenuColour) private var panelTextColour
     @Environment(\.uiContextMenuSecondaryColour)

@@ -64,8 +64,7 @@ enum PerGameControllerColumn: String {
 }
 
 @MainActor
-@Observable
-final class PerGameSettingsControllerCoordinator {
+final class PerGameSettingsControllerCoordinator : ObservableObject {
     static let closeControllerTargetID = "per-game.footer.close"
     static let saveControllerTargetID = "per-game.footer.save"
     static let detailBackControllerTargetID = "per-game.detail.back"
@@ -75,13 +74,13 @@ final class PerGameSettingsControllerCoordinator {
     let settings = SettingsStore.shared
     let layoutPresets = PadLayoutPresetStore.shared
     let skinLibrary = VPadSkinLibraryStore.shared
-    var textureControllerTargets: [String] = []
+    @Published var textureControllerTargets: [String] = []
     var showResetAllConfirmation = false
     var showDiscardConfirmation = false
     var showFramePacingResetConfirmation = false
-    var openCategory: PerGameSettingsCategory = .general
-    var selectedControllerDetail: PerGameSettingsCategory?
-    var shaderWorkspaceControllerTargetOrder: [String] = []
+    @Published var openCategory: PerGameSettingsCategory = .general
+    @Published var selectedControllerDetail: PerGameSettingsCategory?
+    @Published var shaderWorkspaceControllerTargetOrder: [String] = []
 
     init(
         draft: PerGameSettingsDraft,

@@ -10,7 +10,7 @@ struct SettingsJITStatusSection: View {
     @Binding var stikDebugOpenFailed: Bool
     @Binding var stikDebugOpenInProgress: Bool
     let refreshJITStatus: () -> Void
-    @State private var settings = SettingsStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
 
     var body: some View {
         Section {

@@ -35,15 +35,14 @@ private enum ManifestRead {
 }
 
 @MainActor
-@Observable
-final class VPadSkinLibraryStore {
+final class VPadSkinLibraryStore : ObservableObject {
     static let shared = VPadSkinLibraryStore()
     static let schemaVersion = 1
 
     private let libraryURL: URL
     private let assetsRootURL: URL
     private let legacyCustomSkinURL: URL?
-    private(set) var importedDescriptors: [VPadSkinDescriptor] = []
+    private(set) @Published var importedDescriptors: [VPadSkinDescriptor] = []
     private var didMigrateLegacyCustomSkin = false
 
     var selectedSkinID: String {

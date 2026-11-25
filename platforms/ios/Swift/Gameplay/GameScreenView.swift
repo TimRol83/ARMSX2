@@ -4,7 +4,7 @@
 import SwiftUI
 import UIKit
 import GameController
-import Observation
+import Combine
 
 private struct GameScreenSizePreferenceKey: PreferenceKey {
     static let defaultValue: CGSize = .zero
@@ -26,12 +26,12 @@ struct GameScreenView: View {
         _overlay = State(initialValue: GameplayOverlayModel(feedback: feedback, shortcuts: shortcuts))
     }
 
-    @State private var appState = AppState.shared
-    @State private var session = GameSession.shared
-    @State private var settings = SettingsStore.shared
-    @State private var dynamicSettings = SettingsStore.shared.dynamicThumbsticks
-    @State private var layoutPresets = PadLayoutPresetStore.shared
-    @State private var skinLibrary = VPadSkinLibraryStore.shared
+    @ObservedObject private var appState = AppState.shared
+    @ObservedObject private var session = GameSession.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var dynamicSettings = SettingsStore.shared.dynamicThumbsticks
+    @ObservedObject private var layoutPresets = PadLayoutPresetStore.shared
+    @ObservedObject private var skinLibrary = VPadSkinLibraryStore.shared
     @State private var touchActionSession = VirtualPadTouchActionSession()
     @Environment(\.menuControllerInputRouter) private var controllerInput
     @State private var externalControllerConnected = false
@@ -40,9 +40,9 @@ struct GameScreenView: View {
     @State private var vmMenuAvailable = false
     @State private var gameMenuAvailable = false
     @State private var noJITFallbackActive = false
-    @State private var feedback: GameplayFeedback
-    @State private var shortcuts: GameplayShortcutCoordinator
-    @State private var overlay: GameplayOverlayModel
+    @StateObject private var feedback: GameplayFeedback
+    @StateObject private var shortcuts: GameplayShortcutCoordinator
+    @StateObject private var overlay: GameplayOverlayModel
     private let saveStateUndo = SaveStateUndoModel.shared
     @State private var previousHideHomeIndicator = false
     @State private var previousHideStatusBar = false

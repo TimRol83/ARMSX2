@@ -439,7 +439,7 @@ private struct LegacyGlassTabButtonStyle: ButtonStyle {
 #if targetEnvironment(macCatalyst)
 struct CatalystMenuTabBar: View {
     @Binding var selectedTab: Int
-    @State private var settings = SettingsStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
 
     private let tabs = [
         (0, "Games"),

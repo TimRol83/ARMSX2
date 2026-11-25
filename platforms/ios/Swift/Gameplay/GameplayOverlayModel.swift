@@ -13,31 +13,30 @@ enum OverlayRoute: Equatable {
 /// The pause card route, its child panels and the VM pause they hold. GameScreenView owns it as
 /// @State, so none of it outlives the screen.
 @MainActor
-@Observable
-final class GameplayOverlayModel {
-    var overlayRoute: OverlayRoute = .hidden {
+final class GameplayOverlayModel : ObservableObject {
+    @Published var overlayRoute: OverlayRoute = .hidden {
         // The sheet binding's setter never runs for a teardown, so the request goes with the route.
         didSet { if overlayRoute != .pausedPresenting(.reportProblem) { reportRequest = nil } }
     }
     // The pause menu child last opened. Its row takes focus when the card returns.
-    var pauseMenuChild: QuickMenuDestination?
-    var pauseCardFoldMemory: QuickMenuFoldMemory?
-    var reportRequest: ReportSheetRequest?
-    private var reportCapture: Task<Void, Never>?
+    @Published var pauseMenuChild: QuickMenuDestination?
+    @Published var pauseCardFoldMemory: QuickMenuFoldMemory?
+    @Published var reportRequest: ReportSheetRequest?
+    private @Published var reportCapture: Task<Void, Never>?
     var cheatsSession = CheatsPatchesSession()
-    var runtimePerGameSettingsEntry: ISOEntry?
-    var runtimePerGameSettings: [ARMSX2PerGameKey: Any]?
+    @Published var runtimePerGameSettingsEntry: ISOEntry?
+    @Published var runtimePerGameSettings: [ARMSX2PerGameKey: Any]?
     var runtimePerGameStartsInGameController = false
     var runtimePerGameStartsInShaders = false
     var runtimePerGameLivePreviewPresentation:
         PerGameLivePreviewPresentation = .editing
-    var runtimePerGameLivePreviewDismissRequest: UInt64 = 0
+    @Published var runtimePerGameLivePreviewDismissRequest: UInt64 = 0
     // Optional, so the per-game panel's observable state goes when the panel closes.
     var runtimePerGameLivePreviewToast:
         PerGameLivePreviewToastState?
-    var resumeGameplayTask: Task<Void, Never>?
-    private var quickMenuResourceReleaseTask: Task<Void, Never>?
-    var runtimePadLayoutIdentity: PadLayoutGameIdentity?
+    @Published var resumeGameplayTask: Task<Void, Never>?
+    private @Published var quickMenuResourceReleaseTask: Task<Void, Never>?
+    @Published var runtimePadLayoutIdentity: PadLayoutGameIdentity?
     private(set) var runtimeOverlayPauseActive = false
 
     private let feedback: GameplayFeedback

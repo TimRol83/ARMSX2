@@ -45,7 +45,7 @@ struct GameLibraryViewOptionsPanel: View {
     let onApply: () -> Void
 
     @Environment(\.uiAccentColour) private var accentColour
-    @State private var settings = SettingsStore.shared
+    @ObservedObject private var settings = SettingsStore.shared
     @State private var previewEndTask: Task<Void, Never>?
     @State private var showsResetConfirmation = false
     @State private var resetFeedbackVisible = false

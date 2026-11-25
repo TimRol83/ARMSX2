@@ -4,8 +4,8 @@
 import SwiftUI
 
 struct AppearanceInterfaceSections: View, AppearanceSettingsEditing {
-    @State private var settings = SettingsStore.shared
-    @State private var frameRates = UIFrameRateSettings.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var frameRates = UIFrameRateSettings.shared
 
     var body: some View {
         Section {

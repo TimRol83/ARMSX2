@@ -9,10 +9,10 @@ struct LaunchReportOffer: ViewModifier {
     let showBootSplash: Bool
     let menuControllerInput: MenuControllerInputRouter
 
-    @State private var settings = SettingsStore.shared
-    @State private var appState = AppState.shared
-    @State private var session = GameSession.shared
-    @State private var fileImporter = FileImportHandler.shared
+    @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var appState = AppState.shared
+    @ObservedObject private var session = GameSession.shared
+    @ObservedObject private var fileImporter = FileImportHandler.shared
     @State private var reportRequest: ReportSheetRequest?
 
     private static let scanned = OSAllocatedUnfairLock(initialState: false)

@@ -5,8 +5,7 @@ import SwiftUI
 import UIKit
 
 @MainActor
-@Observable
-final class AppState {
+final class AppState : ObservableObject {
     static let shared = AppState()
     nonisolated static let systemChromeNeedsUpdateNotification = Notification.Name("ARMSX2iOSSystemChromeNeedsUpdate")
     static let releaseMenuBackgroundResourcesNotification = Notification.Name("ARMSX2iOSReleaseMenuBackgroundResources")
@@ -16,27 +15,27 @@ final class AppState {
         case playing
     }
 
-    var currentScreen: Screen = .menu {
+    @Published var currentScreen: Screen = .menu {
         didSet {
             if systemChromeNotificationsEnabled, oldValue != currentScreen {
                 NotificationCenter.default.post(name: Self.systemChromeNeedsUpdateNotification, object: nil)
             }
         }
     }
-    var pendingLibraryExport: String?
+    @Published var pendingLibraryExport: String?
     var externalDisplayConnected = false
     var sizeTransitions = 0
     // Written by the hinge interaction on the menu hosting view.
     var hingePartiallyOpen = false
     var hingePresent = false
-    var hideStatusBar: Bool = false {
+    @Published var hideStatusBar: Bool = false {
         didSet {
             if systemChromeNotificationsEnabled, oldValue != hideStatusBar {
                 NotificationCenter.default.post(name: Self.systemChromeNeedsUpdateNotification, object: nil)
             }
         }
     }
-    var hideHomeIndicator: Bool = false {
+    @Published var hideHomeIndicator: Bool = false {
         didSet {
             if systemChromeNotificationsEnabled, oldValue != hideHomeIndicator {
                 NotificationCenter.default.post(name: Self.systemChromeNeedsUpdateNotification, object: nil)
@@ -44,7 +43,7 @@ final class AppState {
         }
     }
 
-    @ObservationIgnored private var systemChromeNotificationsEnabled = false
+    private var systemChromeNotificationsEnabled = false
 
     private init() {
         let automaticGameStartup = SettingsStore._automaticLoadLastGameConfig.load()

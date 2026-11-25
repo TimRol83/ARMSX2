@@ -3,7 +3,7 @@
 
 import AVFoundation
 import Foundation
-import Observation
+import Combine
 
 enum MenuAudioPackImportError: LocalizedError, Sendable {
     case notZip
@@ -25,8 +25,7 @@ enum MenuAudioPackImportError: LocalizedError, Sendable {
 /// Owns the menu soundtrack and short UI effects. Playback stays centralized so
 /// retained Settings views and recycled controller targets never own audio players.
 @MainActor
-@Observable
-final class MenuAudioPackManager {
+final class MenuAudioPackManager : ObservableObject {
     enum Sound: CaseIterable, Sendable {
         case startup
         case background
@@ -87,43 +86,43 @@ final class MenuAudioPackManager {
         "ARMSX2.MenuAudioPack.CustomAudioEnabled"
     static let soundVolumeDefaultsKeyPrefix =
         "ARMSX2.MenuAudioPack.SoundVolume."
-    private(set) var installedPackName: String?
+    private(set) @Published var installedPackName: String?
     private(set) var usesBundledDefault = false
     var isWorking = false
     private(set) var uiAudioVolume = 1.0
     private(set) var customUIAudioEnabled = true
-    private(set) var customSounds: Set<Sound> = []
+    private(set) @Published var customSounds: Set<Sound> = []
 
-    @ObservationIgnored private var soundURLs: [Sound: URL] = [:]
-    @ObservationIgnored private var customSoundURLs: [Sound: URL] = [:]
-    @ObservationIgnored var soundVolumes: [Sound: Double] = [:]
+    private var soundURLs: [Sound: URL] = [:]
+    private var customSoundURLs: [Sound: URL] = [:]
+    var soundVolumes: [Sound: Double] = [:]
     // Kept for the pack's lifetime, so AVAudioPlayer(data:) never reopens a file mid-navigation.
-    @ObservationIgnored private var soundData: [Sound: Data] = [:]
-    @ObservationIgnored var introHasFinished = false
-    @ObservationIgnored var interfaceIsActive = false
-    @ObservationIgnored private var mainInterfaceIsActive = false
-    @ObservationIgnored var applicationIsActive = true
-    @ObservationIgnored private var audioSessionPrepared = false
-    @ObservationIgnored private var startupPlayer: AVAudioPlayer?
-    @ObservationIgnored private var startupCompletionTask: Task<Void, Never>?
-    @ObservationIgnored private var startupRetryTask: Task<Void, Never>?
-    @ObservationIgnored private var startupPlaybackPending = false
-    @ObservationIgnored private var startupRetryAttempt = 0
-    @ObservationIgnored private var backgroundPlayer: AVAudioPlayer?
-    @ObservationIgnored private var pauseMusicPlayer: AVAudioPlayer?
-    @ObservationIgnored private var previewPlayer: AVAudioPlayer?
-    @ObservationIgnored private var previewSound: Sound?
-    @ObservationIgnored private var backgroundFadeTask: Task<Void, Never>?
-    @ObservationIgnored private var gameLaunchCompletionTask: Task<Void, Never>?
-    @ObservationIgnored private var gameLaunchAudioActive = false
-    @ObservationIgnored private var automaticGameStartupActive = false
-    @ObservationIgnored private var effectPlayers: [Sound: AVAudioPlayer] = [:]
-    @ObservationIgnored var pendingTouchNavigationTask: Task<Void, Never>?
-    @ObservationIgnored var stoppingGamePendingForMainInterface = false
-    @ObservationIgnored var stoppingGameWaitsForVMShutdown = false
-    @ObservationIgnored private var emulationAudioRecoveryTask: Task<Void, Never>?
-    @ObservationIgnored var selectionSuppressedUntil: TimeInterval = 0
-    @ObservationIgnored var lastEventPlaybackTimes: [Event: TimeInterval] = [:]
+    private var soundData: [Sound: Data] = [:]
+    var introHasFinished = false
+    var interfaceIsActive = false
+    private var mainInterfaceIsActive = false
+    var applicationIsActive = true
+    private var audioSessionPrepared = false
+    private var startupPlayer: AVAudioPlayer?
+    private var startupCompletionTask: Task<Void, Never>?
+    private var startupRetryTask: Task<Void, Never>?
+    private var startupPlaybackPending = false
+    private var startupRetryAttempt = 0
+    private var backgroundPlayer: AVAudioPlayer?
+    private var pauseMusicPlayer: AVAudioPlayer?
+    private var previewPlayer: AVAudioPlayer?
+    private var previewSound: Sound?
+    private var backgroundFadeTask: Task<Void, Never>?
+    private var gameLaunchCompletionTask: Task<Void, Never>?
+    private var gameLaunchAudioActive = false
+    private var automaticGameStartupActive = false
+    private var effectPlayers: [Sound: AVAudioPlayer] = [:]
+    var pendingTouchNavigationTask: Task<Void, Never>?
+    var stoppingGamePendingForMainInterface = false
+    var stoppingGameWaitsForVMShutdown = false
+    private var emulationAudioRecoveryTask: Task<Void, Never>?
+    var selectionSuppressedUntil: TimeInterval = 0
+    var lastEventPlaybackTimes: [Event: TimeInterval] = [:]
 
     var hasInstalledPack: Bool {
         installedPackName != nil && Self.containsRequiredSounds(soundURLs)

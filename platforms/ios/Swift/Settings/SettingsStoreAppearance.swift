@@ -6,10 +6,9 @@ import SwiftUI
 
 extension SettingsStore {
     @MainActor
-    @Observable
-    final class Appearance {
+    final class Appearance : ObservableObject {
         // ── Library Background ──
-        var dynamicBackgroundsEnabled: Bool = true {
+        @Published var dynamicBackgroundsEnabled: Bool = true {
             didSet {
                 UserDefaults.standard.set(
                     dynamicBackgroundsEnabled,
@@ -17,10 +16,10 @@ extension SettingsStore {
                 )
             }
         }
-        var dynamicAppearancePreferences: DynamicAppearancePreferences = .standard {
+        @Published var dynamicAppearancePreferences: DynamicAppearancePreferences = .standard {
             didSet { dynamicAppearancePreferences.save() }
         }
-        var clearLiquidGlassUI: Bool = true {
+        @Published var clearLiquidGlassUI: Bool = true {
             didSet {
                 UserDefaults.standard.set(clearLiquidGlassUI, forKey: "ARMSX2iOSClearLiquidGlassUI")
                 if !clearLiquidGlassUI && clearLiquidGlassUISubSettings {
@@ -28,7 +27,7 @@ extension SettingsStore {
                 }
             }
         }
-        var clearLiquidGlassUISubSettings: Bool = true {
+        @Published var clearLiquidGlassUISubSettings: Bool = true {
             didSet {
                 UserDefaults.standard.set(
                     clearLiquidGlassUISubSettings,
@@ -36,7 +35,7 @@ extension SettingsStore {
                 )
             }
         }
-        var clearLiquidGlassUIQuickMenu: Bool = false {
+        @Published var clearLiquidGlassUIQuickMenu: Bool = false {
             didSet {
                 UserDefaults.standard.set(
                     clearLiquidGlassUIQuickMenu,
@@ -44,7 +43,7 @@ extension SettingsStore {
                 )
             }
         }
-        var clearLiquidGlassUIPerGameSettingsLibrary: Bool = false {
+        @Published var clearLiquidGlassUIPerGameSettingsLibrary: Bool = false {
             didSet {
                 UserDefaults.standard.set(
                     clearLiquidGlassUIPerGameSettingsLibrary,
@@ -52,7 +51,7 @@ extension SettingsStore {
                 )
             }
         }
-        var clearLiquidGlassUIPerGameSettingsEmulation: Bool = false {
+        @Published var clearLiquidGlassUIPerGameSettingsEmulation: Bool = false {
             didSet {
                 UserDefaults.standard.set(
                     clearLiquidGlassUIPerGameSettingsEmulation,
@@ -62,7 +61,7 @@ extension SettingsStore {
         }
         static let perGameLivePreviewDurationRange: ClosedRange<Double> = 2...10
         static let perGameBeforeChangesPreviewDurationRange: ClosedRange<Double> = 0...10
-        var temporalSaveStateToLivePreviewChanges: Bool = true {
+        @Published var temporalSaveStateToLivePreviewChanges: Bool = true {
             didSet {
                 UserDefaults.standard.set(
                     temporalSaveStateToLivePreviewChanges,
@@ -70,7 +69,7 @@ extension SettingsStore {
                 )
             }
         }
-        var perGameLivePreviewDuration: Double = 2 {
+        @Published var perGameLivePreviewDuration: Double = 2 {
             didSet {
                 UserDefaults.standard.set(
                     perGameLivePreviewDuration,
@@ -78,7 +77,7 @@ extension SettingsStore {
                 )
             }
         }
-        var perGameBeforeChangesPreviewDuration: Double = 0 {
+        @Published var perGameBeforeChangesPreviewDuration: Double = 0 {
             didSet {
                 UserDefaults.standard.set(
                     perGameBeforeChangesPreviewDuration,
@@ -86,7 +85,7 @@ extension SettingsStore {
                 )
             }
         }
-        var perGameLivePreviewStopsWithCircle: Bool = true {
+        @Published var perGameLivePreviewStopsWithCircle: Bool = true {
             didSet {
                 UserDefaults.standard.set(
                     perGameLivePreviewStopsWithCircle,
@@ -94,7 +93,7 @@ extension SettingsStore {
                 )
             }
         }
-        var gameCardZoomAnimationEnabled: Bool = true {
+        @Published var gameCardZoomAnimationEnabled: Bool = true {
             didSet {
                 UserDefaults.standard.set(
                     gameCardZoomAnimationEnabled,
@@ -102,7 +101,7 @@ extension SettingsStore {
                 )
             }
         }
-        var favoriteGlowingEffectEnabled: Bool = false {
+        @Published var favoriteGlowingEffectEnabled: Bool = false {
             didSet {
                 UserDefaults.standard.set(
                     favoriteGlowingEffectEnabled,
@@ -110,7 +109,7 @@ extension SettingsStore {
                 )
             }
         }
-        var gameMenuCoverColoursEnabled: Bool = true {
+        @Published var gameMenuCoverColoursEnabled: Bool = true {
             didSet {
                 UserDefaults.standard.set(
                     gameMenuCoverColoursEnabled,
@@ -118,7 +117,7 @@ extension SettingsStore {
                 )
             }
         }
-        var hideGameplayStatusBar: Bool = true {
+        @Published var hideGameplayStatusBar: Bool = true {
             didSet {
                 UserDefaults.standard.set(
                     hideGameplayStatusBar,
@@ -126,7 +125,7 @@ extension SettingsStore {
                 )
             }
         }
-        var hideIntroStatusBar: Bool = true {
+        @Published var hideIntroStatusBar: Bool = true {
             didSet {
                 UserDefaults.standard.set(
                     hideIntroStatusBar,
@@ -134,7 +133,7 @@ extension SettingsStore {
                 )
             }
         }
-        var hideMenuStatusBar: Bool = false {
+        @Published var hideMenuStatusBar: Bool = false {
             didSet {
                 UserDefaults.standard.set(
                     hideMenuStatusBar,
@@ -142,7 +141,7 @@ extension SettingsStore {
                 )
             }
         }
-        var focusOrbsEnabled: Bool = false {
+        @Published var focusOrbsEnabled: Bool = false {
             didSet {
                 UserDefaults.standard.set(
                     focusOrbsEnabled,
@@ -151,14 +150,14 @@ extension SettingsStore {
             }
         }
         // Retain the preset's readable semantic defaults while editing Custom.
-        var controllerCustomThemeBase: ControllerUIThemePreset = ControllerUIThemePreset(
+        @Published var controllerCustomThemeBase: ControllerUIThemePreset = ControllerUIThemePreset(
             rawValue: UserDefaults.standard.string(forKey: "ARMSX2iOSCustomThemeBase") ?? ""
         ) ?? .defaultTheme {
             didSet {
                 UserDefaults.standard.set(controllerCustomThemeBase.rawValue, forKey: "ARMSX2iOSCustomThemeBase")
             }
         }
-        var controllerRoleCustomColors: [String: SavedPaletteColor] = {
+        @Published var controllerRoleCustomColors: [String: SavedPaletteColor] = {
             guard let data = UserDefaults.standard.data(forKey: "ARMSX2iOSRoleCustomColors") else { return [:] }
             return (try? JSONDecoder().decode([String: SavedPaletteColor].self, from: data)) ?? [:]
         }() {
@@ -168,7 +167,7 @@ extension SettingsStore {
                 }
             }
         }
-        var controllerUIThemePreset: ControllerUIThemePreset = .defaultTheme {
+        @Published var controllerUIThemePreset: ControllerUIThemePreset = .defaultTheme {
             didSet {
                 UserDefaults.standard.set(
                     controllerUIThemePreset.rawValue,
@@ -176,7 +175,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerNavigationDepthEffectEnabled: Bool = true {
+        @Published var controllerNavigationDepthEffectEnabled: Bool = true {
             didSet {
                 UserDefaults.standard.set(
                     controllerNavigationDepthEffectEnabled,
@@ -184,7 +183,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerFocusBoxStyle: ControllerFocusBoxStyle = .neonBlue {
+        @Published var controllerFocusBoxStyle: ControllerFocusBoxStyle = .neonBlue {
             didSet {
                 UserDefaults.standard.set(
                     controllerFocusBoxStyle.rawValue,
@@ -192,7 +191,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerNavigationFocusAnimation: ControllerNavigationFocusTravelStyle = .easeInOut {
+        @Published var controllerNavigationFocusAnimation: ControllerNavigationFocusTravelStyle = .easeInOut {
             didSet {
                 UserDefaults.standard.set(
                     controllerNavigationFocusAnimation.rawValue,
@@ -200,7 +199,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerFocusBoxPalette: ThemePalette = .multicolor {
+        @Published var controllerFocusBoxPalette: ThemePalette = .multicolor {
             didSet {
                 UserDefaults.standard.set(
                     controllerFocusBoxPalette.rawValue,
@@ -216,7 +215,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerOrbPalette: ThemePalette = .blue {
+        @Published var controllerOrbPalette: ThemePalette = .blue {
             didSet {
                 UserDefaults.standard.set(
                     controllerOrbPalette.rawValue,
@@ -224,7 +223,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerNavigationAccentPalette: ThemePalette = .henyBlue {
+        @Published var controllerNavigationAccentPalette: ThemePalette = .henyBlue {
             didSet {
                 UserDefaults.standard.set(
                     controllerNavigationAccentPalette.rawValue,
@@ -240,7 +239,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerTextPalette: ThemePalette? = nil {
+        @Published var controllerTextPalette: ThemePalette? = nil {
             didSet {
                 if let controllerTextPalette {
                     UserDefaults.standard.set(
@@ -262,7 +261,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerSecondaryTextPalette: ThemePalette? = nil {
+        @Published var controllerSecondaryTextPalette: ThemePalette? = nil {
             didSet {
                 if let controllerSecondaryTextPalette {
                     UserDefaults.standard.set(
@@ -276,7 +275,7 @@ extension SettingsStore {
                 }
             }
         }
-        var controllerCriticalTextPalette: ThemePalette = .crimson {
+        @Published var controllerCriticalTextPalette: ThemePalette = .crimson {
             didSet {
                 UserDefaults.standard.set(
                     controllerCriticalTextPalette.rawValue,
@@ -284,7 +283,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerTabTitlePalette: ThemePalette? = nil {
+        @Published var controllerTabTitlePalette: ThemePalette? = nil {
             didSet {
                 Self.persistOptionalThemePalette(
                     controllerTabTitlePalette,
@@ -292,7 +291,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerTabSubtitlePalette: ThemePalette? = nil {
+        @Published var controllerTabSubtitlePalette: ThemePalette? = nil {
             didSet {
                 Self.persistOptionalThemePalette(
                     controllerTabSubtitlePalette,
@@ -300,7 +299,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerBottomTabBarPalette: ThemePalette? = nil {
+        @Published var controllerBottomTabBarPalette: ThemePalette? = nil {
             didSet {
                 Self.persistOptionalThemePalette(
                     controllerBottomTabBarPalette,
@@ -308,7 +307,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerBottomTabBarUnselectedPalette: ThemePalette? = nil {
+        @Published var controllerBottomTabBarUnselectedPalette: ThemePalette? = nil {
             didSet {
                 Self.persistOptionalThemePalette(
                     controllerBottomTabBarUnselectedPalette,
@@ -316,7 +315,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerCardTitlePalette: ThemePalette? = nil {
+        @Published var controllerCardTitlePalette: ThemePalette? = nil {
             didSet {
                 Self.persistOptionalThemePalette(
                     controllerCardTitlePalette,
@@ -324,7 +323,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerContextMenuPalette: ThemePalette? = nil {
+        @Published var controllerContextMenuPalette: ThemePalette? = nil {
             didSet {
                 Self.persistOptionalThemePalette(
                     controllerContextMenuPalette,
@@ -332,7 +331,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerImportActionPalette: ThemePalette? = nil {
+        @Published var controllerImportActionPalette: ThemePalette? = nil {
             didSet {
                 Self.persistOptionalThemePalette(
                     controllerImportActionPalette,
@@ -340,7 +339,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerToolbarPalette: ThemePalette? = nil {
+        @Published var controllerToolbarPalette: ThemePalette? = nil {
             didSet {
                 Self.persistOptionalThemePalette(
                     controllerToolbarPalette,
@@ -348,7 +347,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerFocusedTextPalette: ThemePalette = .blue {
+        @Published var controllerFocusedTextPalette: ThemePalette = .blue {
             didSet {
                 UserDefaults.standard.set(
                     controllerFocusedTextPalette.rawValue,
@@ -364,7 +363,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerTextShadowStrength: Double = 0 {
+        @Published var controllerTextShadowStrength: Double = 0 {
             didSet {
                 UserDefaults.standard.set(
                     controllerTextShadowStrength,
@@ -372,7 +371,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerTextShadowPalette: ThemePalette = .obsidian {
+        @Published var controllerTextShadowPalette: ThemePalette = .obsidian {
             didSet {
                 UserDefaults.standard.set(
                     controllerTextShadowPalette.rawValue,
@@ -388,7 +387,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerFocusedTextShadowStrength: Double = 0.1 {
+        @Published var controllerFocusedTextShadowStrength: Double = 0.1 {
             didSet {
                 UserDefaults.standard.set(
                     controllerFocusedTextShadowStrength,
@@ -396,7 +395,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerFocusedTextShadowPalette: ThemePalette = .obsidian {
+        @Published var controllerFocusedTextShadowPalette: ThemePalette = .obsidian {
             didSet {
                 UserDefaults.standard.set(
                     controllerFocusedTextShadowPalette.rawValue,
@@ -412,7 +411,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerFocusBoxAnimationSpeed: Double = 1 {
+        @Published var controllerFocusBoxAnimationSpeed: Double = 1 {
             didSet {
                 UserDefaults.standard.set(
                     controllerFocusBoxAnimationSpeed,
@@ -420,7 +419,7 @@ extension SettingsStore {
                 )
             }
         }
-        var controllerFocusBoxGlowIntensity: Double = 1 {
+        @Published var controllerFocusBoxGlowIntensity: Double = 1 {
             didSet {
                 UserDefaults.standard.set(
                     controllerFocusBoxGlowIntensity,
@@ -449,7 +448,7 @@ extension SettingsStore {
         var backgroundFitMode: BackgroundFitMode {
             didSet { UserDefaults.standard.set(backgroundFitMode.rawValue, forKey: "ARMSX2iOSBackgroundFitMode") }
         }
-        var backgroundLandscapeFitMode: BackgroundFitMode = .fill {
+        @Published var backgroundLandscapeFitMode: BackgroundFitMode = .fill {
             didSet { UserDefaults.standard.set(backgroundLandscapeFitMode.rawValue, forKey: "ARMSX2iOSBackgroundLandscapeFitMode") }
         }
         var backgroundVideoMuted: Bool {
@@ -462,17 +461,17 @@ extension SettingsStore {
                 UserDefaults.standard.set(backgroundDim, forKey: "ARMSX2iOSBackgroundDim")
             }
         }
-        var backgroundEnabledInBIOS: Bool = true {
+        @Published var backgroundEnabledInBIOS: Bool = true {
             didSet {
                 UserDefaults.standard.set(backgroundEnabledInBIOS, forKey: "ARMSX2iOSBackgroundEnabledInBIOS")
             }
         }
-        var backgroundEnabledInHelp: Bool = true {
+        @Published var backgroundEnabledInHelp: Bool = true {
             didSet {
                 UserDefaults.standard.set(backgroundEnabledInHelp, forKey: "ARMSX2iOSBackgroundEnabledInHelp")
             }
         }
-        var backgroundEnabledInSettings: Bool = true {
+        @Published var backgroundEnabledInSettings: Bool = true {
             didSet {
                 UserDefaults.standard.set(backgroundEnabledInSettings, forKey: "ARMSX2iOSBackgroundEnabledInSettings")
             }
