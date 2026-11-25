@@ -134,7 +134,7 @@ elseif("${_PCSX2_TARGET_PROCESSOR}" STREQUAL "arm64" OR "${_PCSX2_TARGET_PROCESS
 		# target is an A10 iPad (6th and 7th generation), not an A12 phone. An A12
 		# baseline uses ARMv8.3 ldapr for every static guard, so an A10 SIGILLs
 		# before main. -mcpu implies its own architecture, so no -march disagrees.
-		add_compile_options("-mcpu=apple-a10")
+		add_compile_options("-mcpu=apple-a9")
 	elseif(APPLE)
 		message(STATUS "Building for Apple Silicon (ARM64).")
 		# Min spec is an M1.
