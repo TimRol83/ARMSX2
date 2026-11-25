@@ -257,7 +257,7 @@ if(MSVC)
 	# Disable Exceptions
 	string(REPLACE "/EHsc" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
 else()
-	add_compile_options(-pipe -fvisibility=hidden -pthread)
+	add_compile_options($<$<COMPILE_LANGUAGE:C,CXX>:-pipe;-fvisibility=hidden;-pthread>)
 	add_compile_options(
 		"$<$<COMPILE_LANGUAGE:CXX>:-fno-exceptions>"
 	)
