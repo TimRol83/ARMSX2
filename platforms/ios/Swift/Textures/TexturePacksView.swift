@@ -81,7 +81,6 @@ struct TexturePacksView<Options: View>: View {
 
             options
         }
-        .navigationViewStyle(.stack)
         .navigationTitle(settings.localized("Texture Packs"))
         .navigationBarTitleDisplayMode(.inline)
         .task { await reload() }
