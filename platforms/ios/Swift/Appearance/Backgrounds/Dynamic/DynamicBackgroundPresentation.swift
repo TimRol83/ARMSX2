@@ -308,7 +308,7 @@ private struct DynamicBackgroundStyleCrossfadeView: View {
                 }
             }
 
-            try? await Task.sleep(for: .seconds(transitionDuration + 0.08))
+            try? await Task.sleep(for: Duration.seconds(transitionDuration + 0.08))
             layers.removeAll {
                 retiringIDs.contains($0.id) && $0.id != activeLayerID
             }

@@ -52,7 +52,7 @@ final class TransientBannerController<Value: Equatable>: ObservableObject {
             content = value
         }
         dismissTask = Task { @MainActor in
-            try? await Task.sleep(for: .seconds(duration))
+            try? await Task.sleep(for: Duration.seconds(duration))
             guard !Task.isCancelled else { return }
             guard self.generation == currentGeneration else { return }
             withAnimation(.easeIn(duration: 0.18)) {

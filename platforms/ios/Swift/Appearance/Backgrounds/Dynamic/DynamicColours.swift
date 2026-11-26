@@ -501,7 +501,7 @@ struct ThemePaletteEditor: View {
 
     backgroundPreviewTask = Task { @MainActor in
       if beforeDuration > 0 {
-        try? await Task.sleep(for: .seconds(beforeDuration))
+        try? await Task.sleep(for: Duration.seconds(beforeDuration))
         guard !Task.isCancelled else { return }
 
         var themeTransaction = Transaction(animation: nil)
@@ -514,7 +514,7 @@ struct ThemePaletteEditor: View {
 
       guard activeSliderTitle == nil else { return }
       if afterDuration > 0 {
-        try? await Task.sleep(for: .seconds(afterDuration))
+        try? await Task.sleep(for: Duration.seconds(afterDuration))
         guard !Task.isCancelled else { return }
       }
       endBackgroundPreview()
@@ -527,7 +527,7 @@ struct ThemePaletteEditor: View {
 
     backgroundPreviewTask = Task { @MainActor in
       if afterDuration > 0 {
-        try? await Task.sleep(for: .seconds(afterDuration))
+        try? await Task.sleep(for: Duration.seconds(afterDuration))
         guard !Task.isCancelled else { return }
       }
       endBackgroundPreview()

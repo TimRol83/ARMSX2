@@ -45,7 +45,7 @@ private final class VirtualPadActionPressCoordinator {
         pulseButtons[source] = button
         set(button, source: source, pressed: true)
         pulseTasks[source] = Task { @MainActor [weak self] in
-            try? await Task.sleep(for: .seconds(max(duration, 0)))
+            try? await Task.sleep(for: Duration.seconds(max(duration, 0)))
             guard !Task.isCancelled, let self else { return }
             self.set(button, source: source, pressed: false)
             self.pulseTasks.removeValue(forKey: source)
@@ -185,7 +185,7 @@ final class DynamicCrosshairRuntimeState : ObservableObject {
         swipeHideTask?.cancel()
         let delay = max(hideDelay, 0)
         swipeHideTask = Task { @MainActor [weak self] in
-            try? await Task.sleep(for: .seconds(delay))
+            try? await Task.sleep(for: Duration.seconds(delay))
             guard !Task.isCancelled, let self else { return }
             self.isSwipeCrosshairVisible = false
             self.swipeHideTask = nil
@@ -379,7 +379,7 @@ final class VirtualPadTouchActionController {
         aimReleaseTask?.cancel()
         let delay = max(SettingsStore.shared.dynamicThumbsticks.aimReleaseDelay, 0)
         aimReleaseTask = Task { @MainActor [weak self] in
-            try? await Task.sleep(for: .seconds(delay))
+            try? await Task.sleep(for: Duration.seconds(delay))
             guard !Task.isCancelled, let self, !self.touchActive else { return }
             self.aimEngaged = false
             self.setAimPressed(false)
@@ -390,7 +390,7 @@ final class VirtualPadTouchActionController {
         fireReleaseTask?.cancel()
         let delay = max(SettingsStore.shared.dynamicThumbsticks.fireReleaseDelay, 0)
         fireReleaseTask = Task { @MainActor [weak self] in
-            try? await Task.sleep(for: .seconds(delay))
+            try? await Task.sleep(for: Duration.seconds(delay))
             guard !Task.isCancelled, let self, !self.touchActive else { return }
             self.stopRapidFire()
         }
@@ -412,7 +412,7 @@ final class VirtualPadTouchActionController {
     private func scheduleSingleFire(after delay: TimeInterval) {
         pendingSingleFireTask?.cancel()
         pendingSingleFireTask = Task { @MainActor [weak self] in
-            try? await Task.sleep(for: .seconds(max(delay, 0)))
+            try? await Task.sleep(for: Duration.seconds(max(delay, 0)))
             guard !Task.isCancelled, let self else { return }
             self.pendingSingleFireTask = nil
             self.pulseFire()
@@ -455,10 +455,10 @@ final class VirtualPadTouchActionController {
                 let interval = max(SettingsStore.shared.dynamicThumbsticks.automaticFireInterval, 0.06)
                 self.setHoldFirePressed(true)
                 self.crosshairState.triggerShot()
-                try? await Task.sleep(for: .seconds(min(interval * 0.45, 0.05)))
+                try? await Task.sleep(for: Duration.seconds(min(interval * 0.45, 0.05)))
                 if Task.isCancelled { break }
                 self.setHoldFirePressed(false)
-                try? await Task.sleep(for: .seconds(max(interval * 0.55, 0.02)))
+                try? await Task.sleep(for: Duration.seconds(max(interval * 0.55, 0.02)))
             }
             self?.setHoldFirePressed(false)
         }

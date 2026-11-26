@@ -150,4 +150,27 @@ private struct OnChangeTwoArgModifier<V: Equatable>: ViewModifier {
     }
 }
 
+
+@available(iOS, deprecated: 17.0)
+public struct Duration: Sendable, Hashable {
+    public let nanoseconds: UInt64
+    public init(nanoseconds: UInt64) { self.nanoseconds = nanoseconds }
+    public static func milliseconds<T: BinaryInteger>(_ value: T) -> Duration {
+        Duration(nanoseconds: UInt64(max(0, Int64(value))) * 1_000_000)
+    }
+    public static func seconds<T: BinaryInteger>(_ value: T) -> Duration {
+        Duration(nanoseconds: UInt64(max(0, Int64(value))) * 1_000_000_000)
+    }
+    public static func seconds(_ value: Double) -> Duration {
+        Duration(nanoseconds: UInt64(max(0.0, value) * 1_000_000_000.0))
+    }
+}
+
+@available(iOS, deprecated: 17.0)
+public extension Task where Success == Never, Failure == Never {
+    static func sleep(for duration: Duration) async throws {
+        try await Task.sleep(nanoseconds: duration.nanoseconds)
+    }
+}
+
 #endif
