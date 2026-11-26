@@ -372,7 +372,7 @@ struct RootView: View {
         Task { @MainActor in
             // Keep the status bar out of the splash fade, then apply the menu
             // preference once the intro has actually left the hierarchy.
-            try? await Task.sleep(for: .milliseconds(220))
+            try? await Task.sleep(nanoseconds: 220000000)
             guard !Task.isCancelled,
                   !showBootSplash,
                   appState.currentScreen == .menu else { return }
@@ -385,7 +385,7 @@ struct RootView: View {
             // Keep consuming the press which dismissed the movie until UIKit
             // has completed the splash transition. Otherwise the same Cross
             // edge can reach the already-mounted game library underneath.
-            try? await Task.sleep(for: .milliseconds(400))
+            try? await Task.sleep(nanoseconds: 400000000)
             guard !Task.isCancelled else { return }
             menuControllerInput.setLaunchInputInterceptor(nil)
             bootSplashInputReleaseTask = nil

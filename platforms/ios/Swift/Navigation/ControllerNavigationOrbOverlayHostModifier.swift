@@ -106,12 +106,12 @@ private struct ControllerNavigationMovingOrbOverlay: View {
                 // Lazy grids drop the old card a pass before the new one
                 // publishes its anchor; wait out the controller scroll so the
                 // field never blinks out between two library selections.
-                try? await Task.sleep(for: .milliseconds(380))
+                try? await Task.sleep(nanoseconds: 380000000)
                 guard !Task.isCancelled else { return }
                 withAnimation(.easeOut(duration: 0.12)) {
                     isVisible = false
                 }
-                try? await Task.sleep(for: .milliseconds(130))
+                try? await Task.sleep(nanoseconds: 130000000)
                 guard !Task.isCancelled else { return }
                 displayedTarget = nil
                 removalTask = nil

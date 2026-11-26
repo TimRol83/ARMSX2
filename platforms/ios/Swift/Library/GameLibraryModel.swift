@@ -23,7 +23,7 @@ final class GameLibraryActivityState {
             try? await Task.sleep(for: delay)
             guard !Task.isCancelled else { return }
             while self?.isScrolling == true {
-                try? await Task.sleep(for: .milliseconds(50))
+                try? await Task.sleep(nanoseconds: 50000000)
                 guard !Task.isCancelled else { return }
             }
             operation()

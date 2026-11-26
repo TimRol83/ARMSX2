@@ -477,20 +477,20 @@ extension GameLibraryControllerCoordinator {
         nowRunningRemovalResetTask = Task { @MainActor in
             // Let the status morph complete, fade its foreground away, then
             // collapse the complete composited glass surface to zero pixels.
-            try? await Task.sleep(for: .milliseconds(420))
+            try? await Task.sleep(nanoseconds: 420000000)
             guard !Task.isCancelled else { return }
 
             withAnimation(.easeInOut(duration: 0.3)) {
                 nowRunningStatusOpacity = 0
             }
-            try? await Task.sleep(for: .milliseconds(320))
+            try? await Task.sleep(nanoseconds: 320000000)
             guard !Task.isCancelled else { return }
 
             withAnimation(.easeInOut(duration: 0.65)) {
                 nowRunningCardOpacity = 0
                 nowRunningCardScale = 0
             }
-            try? await Task.sleep(for: .milliseconds(700))
+            try? await Task.sleep(nanoseconds: 700000000)
             guard !Task.isCancelled else { return }
 
             // Stop the VM once the card's departure completes. The invisible
@@ -499,14 +499,14 @@ extension GameLibraryControllerCoordinator {
             session.stopGame()
 
             while library.gameLibraryActivity.isScrolling {
-                try? await Task.sleep(for: .milliseconds(50))
+                try? await Task.sleep(nanoseconds: 50000000)
                 guard !Task.isCancelled else { return }
             }
 
             withAnimation(.smooth(duration: 0.52, extraBounce: 0.02)) {
                 departingRunningGameName = nil
             }
-            try? await Task.sleep(for: .milliseconds(540))
+            try? await Task.sleep(nanoseconds: 540000000)
             guard !Task.isCancelled else { return }
 
             // The collapsed values remain private to the departed placeholder.

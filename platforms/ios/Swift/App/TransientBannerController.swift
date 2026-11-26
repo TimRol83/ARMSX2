@@ -60,7 +60,7 @@ final class TransientBannerController<Value: Equatable>: ObservableObject {
             }
             // Small gap so the outgoing banner fully fades before the next appears.
             if !self.pending.isEmpty {
-                try? await Task.sleep(for: .milliseconds(160))
+                try? await Task.sleep(nanoseconds: 160000000)
                 guard !Task.isCancelled else { return }
                 let next = self.pending.removeFirst()
                 let nextDuration = self.pendingDuration

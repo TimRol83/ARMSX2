@@ -82,19 +82,19 @@ struct PerGameSettingsPanel: View {
         self.initiallySelectsGameController = initiallySelectsGameController
         self.initiallySelectsShaders = initiallySelectsShaders
         self.livePreviewDismissRequest = livePreviewDismissRequest
-        _draft = State(initialValue: PerGameSettingsDraft(
+        _draft = StateObject(wrappedValue: PerGameSettingsDraft(
             game: game,
             preloadedSettings: preloadedSettings,
             savesToRunningGame: savesToRunningGame,
             initiallySelectsGameController: initiallySelectsGameController,
             initiallySelectsShaders: initiallySelectsShaders
         ))
-        _livePreview = State(initialValue: PerGameLivePreviewSession(
+        _livePreview = StateObject(wrappedValue: PerGameLivePreviewSession(
             draft: _draft.wrappedValue,
             onLivePreviewPresentationChange: onLivePreviewPresentationChange,
             onLivePreviewStatusChange: onLivePreviewStatusChange
         ))
-        _controller = State(initialValue: PerGameSettingsControllerCoordinator(
+        _controller = StateObject(wrappedValue: PerGameSettingsControllerCoordinator(
             draft: _draft.wrappedValue,
             initiallySelectsGameController: initiallySelectsGameController,
             initiallySelectsShaders: initiallySelectsShaders
@@ -759,7 +759,7 @@ struct PerGameSettingsPanel: View {
             saveFeedbackVisible = true
         }
         Task { @MainActor in
-            try? await Task.sleep(for: .seconds(1.4))
+            try? await Task.sleep(nanoseconds: 1400000000)
             withAnimation(.easeOut(duration: 0.24)) {
                 saveFeedbackVisible = false
             }

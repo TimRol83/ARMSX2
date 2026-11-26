@@ -94,7 +94,7 @@ struct BackgroundContainerView: View {
             inactiveReleaseTask = Task { @MainActor in
                 // Allow the immediate captured frame to enter the hierarchy
                 // before releasing the inactive live surface.
-                try? await Task.sleep(for: .milliseconds(32))
+                try? await Task.sleep(nanoseconds: 32000000)
                 guard !Task.isCancelled else { return }
                 isRenderingEnabled = false
                 videoPoster = nil

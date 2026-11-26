@@ -160,7 +160,7 @@ struct MenuThemePresetShortcutOverlay: View {
         .task(id: presentation?.sequence) {
             guard presentation != nil else { return }
             do {
-                try await Task.sleep(for: .seconds(2))
+                try await Task.sleep(nanoseconds: 2000000000)
                 presentation = nil
             } catch { }
         }

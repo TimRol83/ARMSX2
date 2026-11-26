@@ -209,7 +209,7 @@ struct NetworkSettingsView: View {
     private func scheduleHostSave() {
         hostSaveTask?.cancel()
         hostSaveTask = Task { @MainActor in
-            try? await Task.sleep(for: .milliseconds(400))
+            try? await Task.sleep(nanoseconds: 400000000)
             guard !Task.isCancelled else { return }
             saveHosts()
             hostSaveTask = nil

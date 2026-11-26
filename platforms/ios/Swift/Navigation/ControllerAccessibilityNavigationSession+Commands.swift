@@ -17,7 +17,7 @@ extension ControllerAccessibilityNavigationSession {
             // Wait one display frame for the binding mutation to update the
             // target probe, then report the resulting value rather than its
             // pre-adjustment value.
-            try? await Task.sleep(for: .milliseconds(16))
+            try? await Task.sleep(nanoseconds: 16000000)
             guard let self, !Task.isCancelled else { return }
             let updatedTarget = self.targets[key]
                 ?? self.targets.values.first {

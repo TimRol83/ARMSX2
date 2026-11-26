@@ -283,7 +283,7 @@ final class PadLayoutPresetStore : ObservableObject {
     static let schemaVersion = 2
 
     private let libraryURL: URL
-    private(set) @Published var presets: [PadLayoutPreset] = []
+    @Published private(set) var presets: [PadLayoutPreset] = []
     var globalPresetID: String? {
         didSet {
             if globalPresetID != oldValue {

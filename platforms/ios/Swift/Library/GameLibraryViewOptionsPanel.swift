@@ -496,7 +496,7 @@ struct GameLibraryViewOptionsPanel: View {
         // callback, so every movement rearms one inactivity deadline and the
         // popup returns a second after touch or controller adjustment stops.
         previewEndTask = Task { @MainActor in
-            try? await Task.sleep(for: .seconds(1))
+            try? await Task.sleep(nanoseconds: 1000000000)
             guard !Task.isCancelled else { return }
             withAnimation(.easeOut(duration: 0.18)) {
                 onPreviewChanged(nil)
@@ -517,7 +517,7 @@ struct GameLibraryViewOptionsPanel: View {
             controllerInput: controllerInput
         )
         resetFeedbackTask = Task { @MainActor in
-            try? await Task.sleep(for: .seconds(2.4))
+            try? await Task.sleep(nanoseconds: 2400000000)
             guard !Task.isCancelled else { return }
             withAnimation(.easeIn(duration: 0.18)) {
                 resetFeedbackVisible = false

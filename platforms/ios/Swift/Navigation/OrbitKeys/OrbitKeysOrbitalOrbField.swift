@@ -158,7 +158,7 @@ struct OrbitKeysOrbitalOrbField: View {
       guard lastSettledPosition != selectedPosition else { return }
 
       do {
-        try await Task.sleep(for: .milliseconds(420))
+        try await Task.sleep(nanoseconds: 420000000)
       } catch {
         return
       }

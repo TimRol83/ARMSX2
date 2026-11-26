@@ -210,7 +210,7 @@ final class PerGameLivePreviewSession : ObservableObject {
                     + beforeDuration
                 while Date.timeIntervalSinceReferenceDate < beforeDeadline,
                       livePreviewChangeSequence == initialSequence {
-                    try await Task.sleep(for: .milliseconds(16))
+                    try await Task.sleep(nanoseconds: 16000000)
                     try Task.checkCancellation()
                 }
             }
@@ -239,7 +239,7 @@ final class PerGameLivePreviewSession : ObservableObject {
                 // preview, but immediately apply a newly adjusted Left/Right
                 // value without remounting the editor between changes.
                 while livePreviewChangeSequence == sequenceBeingApplied {
-                    try await Task.sleep(for: .milliseconds(16))
+                    try await Task.sleep(nanoseconds: 16000000)
                     try Task.checkCancellation()
                 }
             }

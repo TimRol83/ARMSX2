@@ -59,14 +59,14 @@ final class PatchStore : ObservableObject {
     private let fileManager = FileManager.default
 
     // Current game (manager UI context)
-    private(set) @Published var isoName: String = ""
-    private(set) @Published var launchContext: CheatsPatchesLaunchContext = .library
-    private(set) @Published var identityState: PatchIdentityState = .libraryAwaitingFirstLaunch
-    private(set) @Published var hasGameIdentity: Bool = false
-    private(set) @Published var canManageInstalledFiles: Bool = false
-    private(set) @Published var installed: [PatchEntry] = []
-    private(set) @Published var lastMessage: String?
-    private(set) @Published var lastMessageKind: PatchFeedbackKind = .information
+    @Published private(set) var isoName: String = ""
+    @Published private(set) var launchContext: CheatsPatchesLaunchContext = .library
+    @Published private(set) var identityState: PatchIdentityState = .libraryAwaitingFirstLaunch
+    @Published private(set) var hasGameIdentity: Bool = false
+    @Published private(set) var canManageInstalledFiles: Bool = false
+    @Published private(set) var installed: [PatchEntry] = []
+    @Published private(set) var lastMessage: String?
+    @Published private(set) var lastMessageKind: PatchFeedbackKind = .information
     private(set) var showMessage = false
     var isDownloading = false
 

@@ -590,7 +590,7 @@ struct ThemePaletteEditor: View {
     }
 
     previewFadeTask = Task { @MainActor in
-      try? await Task.sleep(for: .milliseconds(100))
+      try? await Task.sleep(nanoseconds: 100000000)
       guard !Task.isCancelled, backgroundPreviewOpacity == 0 else { return }
 
       activeUpdatedTheme = nil
@@ -699,7 +699,7 @@ struct ThemePaletteEditor: View {
 
     historyCommitTask?.cancel()
     historyCommitTask = Task { @MainActor in
-      try? await Task.sleep(for: .milliseconds(300))
+      try? await Task.sleep(nanoseconds: 300000000)
       guard !Task.isCancelled else { return }
       commitPendingUndoSnapshot()
     }

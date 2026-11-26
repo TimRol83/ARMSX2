@@ -42,7 +42,7 @@ extension MenuControllerInputRouter {
         themePresetRepeatTasks[profileID]?[button]?.cancel()
         let task = Task { @MainActor [weak self] in
             do {
-                try await Task.sleep(for: .milliseconds(420))
+                try await Task.sleep(nanoseconds: 420000000)
             } catch {
                 return
             }
@@ -176,7 +176,7 @@ extension MenuControllerInputRouter {
     ) {
         cancelEmulationMacroRepeat(action, profileID: profileID)
         let task = Task { @MainActor [weak self, weak gamepad] in
-            try? await Task.sleep(for: .milliseconds(320))
+            try? await Task.sleep(nanoseconds: 320000000)
             guard let self, let gamepad, !Task.isCancelled else { return }
             while !Task.isCancelled,
                   !self.isMenuActive,
@@ -185,7 +185,7 @@ extension MenuControllerInputRouter {
                     .isPressed(on: gamepad),
                   self.emulationMacroLatches[profileID]?.contains(action) == true {
                 self.publishControllerMacro(action)
-                try? await Task.sleep(for: .milliseconds(100))
+                try? await Task.sleep(nanoseconds: 100000000)
             }
         }
         emulationMacroRepeatTasks[profileID, default: [:]][action] = task

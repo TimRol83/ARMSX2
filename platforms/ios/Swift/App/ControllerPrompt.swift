@@ -24,7 +24,7 @@ final class ControllerPrompt : ObservableObject {
     }
 
     static let shared = ControllerPrompt()
-    private(set) @Published var request: Request?
+    @Published private(set) var request: Request?
 
     func ask(_ title: String, message: String, actions: [Action]) {
         request = Request(title: title, message: message, actions: actions)

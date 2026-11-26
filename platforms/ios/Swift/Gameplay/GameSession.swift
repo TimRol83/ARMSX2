@@ -67,7 +67,7 @@ final class GameSession : ObservableObject {
     var bootDisclaimerTitle = "BIOS"
     @Published var pendingJITGameBoot: PendingJITGameBoot?
     @Published var pendingRestartGame: String?
-    private(set) @Published var automaticGameStartupPending: Bool
+    @Published private(set) var automaticGameStartupPending: Bool
     private var automaticGameStartupStarted = false
     @Published var gameplayLaunchTransition: GameplayLaunchTransition?
     var gameplayLaunchControlsVisible = true
@@ -75,11 +75,11 @@ final class GameSession : ObservableObject {
     /// Serial supplied by the library before the VM has published its CRC.
     /// This lets gameplay resolve a serial-scoped automatic pad assignment on
     /// its very first SwiftUI frame instead of briefly drawing Global Default.
-    private(set) @Published var gameplayPadSerial: String?
+    @Published private(set) var gameplayPadSerial: String?
     /// Library-resolved identity available before the VM publishes its own
     /// settings identity. This prevents the first virtual-pad frame from
     /// falling back to the default layout.
-    private(set) @Published var gameplayPadIdentity: PadLayoutGameIdentity?
+    @Published private(set) var gameplayPadIdentity: PadLayoutGameIdentity?
     /// Changes only when a new VM boot begins. The root gameplay overlay uses
     /// this identity to show startup guidance once per emulation session,
     /// rather than every time GameScreenView remounts after visiting the menu.
@@ -94,7 +94,7 @@ final class GameSession : ObservableObject {
     @Published var runtimeShortcutSpeedPercent: Int?
     @Published var isEmulationOnlyMode: Bool = false
     var emulationOnlyPresentation = EmulationOnlyPresentation.minimal
-    private(set) @Published var emulationOnlyStartupReady: Bool = false
+    @Published private(set) var emulationOnlyStartupReady: Bool = false
     private @Published var emulationOnlyTransitionTask: Task<Void, Never>?
     private var emulationOnlyActivationInFlight = false
     private @Published var pendingEmulationOnlyPresentation: EmulationOnlyPresentation?
@@ -455,7 +455,7 @@ final class GameSession : ObservableObject {
             let id = leaveSave
             SaveStateAutoSave.shared.save(leaving: true) { _ in self.stopAfterLeaveSave(id) }
             // Stop never waits long on a save stuck behind other work.
-            try? await Task.sleep(for: .seconds(2))
+            try? await Task.sleep(nanoseconds: 2000000000)
             stopAfterLeaveSave(id)
         }
     }

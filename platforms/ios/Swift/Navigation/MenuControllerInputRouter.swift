@@ -167,9 +167,9 @@ final class MenuControllerInputRouter : ObservableObject {
         case nextTheme
     }
 
-    private(set) @Published var latestEvent: MenuControllerInputEvent?
-    private(set) @Published var latestEventTimestamp: TimeInterval?
-    private(set) @Published var latestLibraryEntryRequest: MenuControllerLibraryEntryRequest?
+    @Published private(set) var latestEvent: MenuControllerInputEvent?
+    @Published private(set) var latestEventTimestamp: TimeInterval?
+    @Published private(set) var latestLibraryEntryRequest: MenuControllerLibraryEntryRequest?
     @Published var latestQuickPauseRequest: MenuControllerQuickPauseRequest?
     var latestEmulationShortcutRequest:
         EmulationControllerShortcutRequest?
@@ -180,8 +180,8 @@ final class MenuControllerInputRouter : ObservableObject {
     /// host, so crossing a safe-area boundary never replaces the active particle field.
     @Published var tabBarOrbFocusFrameInWindow: CGRect?
     @Published var tabBarOrbFocusedIndex: Int?
-    private(set) @Published var tabBarOrbSelectedIndex: Int?
-    private(set) @Published var focusReleaseSequence: UInt64 = 0
+    @Published private(set) var tabBarOrbSelectedIndex: Int?
+    @Published private(set) var focusReleaseSequence: UInt64 = 0
     @Published var rightStickScrollEndSequence: UInt64 = 0
     var isMenuActive = false
     private(set) var isNavigationCaptured = false
@@ -222,7 +222,7 @@ final class MenuControllerInputRouter : ObservableObject {
     ] = [:]
     var navigationSessions: [UUID: NavigationSessionTarget] = [:]
     /// Session input goes to. Nil while a screen like the pause menu captures it; all rings stay.
-    private(set) @Published var navigationInputSessionID: UUID?
+    @Published private(set) var navigationInputSessionID: UUID?
     private var rememberedNavigationFocusKeys: [String: String] = [:]
     private var navigationSessionSequence: UInt64 = 0
     var pendingNavigationSessionCommands: [

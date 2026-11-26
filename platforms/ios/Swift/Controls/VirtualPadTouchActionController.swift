@@ -80,7 +80,7 @@ final class DynamicCrosshairRuntimeState : ObservableObject {
     private(set) var movementStartedAt = 0.0
     private(set) var movementEndedAt = 0.0
     private(set) var shotStartedAt = 0.0
-    private(set) @Published var shotTiltRadians: CGFloat = 0
+    @Published private(set) var shotTiltRadians: CGFloat = 0
     private(set) var rapidFireStartedAt = 0.0
 
     private var sourceMotion: [DynamicCrosshairMotionSource: DynamicThumbstickVector] = [:]
@@ -148,7 +148,7 @@ final class DynamicCrosshairRuntimeState : ObservableObject {
         shotTask = nil
         guard !isRapidFiring else { return }
         shotTask = Task { @MainActor [weak self] in
-            try? await Task.sleep(for: .milliseconds(160))
+            try? await Task.sleep(nanoseconds: 160000000)
             guard !Task.isCancelled else { return }
             self?.isShooting = false
         }
@@ -217,7 +217,7 @@ final class DynamicCrosshairRuntimeState : ObservableObject {
         movementEndedAt = now
         settlingTask?.cancel()
         settlingTask = Task { @MainActor [weak self] in
-            try? await Task.sleep(for: .milliseconds(260))
+            try? await Task.sleep(nanoseconds: 260000000)
             guard !Task.isCancelled, let self else { return }
             self.isCameraSettling = false
             self.cameraMotion = .zero
@@ -403,7 +403,7 @@ final class VirtualPadTouchActionController {
         crosshairState.triggerShot()
         GameEventHaptics.shared.dynamicActionShot()
         tapFireTask = Task { @MainActor [weak self] in
-            try? await Task.sleep(for: .milliseconds(75))
+            try? await Task.sleep(nanoseconds: 75000000)
             guard !Task.isCancelled else { return }
             self?.setTapFirePressed(false)
         }

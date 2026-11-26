@@ -682,7 +682,7 @@ final class OrbitKeysModel: ObservableObject {
     toastMessage = message
     let currentMessage = message
     Task { @MainActor [weak self] in
-      try? await Task.sleep(for: .seconds(1.6))
+      try? await Task.sleep(nanoseconds: 1600000000)
       guard self?.toastMessage == currentMessage else { return }
       self?.toastMessage = nil
     }

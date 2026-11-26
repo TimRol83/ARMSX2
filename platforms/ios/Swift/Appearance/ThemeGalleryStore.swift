@@ -551,7 +551,7 @@ final class ThemeGalleryStore {
             // dismantling the large Appearance Form before JSON persistence
             // gets main-actor time. This removes the visible multi-second
             // focus stall when returning to Settings.
-            try? await Task.sleep(for: .milliseconds(250))
+            try? await Task.sleep(nanoseconds: 250000000)
             guard let self, !Task.isCancelled,
                   let data = try? JSONEncoder().encode(snapshot) else { return }
             self.defaults.set(data, forKey: Self.draftKey)

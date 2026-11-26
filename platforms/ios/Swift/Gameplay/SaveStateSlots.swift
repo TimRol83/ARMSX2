@@ -254,10 +254,10 @@ final class SaveStateUndoModel : ObservableObject {
     static let shared = SaveStateUndoModel()
 
     /// The window of the toast on screen, from Settings, so the bar drains over the same span.
-    private(set) @Published var duration: Double = 5
+    @Published private(set) var duration: Double = 5
 
-    private(set) @Published var item: Item?
-    private(set) @Published var remaining: Double = 0
+    @Published private(set) var item: Item?
+    @Published private(set) var remaining: Double = 0
     /// Set while the toast holds VoiceOver focus.
     var focusHeld = false
     private @Published var timer: Task<Void, Never>?
@@ -277,7 +277,7 @@ final class SaveStateUndoModel : ObservableObject {
         if let announcement { AccessibilityNotification.Announcement(announcement).post() }
         timer = Task { [weak self] in
             while let self, !Task.isCancelled, self.item?.id == next.id {
-                try? await Task.sleep(for: .milliseconds(100))
+                try? await Task.sleep(nanoseconds: 100000000)
                 // The window waits while the toast has VoiceOver focus or the app is away.
                 let paused = self.focusHeld || UIApplication.shared.applicationState != .active
                 if !paused { self.remaining -= 0.1 }

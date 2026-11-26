@@ -71,7 +71,7 @@ struct MenuTabView: View {
         self._selectedTab = selectedTab
         self._settingsNavigationPath = settingsNavigationPath
         self._titleMorphSelection = State(initialValue: selectedTab.wrappedValue)
-        self._controllerTabFocusState = State(
+        self._controllerTabFocusState = StateObject(wrappedValue: 
             initialValue: MenuControllerTabFocusState(
                 focusedIndex: selectedTab.wrappedValue
             )
@@ -245,7 +245,7 @@ struct MenuTabView: View {
             scheduleControllerContentEntry(for: tab)
         }
         menuLargeTitleMorphResetTask = Task { @MainActor in
-            try? await Task.sleep(for: .milliseconds(280))
+            try? await Task.sleep(nanoseconds: 280000000)
             guard !Task.isCancelled else { return }
             menuLargeTitleMorphActive = false
             menuLargeTitleMorphResetTask = nil

@@ -304,7 +304,7 @@ private struct DynamicThumbstickVisual: View {
             withAnimation(.spring(response: 0.18, dampingFraction: 0.58)) {
                 maximumPullPulseProgress = 1
             }
-            try? await Task.sleep(for: .milliseconds(170))
+            try? await Task.sleep(nanoseconds: 170000000)
             guard !Task.isCancelled else { return }
             withAnimation(.easeOut(duration: 0.22)) {
                 maximumPullPulseProgress = 0

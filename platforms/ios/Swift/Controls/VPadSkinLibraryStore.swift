@@ -42,7 +42,7 @@ final class VPadSkinLibraryStore : ObservableObject {
     private let libraryURL: URL
     private let assetsRootURL: URL
     private let legacyCustomSkinURL: URL?
-    private(set) @Published var importedDescriptors: [VPadSkinDescriptor] = []
+    @Published private(set) var importedDescriptors: [VPadSkinDescriptor] = []
     private var didMigrateLegacyCustomSkin = false
 
     var selectedSkinID: String {

@@ -17,7 +17,7 @@ struct RetroAchievementsToast: Equatable {
 /// virtual-pad, Quick Menu, and overlay layout on every repeated percentage step.
 @MainActor
 final class PerGameLivePreviewToastState : ObservableObject {
-    private(set) @Published var status: PerGameLivePreviewStatus?
+    @Published private(set) var status: PerGameLivePreviewStatus?
 
     func present(_ next: PerGameLivePreviewStatus) {
         guard status?.value != next.value else { return }

@@ -21,9 +21,9 @@ struct GameScreenView: View {
         // Built together so the coordinator and the overlay raise their toasts on the banners this view shows.
         let feedback = GameplayFeedback()
         let shortcuts = GameplayShortcutCoordinator(feedback: feedback)
-        _feedback = State(initialValue: feedback)
-        _shortcuts = State(initialValue: shortcuts)
-        _overlay = State(initialValue: GameplayOverlayModel(feedback: feedback, shortcuts: shortcuts))
+        _feedback = StateObject(wrappedValue: feedback)
+        _shortcuts = StateObject(wrappedValue: shortcuts)
+        _overlay = StateObject(wrappedValue: GameplayOverlayModel(feedback: feedback, shortcuts: shortcuts))
     }
 
     @ObservedObject private var appState = AppState.shared
@@ -527,7 +527,7 @@ struct GameScreenView: View {
         menuRevealTask?.cancel()
         withAnimation(.easeOut(duration: 0.18)) { menuButtonRevealed = true }
         menuRevealTask = Task { @MainActor in
-            try? await Task.sleep(for: .seconds(4))
+            try? await Task.sleep(nanoseconds: 4000000000)
             guard !Task.isCancelled else { return }
             withAnimation(.easeIn(duration: 0.18)) { menuButtonRevealed = false }
         }
@@ -614,7 +614,7 @@ struct GameScreenView: View {
         .task(id: session.emulationSessionID) {
             SaveStateAutoSave.shared.restart()
             while !Task.isCancelled {
-                try? await Task.sleep(for: .seconds(5))
+                try? await Task.sleep(nanoseconds: 5000000000)
                 // Only play counts: not the pause card, the live preview, or time in the library.
                 if overlay.overlayRoute == .hidden, !overlay.runtimeOverlayPauseActive, appState.currentScreen == .playing,
                    UIApplication.shared.applicationState == .active, ARMSX2Bridge.isVMRunning() {

@@ -238,7 +238,7 @@ private final class SettingsClearGlassListInstallerView: UIView {
     private func scheduleVisibleCellDecoration() {
         guard pendingDecoration == nil else { return }
         pendingDecoration = Task { @MainActor [weak self] in
-            try? await Task.sleep(for: .milliseconds(8))
+            try? await Task.sleep(nanoseconds: 8000000)
             guard !Task.isCancelled, let self else { return }
             UIView.performWithoutAnimation {
                 self.decorateVisibleCells()

@@ -27,7 +27,7 @@ struct BIOSLibraryEntry: Identifiable, Equatable, Sendable {
 final class BIOSLibraryState : ObservableObject {
     static let shared = BIOSLibraryState()
 
-    private(set) @Published var entries: [BIOSLibraryEntry] = []
+    @Published private(set) var entries: [BIOSLibraryEntry] = []
     private(set) var defaultBIOS = ""
     private(set) var hasLoaded = false
     private var refreshTask: Task<Void, Never>?

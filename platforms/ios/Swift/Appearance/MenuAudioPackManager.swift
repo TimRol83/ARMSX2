@@ -86,12 +86,12 @@ final class MenuAudioPackManager : ObservableObject {
         "ARMSX2.MenuAudioPack.CustomAudioEnabled"
     static let soundVolumeDefaultsKeyPrefix =
         "ARMSX2.MenuAudioPack.SoundVolume."
-    private(set) @Published var installedPackName: String?
+    @Published private(set) var installedPackName: String?
     private(set) var usesBundledDefault = false
     var isWorking = false
     private(set) var uiAudioVolume = 1.0
     private(set) var customUIAudioEnabled = true
-    private(set) @Published var customSounds: Set<Sound> = []
+    @Published private(set) var customSounds: Set<Sound> = []
 
     private var soundURLs: [Sound: URL] = [:]
     private var customSoundURLs: [Sound: URL] = [:]
@@ -311,7 +311,7 @@ final class MenuAudioPackManager : ObservableObject {
         // A normal menu-state publication can land one run-loop turn after the
         // native shutdown notification. Retry only if playback is still absent.
         emulationAudioRecoveryTask = Task { @MainActor [weak self] in
-            try? await Task.sleep(for: .milliseconds(180))
+            try? await Task.sleep(nanoseconds: 180000000)
             guard let self, !Task.isCancelled else { return }
             self.emulationAudioRecoveryTask = nil
             guard self.mainInterfaceIsActive,
@@ -538,7 +538,7 @@ final class MenuAudioPackManager : ObservableObject {
 
         startupRetryAttempt += 1
         startupRetryTask = Task { @MainActor [weak self] in
-            try? await Task.sleep(for: .milliseconds(150))
+            try? await Task.sleep(nanoseconds: 150000000)
             guard let self, !Task.isCancelled else { return }
             self.startupRetryTask = nil
             self.audioSessionPrepared = false

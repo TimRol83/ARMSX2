@@ -26,7 +26,7 @@ struct GameCoverThemePreview: Equatable {
 final class GameCoverThemePreviewStore : ObservableObject {
     static let shared = GameCoverThemePreviewStore()
 
-    private(set) @Published var preview: GameCoverThemePreview?
+    @Published private(set) var preview: GameCoverThemePreview?
 
     private var analysisTask: Task<Void, Never>?
     private var requestToken = UUID()

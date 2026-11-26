@@ -30,7 +30,7 @@ final class ARMSX2LogoStore : ObservableObject {
     private static let maximumFileSize = 16 * 1024 * 1024
     private static let maximumPixelDimension: CGFloat = 8_192
 
-    private(set) @Published var image: UIImage?
+    @Published private(set) var image: UIImage?
 
     var hasLogo: Bool { image != nil }
 

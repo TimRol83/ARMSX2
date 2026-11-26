@@ -426,7 +426,7 @@ struct ThemeGalleryView: View {
             gallery.isPreviewing = true
         }
         previewTask = Task { @MainActor in
-            do { try await Task.sleep(for: .seconds(2)) } catch { return }
+            do { try await Task.sleep(nanoseconds: 2000000000) } catch { return }
             withAnimation(.easeOut(duration: 0.2)) {
                 isPreviewing = false
                 gallery.isPreviewing = false

@@ -83,7 +83,7 @@ final class GameplayOverlayModel : ObservableObject {
             if reduceMotion {
                 await Task.yield()
             } else {
-                try? await Task.sleep(for: .milliseconds(220))
+                try? await Task.sleep(nanoseconds: 220000000)
             }
             guard !Task.isCancelled, overlayRoute == route else { return }
             releaseInactiveQuickMenuPresentationResources(for: route)
@@ -144,10 +144,10 @@ final class GameplayOverlayModel : ObservableObject {
         // Keep input until Cross is up, or the press that chose Resume reaches the VM.
         resumeGameplayTask = Task { @MainActor in
             while controllerInput?.pressedFaceButton == .cross {
-                try? await Task.sleep(for: .milliseconds(8))
+                try? await Task.sleep(nanoseconds: 8000000)
                 guard !Task.isCancelled else { return }
             }
-            try? await Task.sleep(for: .milliseconds(16))
+            try? await Task.sleep(nanoseconds: 16000000)
             guard !Task.isCancelled else { return }
             resumeGameplayTask = nil
             overlayRoute = .hidden

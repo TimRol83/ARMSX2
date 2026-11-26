@@ -13,7 +13,7 @@ final class InitialContentBootstrap : ObservableObject {
     private static let logoImportDateKey = "ARMSX2iOSFolderLogoImportDate"
     private static let audioPackImportDateKey = "ARMSX2iOSFolderAudioPackImportDate"
 
-    private(set) @Published var selectedFolderName: String?
+    @Published private(set) var selectedFolderName: String?
     private(set) var isRunning = false
 
     var hasSelectedFolder: Bool {

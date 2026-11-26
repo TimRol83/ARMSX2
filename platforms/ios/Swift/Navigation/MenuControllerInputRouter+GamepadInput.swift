@@ -337,7 +337,7 @@ extension MenuControllerInputRouter {
             emit(direction)
         }
         repeatTasks[profileID] = Task { @MainActor [weak self] in
-            try? await Task.sleep(for: .milliseconds(320))
+            try? await Task.sleep(nanoseconds: 320000000)
             guard let self, !Task.isCancelled else { return }
 
             while !Task.isCancelled,

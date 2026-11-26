@@ -284,9 +284,9 @@ final class ControllerAccessibilityNavigationSession : ObservableObject {
     private var interactionSequence: UInt64 = 0
 
     var focusPresentation = FocusPresentation.empty
-    private(set) @Published var latestOrbInteraction: ControllerNavigationOrbInteraction?
+    @Published private(set) var latestOrbInteraction: ControllerNavigationOrbInteraction?
     private(set) var hasNavigableElements = false
-    private(set) @Published var scopeRevision: UInt64 = 0
+    @Published private(set) var scopeRevision: UInt64 = 0
     var isScrollPresentationActive = false
 
     var registrationIdentifier: UUID? { registrationID }
