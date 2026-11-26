@@ -71,8 +71,7 @@ struct MenuTabView: View {
         self._selectedTab = selectedTab
         self._settingsNavigationPath = settingsNavigationPath
         self._titleMorphSelection = State(initialValue: selectedTab.wrappedValue)
-        self._controllerTabFocusState = StateObject(wrappedValue: 
-            initialValue: MenuControllerTabFocusState(
+        self._controllerTabFocusState = StateObject(wrappedValue: MenuControllerTabFocusState(
                 focusedIndex: selectedTab.wrappedValue
             )
         )
