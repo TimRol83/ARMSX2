@@ -712,7 +712,7 @@ struct ControllerNavigationAnimatedOrbField: View {
         commandPaletteTask?.cancel()
         commandPalette = palette
         commandPaletteTask = Task { @MainActor in
-            try? await Task.sleep(for: .milliseconds(holdMilliseconds))
+            try? await Task.sleep(nanoseconds: UInt64(max(0, holdMilliseconds)) * 1_000_000)
             guard !Task.isCancelled else { return }
             commandPalette = nil
             commandPaletteTask = nil

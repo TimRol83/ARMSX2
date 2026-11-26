@@ -722,10 +722,10 @@ final class OrbitKeysModel: ObservableObject {
     action: @escaping @MainActor (OrbitKeysModel) -> Bool
   ) -> Task<Void, Never> {
     Task { @MainActor [weak self] in
-      try? await Task.sleep(for: .milliseconds(initialDelay))
+      try? await Task.sleep(nanoseconds: UInt64(max(0, initialDelay)) * 1_000_000)
       while !Task.isCancelled {
         guard let self, action(self) else { break }
-        try? await Task.sleep(for: .milliseconds(repeatDelay))
+        try? await Task.sleep(nanoseconds: UInt64(max(0, repeatDelay)) * 1_000_000)
       }
     }
   }
@@ -737,7 +737,7 @@ final class OrbitKeysModel: ObservableObject {
   ) {
     pressedFaceReleaseTask?.cancel()
     pressedFaceReleaseTask = Task { @MainActor [weak self] in
-      try? await Task.sleep(for: .milliseconds(delay))
+      try? await Task.sleep(nanoseconds: UInt64(max(0, delay)) * 1_000_000)
       guard let self, self.pressedFace == face else { return }
       guard !unlessRepeating || self.repeatingFace != face else { return }
       self.pressedFace = nil

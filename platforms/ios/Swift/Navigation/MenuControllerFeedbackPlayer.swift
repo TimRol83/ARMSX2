@@ -177,19 +177,19 @@ final class MenuControllerFeedbackPlayer {
             notification().prepare()
         case .contextMenu:
             impact(.medium, intensity: 0.62)
-            scheduleDeviceImpact(.soft, intensity: 0.42, after: .milliseconds(58))
+            scheduleDeviceImpact(.soft, intensity: 0.42, after: 58000000)
         case .submenu:
             impact(.light, intensity: 0.46)
-            scheduleDeviceImpact(.rigid, intensity: 0.36, after: .milliseconds(48))
+            scheduleDeviceImpact(.rigid, intensity: 0.36, after: 48000000)
         case .destination:
             impact(.rigid, intensity: 0.66)
-            scheduleDeviceImpact(.soft, intensity: 0.48, after: .milliseconds(62))
+            scheduleDeviceImpact(.soft, intensity: 0.48, after: 62000000)
         case .previousTab:
             impact(.medium, intensity: 0.50)
-            scheduleDeviceImpact(.light, intensity: 0.30, after: .milliseconds(52))
+            scheduleDeviceImpact(.light, intensity: 0.30, after: 52000000)
         case .nextTab:
             impact(.light, intensity: 0.30)
-            scheduleDeviceImpact(.medium, intensity: 0.50, after: .milliseconds(52))
+            scheduleDeviceImpact(.medium, intensity: 0.50, after: 52000000)
         }
     }
 
@@ -343,10 +343,10 @@ final class MenuControllerFeedbackPlayer {
     private func scheduleDeviceImpact(
         _ style: DeviceImpactStyle,
         intensity: CGFloat,
-        after delay: Duration
+        after delayNanoseconds: UInt64
     ) {
         delayedDeviceFeedbackTask = Task { @MainActor [weak self] in
-            try? await Task.sleep(for: delay)
+            try? await Task.sleep(nanoseconds: delayNanoseconds)
             guard let self, !Task.isCancelled else { return }
             self.impact(style, intensity: intensity)
             self.delayedDeviceFeedbackTask = nil

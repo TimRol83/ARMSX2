@@ -621,7 +621,7 @@ final class ControllerAccessibilityNavigationSession : ObservableObject {
         pendingFocusExpiryTask = Task { @MainActor [weak self] in
             // Lazy Forms may need to scroll before the remembered row remounts.
             // Fall back only if the semantic target genuinely never returns.
-            try? await Task.sleep(for: .milliseconds(1_500))
+            try? await Task.sleep(nanoseconds: 1500000000)
             guard let self, !Task.isCancelled,
                   self.pendingFocusKey == key else { return }
             self.pendingFocusKey = nil

@@ -393,7 +393,7 @@ extension ControllerAccessibilityNavigationSession {
         pendingFocusExpiryTask = Task { @MainActor [weak self] in
             // A long lazy Form may need more than one layout turn to mount a
             // remembered offscreen row after ScrollViewReader seeks to it.
-            try? await Task.sleep(for: .milliseconds(1_500))
+            try? await Task.sleep(nanoseconds: 1500000000)
             guard let self, !Task.isCancelled,
                   self.pendingFocusKey == key else { return }
             self.pendingFocusKey = nil
