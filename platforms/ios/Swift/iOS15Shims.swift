@@ -555,4 +555,36 @@ public extension View {
     func scrollBounceBehavior(_ behavior: ScrollBounceBehaviorCompat, axes: Axis.Set = [.vertical]) -> some View { self }
 }
 
+
+// MARK: - Bindable & Focus/Scroll Modifiers for iOS 15
+
+@available(iOS, deprecated: 17.0)
+@dynamicMemberLookup
+public struct Bindable<Value: AnyObject> {
+    public var wrappedValue: Value
+
+    public init(wrappedValue: Value) {
+        self.wrappedValue = wrappedValue
+    }
+
+    public init(_ wrappedValue: Value) {
+        self.wrappedValue = wrappedValue
+    }
+
+    public subscript<Subject>(dynamicMember keyPath: ReferenceWritableKeyPath<Value, Subject>) -> Binding<Subject> {
+        Binding(
+            get: { self.wrappedValue[keyPath: keyPath] },
+            set: { self.wrappedValue[keyPath: keyPath] = $0 }
+        )
+    }
+}
+
+@available(iOS, deprecated: 17.0)
+public extension View {
+    func focusEffectDisabled(_ disabled: Bool = true) -> some View { self }
+    func persistentSystemOverlays(_ visibility: Visibility) -> some View { self }
+    func scrollDisabled(_ disabled: Bool) -> some View { self }
+    func defersSystemGestures(on edges: Edge.Set) -> some View { self }
+}
+
 #endif
