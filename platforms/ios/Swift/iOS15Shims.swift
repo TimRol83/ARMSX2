@@ -7,6 +7,7 @@ public struct NavigationStack<Root: View>: View {
     let root: Root
     public init(@ViewBuilder root: () -> Root) { self.root = root() }
     public init(path: Any? = nil, @ViewBuilder root: () -> Root) { self.root = root() }
+    public init<P>(path: Binding<P>, @ViewBuilder root: () -> Root) { self.root = root() }
     public var body: some View {
         NavigationView { root }.navigationViewStyle(.stack)
     }
@@ -99,19 +100,14 @@ public enum Visibility {
 }
 
 public extension View {
-    @ViewBuilder
     func presentationDetents(_ detents: Set<PresentationDetent>) -> some View { self }
-    @ViewBuilder
     func presentationDragIndicator(_ visibility: Visibility) -> some View { self }
-    @ViewBuilder
     func scrollContentBackground(_ visibility: Visibility) -> some View { self }
-    @ViewBuilder
     func toolbarBackground(_ visibility: Visibility, for bars: Any...) -> some View { self }
 }
 
 @available(iOS, deprecated: 17.0)
 public extension View {
-    @ViewBuilder
     func onChange<V: Equatable>(
         of value: V,
         initial: Bool = false,
@@ -216,13 +212,11 @@ public extension URL {
 }
 
 public extension View {
-    @ViewBuilder
     func onChangeCompat<V: Equatable>(of value: V, initial: Bool = false, perform action: @escaping () -> Void) -> some View {
         self.onChange(of: value) { _ in action() }
             .onAppear { if initial { action() } }
     }
 
-    @ViewBuilder
     func onChangeCompat<V: Equatable>(of value: V, initial: Bool = false, perform action: @escaping (V, V) -> Void) -> some View {
         self.modifier(OnChangeTwoArgModifier(value: value, initial: initial, action: action))
     }
@@ -300,11 +294,194 @@ public enum VisibilityCompat {
 
 @available(iOS, deprecated: 17.0)
 public extension View {
-    @ViewBuilder func focusEffectDisabled(_ disabled: Bool = true) -> some View { self }
-    @ViewBuilder func persistentSystemOverlays(_ visibility: Visibility) -> some View { self }
-    @ViewBuilder func scrollDisabled(_ disabled: Bool) -> some View { self }
-    @ViewBuilder func scrollContentBackground(_ visibility: Visibility) -> some View { self }
-    @ViewBuilder func defersSystemGestures(on edges: Edge.Set) -> some View { self }
+    func focusEffectDisabled(_ disabled: Bool = true) -> some View { self }
+    func persistentSystemOverlays(_ visibility: Visibility) -> some View { self }
+    func scrollDisabled(_ disabled: Bool) -> some View { self }
+    func scrollContentBackground(_ visibility: Visibility) -> some View { self }
+    func defersSystemGestures(on edges: Edge.Set) -> some View { self }
+}
+
+
+// MARK: - Complete iOS 16/17 UI & Layout Backports for iOS 15
+
+@available(iOS, deprecated: 16.0)
+public struct LabeledContent<Label: View, Content: View>: View {
+    let label: Label
+    let content: Content
+
+    public init(@ViewBuilder content: () -> Content, @ViewBuilder label: () -> Label) {
+        self.label = label()
+        self.content = content()
+    }
+
+    public var body: some View {
+        HStack {
+            label
+            Spacer()
+            content
+                .foregroundColor(.secondary)
+        }
+    }
+}
+
+@available(iOS, deprecated: 16.0)
+public extension LabeledContent where Label == Text {
+    init<S: StringProtocol>(_ title: S, @ViewBuilder content: () -> Content) {
+        self.label = Text(title)
+        self.content = content()
+    }
+}
+
+@available(iOS, deprecated: 16.0)
+public extension LabeledContent where Label == Text, Content == Text {
+    init<S1: StringProtocol, S2: StringProtocol>(_ title: S1, value: S2) {
+        self.label = Text(title)
+        self.content = Text(value)
+    }
+}
+
+@available(iOS, deprecated: 17.0)
+public struct ContentUnavailableView<Label: View, Description: View, Actions: View>: View {
+    let label: Label
+    let description: Description
+    let actions: Actions
+
+    public init(@ViewBuilder label: () -> Label,
+                @ViewBuilder description: () -> Description = { EmptyView() },
+                @ViewBuilder actions: () -> Actions = { EmptyView() }) {
+        self.label = label()
+        self.description = description()
+        self.actions = actions()
+    }
+
+    public var body: some View {
+        VStack(spacing: 12) {
+            label
+                .font(.headline)
+            description
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+            actions
+        }
+        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
+@available(iOS, deprecated: 17.0)
+public extension ContentUnavailableView where Label == SwiftUI.Label<Text, Image>, Description == Text?, Actions == EmptyView {
+    init<S: StringProtocol>(_ title: S, systemImage: String, description: Text? = nil) {
+        self.label = SwiftUI.Label(title, systemImage: systemImage)
+        self.description = description
+        self.actions = EmptyView()
+    }
+}
+
+@available(iOS, deprecated: 16.0)
+public protocol LayoutCompat {
+    associatedtype Body: View
+    func makeBody<Content: View>(@ViewBuilder content: () -> Content) -> Body
+}
+
+@available(iOS, deprecated: 16.0)
+public struct HStackLayout: LayoutCompat {
+    public var alignment: VerticalAlignment
+    public var spacing: CGFloat?
+    public init(alignment: VerticalAlignment = .center, spacing: CGFloat? = nil) {
+        self.alignment = alignment
+        self.spacing = spacing
+    }
+    public func makeBody<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        HStack(alignment: alignment, spacing: spacing, content: content)
+    }
+}
+
+@available(iOS, deprecated: 16.0)
+public struct VStackLayout: LayoutCompat {
+    public var alignment: HorizontalAlignment
+    public var spacing: CGFloat?
+    public init(alignment: HorizontalAlignment = .center, spacing: CGFloat? = nil) {
+        self.alignment = alignment
+        self.spacing = spacing
+    }
+    public func makeBody<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        VStack(alignment: alignment, spacing: spacing, content: content)
+    }
+}
+
+@available(iOS, deprecated: 16.0)
+public struct ZStackLayout: LayoutCompat {
+    public var alignment: Alignment
+    public init(alignment: Alignment = .center) {
+        self.alignment = alignment
+    }
+    public func makeBody<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        ZStack(alignment: alignment, content: content)
+    }
+}
+
+@available(iOS, deprecated: 16.0)
+public struct AnyLayout {
+    private let builder: (AnyView) -> AnyView
+    public init<L: LayoutCompat>(_ layout: L) {
+        self.builder = { content in
+            AnyView(layout.makeBody { content })
+        }
+    }
+    public func callAsFunction<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {
+        builder(AnyView(content()))
+    }
+}
+
+@available(iOS, deprecated: 16.0)
+public enum ToolbarPlacementCompat {
+    case automatic, bottomBar, navigationBar, tabBar
+}
+
+@available(iOS, deprecated: 17.0)
+public enum ContentMarginsPlacementCompat {
+    case automatic, scrollContent, scrollIndicators
+}
+
+@available(iOS, deprecated: 16.0)
+public enum ContentTransitionCompat {
+    case identity, opacity, interpolate, numericText(countsDown: Bool = false)
+    public static var numericText: ContentTransitionCompat { .numericText() }
+}
+
+@available(iOS, deprecated: 17.0)
+public extension View {
+    func contentMargins(_ edges: Edge.Set = .all, _ length: CGFloat?, for placement: ContentMarginsPlacementCompat = .automatic) -> some View { self }
+    func contentMargins(_ length: CGFloat, for placement: ContentMarginsPlacementCompat = .automatic) -> some View { self }
+    func toolbarBackground(_ visibility: Visibility, for bars: ToolbarPlacementCompat...) -> some View { self }
+    func toolbarBackground<S: ShapeStyle>(_ style: S, for bars: ToolbarPlacementCompat...) -> some View { self }
+    func presentationBackground<S: ShapeStyle>(_ style: S) -> some View { self }
+    func presentationBackground<V: View>(alignment: Alignment = .center, @ViewBuilder content: () -> V) -> some View { self }
+    func presentationDragIndicator(_ visibility: Visibility) -> some View { self }
+    func fontWeight(_ weight: Font.Weight?) -> some View { self }
+    func contentTransition(_ transition: ContentTransitionCompat) -> some View { self }
+    func scrollPosition<ID: Hashable>(id: Binding<ID?>, anchor: UnitPoint? = nil) -> some View { self }
+    func foregroundStyle<S1: ShapeStyle, S2: ShapeStyle>(_ primary: S1, _ secondary: S2) -> some View {
+        self.foregroundStyle(primary)
+    }
+    func navigationDestination<V: View>(isPresented: Binding<Bool>, destination: () -> V) -> some View {
+        self.background(
+            NavigationLink(destination: destination(), isActive: isPresented) { EmptyView() }.hidden()
+        )
+    }
+    func navigationDestination<D: Hashable, C: View>(for data: D.Type, destination: @escaping (D) -> C) -> some View { self }
+    func navigationDestination<D: Identifiable, C: View>(item: Binding<D?>, destination: @escaping (D) -> C) -> some View {
+        self.background(
+            NavigationLink(
+                destination: Group { if let val = item.wrappedValue { destination(val) } },
+                isActive: Binding(
+                    get: { item.wrappedValue != nil },
+                    set: { if !$0 { item.wrappedValue = nil } }
+                )
+            ) { EmptyView() }.hidden()
+        )
+    }
 }
 
 #endif
