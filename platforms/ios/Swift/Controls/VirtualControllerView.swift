@@ -10,7 +10,7 @@ let gameplaySurfaceTapNotification = Notification.Name("ARMSX2iOSGameplaySurface
 
 struct VirtualControllerView: View {
     @ObservedObject private var settings = SettingsStore.shared
-    private var dynamicSettings = SettingsStore.shared.dynamicThumbsticks
+    @State private var dynamicSettings = SettingsStore.shared.dynamicThumbsticks
     @ObservedObject private var skinLibrary = VPadSkinLibraryStore.shared
     @ObservedObject private var layout = PadLayoutStore.shared
     @State private var swipeInput = SwipeCameraInputDriver()

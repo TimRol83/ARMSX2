@@ -19,6 +19,151 @@ private struct MenuTabControllerCommandListener: View {
                 onEvent(event)
             })
     }
+
+    @ViewBuilder
+    private var iosMenuZStack: some View {
+                ZStack {
+                    // Only the selected page stays in the hierarchy; three retained stacks left
+                    // Games chrome on BIOS and overlapping focus targets in Settings.
+                    if selectedTab != 2 {
+                        NavigationStack {
+                            Group {
+                                if selectedTab == 0 {
+                                    GameListView(
+                                        embeddedInMenuNavigation: true,
+                                        ownsEmbeddedMenuToolbar: true,
+                                        controllerInput: activeControllerInput,
+                                        onRenamePresentationChanged: {
+                                            gameRenamePresented = $0
+                                        }
+                                    )
+                                        // Past AX3 the favorite star covers the cover art.
+                                        .dynamicTypeSize(...DynamicTypeSize.accessibility3)
+                                        .environment(\.menuTabIsActive, true)
+                                        .environment(
+                                            \.menuLargeTitleIsSource,
+                                            titleMorphSelection == 0
+                                        )
+                                } else {
+                                    SafeAreaProtectedMenuTabContent(
+                                        appliesLegacyLandscapeInsets:
+                                            !biosBackgroundActive
+                                    ) {
+                                        BIOSListView(
+                                            embeddedInMenuNavigation: true,
+                                            ownsEmbeddedMenuToolbar: true,
+                                            controllerInput:
+                                                activeControllerInput,
+                                            onPreviousControllerTab:
+                                                selectPreviousControllerTab,
+                                            onNextControllerTab:
+                                                selectNextControllerTab,
+                                            onControllerBoundary:
+                                                handleSharedControllerBoundary
+                                        )
+                                    }
+                                        .environment(\.menuTabIsActive, true)
+                                        .environment(
+                                            \.menuLargeTitleIsSource,
+                                            titleMorphSelection == 1
+                                        )
+                                }
+                            }
+                            // Keep the page-owned Games/BIOS title in the same
+                            // content coordinate space as Settings.
+                            .safeAreaInset(edge: .top) {
+                                Color.clear.frame(
+                                    height:
+                                        usesPageOwnedLibraryLargeTitle ? 6 : 0
+                                )
+                            }
+                            .navigationTitle(
+                                settings.localized(
+                                    usesPageOwnedLibraryLargeTitle
+                                        || (selectedTab == 0 && hideGamesScreenTitle)
+                                        || (selectedTab == 0 && useGamesLogo)
+                                        ? ""
+                                        : (selectedTab == 1 ? "BIOS" : "Games")
+                                )
+                            )
+                            .toolbarBackground(
+                                (selectedTab == 0
+                                    ? settings.hasCustomBackground
+                                    : biosBackgroundActive) ? .hidden : .automatic,
+                                for: .navigationBar
+                            )
+                            .toolbar(
+                                gameRenamePresented ? .hidden : .automatic,
+                                for: .navigationBar
+                            )
+                            .navigationBarTitleDisplayMode(
+                                usesPageOwnedLibraryLargeTitle
+                                    || (selectedTab == 0 && hideGamesScreenTitle)
+                                    || (selectedTab == 0 && useGamesLogo)
+                                    ? .inline : .large
+                            )
+                            .toolbar {
+                                if verticalSizeClass == .compact,
+                                   !(selectedTab == 0 && hideGamesScreenTitle) {
+                                    ToolbarItem(
+                                        id: "menu.collapsedTitle",
+                                        placement: .principal
+                                    ) {
+                                        EmbeddedMenuCompactTitle(
+                                            title: settings.localized(
+                                                selectedTab == 1
+                                                    ? "BIOS"
+                                                    : "Games"
+                                            ),
+                                            usesARMSX2Logo: false
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                        // Games and BIOS intentionally get distinct navigation
+                        // owners. No native bar/list state is carried across tabs.
+                        .id("library-tab.\(selectedTab)")
+                        .environment(
+                            \.menuLargeTitleIsSource,
+                            titleMorphSelection != 2
+                        )
+                    } else {
+                        SafeAreaProtectedMenuTabContent(
+                            appliesLegacyLandscapeInsets: !settingsBackgroundActive
+                        ) {
+                            SettingsRootView(
+                                navigationPath: $settingsNavigationPath,
+                                resetToRootRequest: settingsRootResetRequest,
+                                onNavigationPathActivityChanged: {
+                                    settingsNavigationHasDestination = $0
+                                },
+                                controllerInput: activeControllerInput,
+                                onPreviousControllerTab: selectPreviousControllerTab,
+                                onNextControllerTab: selectNextControllerTab,
+                                onControllerBoundary: handleSharedControllerBoundary
+                            )
+                        }
+                        .environment(\.menuTabIsActive, true)
+                        .environment(
+                            \.menuLargeTitleIsSource,
+                            titleMorphSelection == 2
+                        )
+                    }
+
+                    NativeMenuTabSwipeRecognizer(
+                        isEnabled: selectedTab != 2 || !settingsNavigationHasDestination,
+                        onSwipe: navigateFromHorizontalSwipe
+                    )
+                    .frame(width: 0, height: 0)
+                }
+                .environment(\.menuLargeTitleNamespace, largeTitleNamespace)
+                .environment(
+                    \.menuLargeTitleMorphActive,
+                    menuLargeTitleMorphActive
+                )
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
 }
 
 @MainActor
@@ -324,147 +469,7 @@ struct MenuTabView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 #else
-                ZStack {
-                    // Only the selected page stays in the hierarchy; three retained stacks left
-                    // Games chrome on BIOS and overlapping focus targets in Settings.
-                    if selectedTab != 2 {
-                        NavigationStack {
-                            Group {
-                                if selectedTab == 0 {
-                                    GameListView(
-                                        embeddedInMenuNavigation: true,
-                                        ownsEmbeddedMenuToolbar: true,
-                                        controllerInput: activeControllerInput,
-                                        onRenamePresentationChanged: {
-                                            gameRenamePresented = $0
-                                        }
-                                    )
-                                        // Past AX3 the favorite star covers the cover art.
-                                        .dynamicTypeSize(...DynamicTypeSize.accessibility3)
-                                        .environment(\.menuTabIsActive, true)
-                                        .environment(
-                                            \.menuLargeTitleIsSource,
-                                            titleMorphSelection == 0
-                                        )
-                                } else {
-                                    SafeAreaProtectedMenuTabContent(
-                                        appliesLegacyLandscapeInsets:
-                                            !biosBackgroundActive
-                                    ) {
-                                        BIOSListView(
-                                            embeddedInMenuNavigation: true,
-                                            ownsEmbeddedMenuToolbar: true,
-                                            controllerInput:
-                                                activeControllerInput,
-                                            onPreviousControllerTab:
-                                                selectPreviousControllerTab,
-                                            onNextControllerTab:
-                                                selectNextControllerTab,
-                                            onControllerBoundary:
-                                                handleSharedControllerBoundary
-                                        )
-                                    }
-                                        .environment(\.menuTabIsActive, true)
-                                        .environment(
-                                            \.menuLargeTitleIsSource,
-                                            titleMorphSelection == 1
-                                        )
-                                }
-                            }
-                            // Keep the page-owned Games/BIOS title in the same
-                            // content coordinate space as Settings.
-                            .safeAreaInset(edge: .top) {
-                                Color.clear.frame(
-                                    height:
-                                        usesPageOwnedLibraryLargeTitle ? 6 : 0
-                                )
-                            }
-                            .navigationTitle(
-                                settings.localized(
-                                    usesPageOwnedLibraryLargeTitle
-                                        || (selectedTab == 0 && hideGamesScreenTitle)
-                                        || (selectedTab == 0 && useGamesLogo)
-                                        ? ""
-                                        : (selectedTab == 1 ? "BIOS" : "Games")
-                                )
-                            )
-                            .toolbarBackground(
-                                (selectedTab == 0
-                                    ? settings.hasCustomBackground
-                                    : biosBackgroundActive) ? .hidden : .automatic,
-                                for: .navigationBar
-                            )
-                            .toolbar(
-                                gameRenamePresented ? .hidden : .automatic,
-                                for: .navigationBar
-                            )
-                            .navigationBarTitleDisplayMode(
-                                usesPageOwnedLibraryLargeTitle
-                                    || (selectedTab == 0 && hideGamesScreenTitle)
-                                    || (selectedTab == 0 && useGamesLogo)
-                                    ? .inline : .large
-                            )
-                            .toolbar {
-                                if verticalSizeClass == .compact,
-                                   !(selectedTab == 0 && hideGamesScreenTitle) {
-                                    ToolbarItem(
-                                        id: "menu.collapsedTitle",
-                                        placement: .principal
-                                    ) {
-                                        EmbeddedMenuCompactTitle(
-                                            title: settings.localized(
-                                                selectedTab == 1
-                                                    ? "BIOS"
-                                                    : "Games"
-                                            ),
-                                            usesARMSX2Logo: false
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                        // Games and BIOS intentionally get distinct navigation
-                        // owners. No native bar/list state is carried across tabs.
-                        .id("library-tab.\(selectedTab)")
-                        .environment(
-                            \.menuLargeTitleIsSource,
-                            titleMorphSelection != 2
-                        )
-                    } else {
-                        SafeAreaProtectedMenuTabContent(
-                            appliesLegacyLandscapeInsets: !settingsBackgroundActive
-                        ) {
-                            SettingsRootView(
-                                navigationPath: $settingsNavigationPath,
-                                resetToRootRequest: settingsRootResetRequest,
-                                onNavigationPathActivityChanged: {
-                                    settingsNavigationHasDestination = $0
-                                },
-                                controllerInput: activeControllerInput,
-                                onPreviousControllerTab: selectPreviousControllerTab,
-                                onNextControllerTab: selectNextControllerTab,
-                                onControllerBoundary: handleSharedControllerBoundary
-                            )
-                        }
-                        .environment(\.menuTabIsActive, true)
-                        .environment(
-                            \.menuLargeTitleIsSource,
-                            titleMorphSelection == 2
-                        )
-                    }
-
-                    NativeMenuTabSwipeRecognizer(
-                        isEnabled: selectedTab != 2 || !settingsNavigationHasDestination,
-                        onSwipe: navigateFromHorizontalSwipe
-                    )
-                    .frame(width: 0, height: 0)
-                }
-                .environment(\.menuLargeTitleNamespace, largeTitleNamespace)
-                .environment(
-                    \.menuLargeTitleMorphActive,
-                    menuLargeTitleMorphActive
-                )
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        iosMenuZStack
                 .environment(\.menuTabBarContentMargin, settingsTabBarContentMargin)
                 .safeAreaInset(edge: .bottom, spacing: tabBarContentSpacing) {
                     ControllerFocusedMenuTabBar(

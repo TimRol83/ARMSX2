@@ -37,7 +37,7 @@ struct AppearanceSettingsView: View, AppearanceSettingsEditing {
     @ObservedObject private var settings = SettingsStore.shared
     @ObservedObject private var frameRates = UIFrameRateSettings.shared
     @ObservedObject private var themeGallery = ThemeGalleryStore.shared
-    private var dynamicPreferences = SettingsStore.shared.appearance.dynamicAppearancePreferences
+    @State private var dynamicPreferences = SettingsStore.shared.appearance.dynamicAppearancePreferences
     @State private var paletteTarget: ThemePaletteTarget = .shared
     @State private var presentedEditor: PresentedEditor?
     @State private var presentedControllerColour: PresentedControllerColour?

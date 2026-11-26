@@ -31,7 +31,7 @@ final class ARMSX2ControllerEventHostViewController: GCEventViewController {
         if #available(iOS 26.0, *) {
             let controllerEvents = GCEventInteraction()
             controllerEvents.handledEventTypes = .gamepad
-            controllerEvents.receivesEventsInView = false
+            // controllerEvents.receivesEventsInView = false // iOS 18+
             view.addInteraction(controllerEvents)
         }
 
