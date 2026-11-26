@@ -287,19 +287,7 @@ public extension OSAllocatedUnfairLock where State == Void {
     }
 }
 
-@available(iOS, deprecated: 16.0)
-public enum VisibilityCompat {
-    case automatic, visible, hidden
-}
 
-@available(iOS, deprecated: 17.0)
-public extension View {
-    func focusEffectDisabled(_ disabled: Bool = true) -> some View { self }
-    func persistentSystemOverlays(_ visibility: Visibility) -> some View { self }
-    func scrollDisabled(_ disabled: Bool) -> some View { self }
-    func scrollContentBackground(_ visibility: Visibility) -> some View { self }
-    func defersSystemGestures(on edges: Edge.Set) -> some View { self }
-}
 
 
 // MARK: - Complete iOS 16/17 UI & Layout Backports for iOS 15
@@ -482,6 +470,89 @@ public extension View {
             ) { EmptyView() }.hidden()
         )
     }
+}
+
+
+// MARK: - UnevenRoundedRectangle & Scroll Shims for iOS 15
+
+@available(iOS, deprecated: 16.0)
+public struct RectangleCornerRadii: Equatable, Sendable {
+    public var topLeading: CGFloat
+    public var bottomLeading: CGFloat
+    public var bottomTrailing: CGFloat
+    public var topTrailing: CGFloat
+
+    public init(topLeading: CGFloat = 0, bottomLeading: CGFloat = 0, bottomTrailing: CGFloat = 0, topTrailing: CGFloat = 0) {
+        self.topLeading = topLeading
+        self.bottomLeading = bottomLeading
+        self.bottomTrailing = bottomTrailing
+        self.topTrailing = topTrailing
+    }
+}
+
+@available(iOS, deprecated: 16.0)
+public struct UnevenRoundedRectangle: Shape, Sendable {
+    public var cornerRadii: RectangleCornerRadii
+    public var style: RoundedCornerStyle
+
+    public init(cornerRadii: RectangleCornerRadii, style: RoundedCornerStyle = .continuous) {
+        self.cornerRadii = cornerRadii
+        self.style = style
+    }
+
+    public init(topLeadingRadius: CGFloat = 0, bottomLeadingRadius: CGFloat = 0, bottomTrailingRadius: CGFloat = 0, topTrailingRadius: CGFloat = 0, style: RoundedCornerStyle = .continuous) {
+        self.cornerRadii = RectangleCornerRadii(
+            topLeading: topLeadingRadius,
+            bottomLeading: bottomLeadingRadius,
+            bottomTrailing: bottomTrailingRadius,
+            topTrailing: topTrailingRadius
+        )
+        self.style = style
+    }
+
+    public func path(in rect: CGRect) -> Path {
+        var path = Path()
+        let tl = min(min(cornerRadii.topLeading, rect.width / 2), rect.height / 2)
+        let tr = min(min(cornerRadii.topTrailing, rect.width / 2), rect.height / 2)
+        let bl = min(min(cornerRadii.bottomLeading, rect.width / 2), rect.height / 2)
+        let br = min(min(cornerRadii.bottomTrailing, rect.width / 2), rect.height / 2)
+
+        path.move(to: CGPoint(x: rect.minX + tl, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.maxX - tr, y: rect.minY))
+        if tr > 0 {
+            path.addArc(center: CGPoint(x: rect.maxX - tr, y: rect.minY + tr), radius: tr, startAngle: .degrees(-90), endAngle: .degrees(0), clockwise: false)
+        }
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY - br))
+        if br > 0 {
+            path.addArc(center: CGPoint(x: rect.maxX - br, y: rect.maxY - br), radius: br, startAngle: .degrees(0), endAngle: .degrees(90), clockwise: false)
+        }
+        path.addLine(to: CGPoint(x: rect.minX + bl, y: rect.maxY))
+        if bl > 0 {
+            path.addArc(center: CGPoint(x: rect.minX + bl, y: rect.maxY - bl), radius: bl, startAngle: .degrees(90), endAngle: .degrees(180), clockwise: false)
+        }
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.minY + tl))
+        if tl > 0 {
+            path.addArc(center: CGPoint(x: rect.minX + tl, y: rect.minY + tl), radius: tl, startAngle: .degrees(180), endAngle: .degrees(270), clockwise: false)
+        }
+        path.closeSubpath()
+        return path
+    }
+}
+
+@available(iOS, deprecated: 16.0)
+public enum ScrollIndicatorVisibilityCompat: Sendable {
+    case automatic, visible, hidden, never
+}
+
+@available(iOS, deprecated: 16.4)
+public enum ScrollBounceBehaviorCompat: Sendable {
+    case automatic, always, basedOnSize
+}
+
+@available(iOS, deprecated: 16.4)
+public extension View {
+    func scrollIndicators(_ visibility: ScrollIndicatorVisibilityCompat, axes: Axis.Set = [.vertical, .horizontal]) -> some View { self }
+    func scrollBounceBehavior(_ behavior: ScrollBounceBehaviorCompat, axes: Axis.Set = [.vertical]) -> some View { self }
 }
 
 #endif

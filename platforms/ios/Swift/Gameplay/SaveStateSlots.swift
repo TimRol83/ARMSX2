@@ -203,11 +203,11 @@ enum SaveStateFormat {
     /// user's 24-hour clock and date order.
     static func locale(_ settings: SettingsStore) -> Locale {
         guard settings.appLanguage != .system else { return .autoupdatingCurrent }
-        var components = Locale.Components(identifier: settings.appLanguage.bcp47Code)
-        if components.region == nil {
-            components.region = Locale.current.region
+        let code = settings.appLanguage.bcp47Code
+        if !code.contains("-"), !code.contains("_"), let region = Locale.current.regionCode, !region.isEmpty {
+            return Locale(identifier: "\(code)_\(region)")
         }
-        return Locale(components: components)
+        return Locale(identifier: code)
     }
 
     /// "Today 18:13", "Yesterday 21:40" or "26 Sep 14:02".
