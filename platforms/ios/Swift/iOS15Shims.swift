@@ -1,3 +1,4 @@
+import os
 import SwiftUI
 
 #if os(iOS)
@@ -245,6 +246,65 @@ private struct OnChangeTwoArgModifier<V: Equatable>: ViewModifier {
                 action(oldValue, newValue)
             }
     }
+}
+
+
+@available(iOS, deprecated: 16.0)
+public final class OSAllocatedUnfairLock<State>: @unchecked Sendable {
+    private let lockPtr: os_unfair_lock_t
+    private var state: State
+
+    public init(initialState: State) {
+        self.lockPtr = .allocate(capacity: 1)
+        self.lockPtr.initialize(to: os_unfair_lock())
+        self.state = initialState
+    }
+
+    deinit {
+        lockPtr.deinitialize(count: 1)
+        lockPtr.deallocate()
+    }
+
+    @discardableResult
+    public func withLock<R>(_ body: (inout State) throws -> R) rethrows -> R {
+        os_unfair_lock_lock(lockPtr)
+        defer { os_unfair_lock_unlock(lockPtr) }
+        return try body(&state)
+    }
+
+    public func withLockIfAvailable<R>(_ body: (inout State) throws -> R) rethrows -> R? {
+        guard os_unfair_lock_trylock(lockPtr) else { return nil }
+        defer { os_unfair_lock_unlock(lockPtr) }
+        return try body(&state)
+    }
+}
+
+@available(iOS, deprecated: 16.0)
+public extension OSAllocatedUnfairLock where State == Void {
+    convenience init() {
+        self.init(initialState: ())
+    }
+
+    @discardableResult
+    func withLock<R>(_ body: () throws -> R) rethrows -> R {
+        os_unfair_lock_lock(lockPtr)
+        defer { os_unfair_lock_unlock(lockPtr) }
+        return try body()
+    }
+}
+
+@available(iOS, deprecated: 16.0)
+public enum VisibilityCompat {
+    case automatic, visible, hidden
+}
+
+@available(iOS, deprecated: 17.0)
+public extension View {
+    @ViewBuilder func focusEffectDisabled(_ disabled: Bool = true) -> some View { self }
+    @ViewBuilder func persistentSystemOverlays(_ visibility: Visibility) -> some View { self }
+    @ViewBuilder func scrollDisabled(_ disabled: Bool) -> some View { self }
+    @ViewBuilder func scrollContentBackground(_ visibility: Visibility) -> some View { self }
+    @ViewBuilder func defersSystemGestures(on edges: Edge.Set) -> some View { self }
 }
 
 #endif

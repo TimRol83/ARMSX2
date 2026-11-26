@@ -36,7 +36,7 @@ enum AppLanguage: String, CaseIterable, Identifiable {
     }
 
     static func resolvedSystemLanguage() -> AppLanguage {
-        let code = Locale.current.languageCode.lowercased() ?? "en"
+        let code = Locale.current.languageCode?.lowercased() ?? "en"
         switch code {
         case "zh":
             return .simplifiedChinese
