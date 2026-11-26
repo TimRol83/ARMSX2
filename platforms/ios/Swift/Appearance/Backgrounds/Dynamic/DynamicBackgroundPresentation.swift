@@ -597,7 +597,7 @@ extension View {
         materializeTransition: Bool = false,
         isEnabled: Bool = true,
         cornerRadius: CGFloat,
-        cornerRadii: RectangleCornerRadii? = nil
+        cornerRadii: Any? = nil
     ) -> some View {
         modifier(
             DynamicBackgroundGlassSurfaceModifier(
@@ -623,15 +623,11 @@ private struct DynamicBackgroundGlassSurfaceModifier: ViewModifier {
     let materializeTransition: Bool
     let isEnabled: Bool
     let cornerRadius: CGFloat
-    let cornerRadii: RectangleCornerRadii?
+    let cornerRadii: Any? = nil
 
     @ViewBuilder
     func body(content: Content) -> some View {
-        if let cornerRadii {
-            surface(content, in: UnevenRoundedRectangle(cornerRadii: cornerRadii, style: .continuous))
-        } else {
-            surface(content, in: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-        }
+        surface(content, in: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
     }
 
     @ViewBuilder
@@ -642,21 +638,6 @@ private struct DynamicBackgroundGlassSurfaceModifier: ViewModifier {
             // content can keep its exact measured card geometry without
             // retaining a live backdrop sampler.
             content
-        } else if false {
-            let glass = usesClearGlass
-                ? Glass.clear
-                : Glass.regular
-            content
-                .glassEffect(
-                    glass.tint(tint).interactive(interactive),
-                    in: shape
-                )
-                .glassEffectTransition(
-                    materializeTransition ? .materialize : .identity
-                )
-                .controllerFocusDepthBehindGlass(
-                    cornerRadius: cornerRadius
-                )
         } else {
             let fallbackMaterial = usesClearGlass
                 ? AnyShapeStyle(.ultraThinMaterial)

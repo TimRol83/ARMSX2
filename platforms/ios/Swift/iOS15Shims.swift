@@ -99,6 +99,7 @@ public enum Visibility {
     case automatic, visible, hidden
 }
 
+}
 public extension View {
     func presentationDetents(_ detents: Set<PresentationDetent>) -> some View { self }
     func presentationDragIndicator(_ visibility: Visibility) -> some View { self }
