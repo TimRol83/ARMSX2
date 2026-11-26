@@ -73,19 +73,13 @@ private final class SettingsClearGlassRowBackgroundView: UIView {
 
     init(isClear: Bool) {
         self.isClear = isClear
-        if #available(iOS 26.0, *) {
-            effectView = UIVisualEffectView(
-                effect: UIGlassEffect(style: isClear ? .clear : .regular)
+        effectView = UIVisualEffectView(
+            effect: UIBlurEffect(
+                style: isClear
+                    ? .systemUltraThinMaterial
+                    : .systemMaterial
             )
-        } else {
-            effectView = UIVisualEffectView(
-                effect: UIBlurEffect(
-                    style: isClear
-                        ? .systemUltraThinMaterial
-                        : .systemMaterial
-                )
-            )
-        }
+        )
         super.init(frame: .zero)
         backgroundColor = .clear
         isUserInteractionEnabled = false
@@ -107,17 +101,11 @@ private final class SettingsClearGlassRowBackgroundView: UIView {
     func configure(isClear: Bool) {
         guard self.isClear != isClear else { return }
         self.isClear = isClear
-        if #available(iOS 26.0, *) {
-            effectView.effect = UIGlassEffect(
-                style: isClear ? .clear : .regular
-            )
-        } else {
-            effectView.effect = UIBlurEffect(
-                style: isClear
-                    ? .systemUltraThinMaterial
-                    : .systemMaterial
-            )
-        }
+        effectView.effect = UIBlurEffect(
+            style: isClear
+                ? .systemUltraThinMaterial
+                : .systemMaterial
+        )
     }
 
     override func layoutSubviews() {

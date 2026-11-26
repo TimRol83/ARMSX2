@@ -29,7 +29,7 @@ struct GameScreenView: View {
     @ObservedObject private var appState = AppState.shared
     @ObservedObject private var session = GameSession.shared
     @ObservedObject private var settings = SettingsStore.shared
-    @ObservedObject private var dynamicSettings = SettingsStore.shared.dynamicThumbsticks
+    private var dynamicSettings = SettingsStore.shared.dynamicThumbsticks
     @ObservedObject private var layoutPresets = PadLayoutPresetStore.shared
     @ObservedObject private var skinLibrary = VPadSkinLibraryStore.shared
     @State private var touchActionSession = VirtualPadTouchActionSession()

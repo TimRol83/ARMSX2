@@ -105,7 +105,7 @@ struct RootView: View {
     @ObservedObject private var settings = SettingsStore.shared
     @ObservedObject private var frameRates = UIFrameRateSettings.shared
     @ObservedObject private var fileImporter = FileImportHandler.shared
-    @ObservedObject private var showBootSplash = !GameSession.shared.automaticGameStartupPending
+    @State private var showBootSplash = !GameSession.shared.automaticGameStartupPending
     @State private var showNoJITFinalConfirmation = false
     @State private var rootControllerAlertSelection = 0
     @StateObject private var menuControllerInput = MenuControllerInputRouter()

@@ -692,7 +692,7 @@ final class MenuControllerInputRouter : ObservableObject {
             }
     }
 
-    @Published var frontmostNavigationSessionEntry: (
+    var frontmostNavigationSessionEntry: (
         key: UUID,
         value: NavigationSessionTarget
     )? {

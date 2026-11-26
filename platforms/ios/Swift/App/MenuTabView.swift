@@ -465,11 +465,6 @@ struct MenuTabView: View {
                     menuLargeTitleMorphActive
                 )
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .contentMargins(
-                    .bottom,
-                    tabContentBottomMargin,
-                    for: .scrollContent
-                )
                 .environment(\.menuTabBarContentMargin, settingsTabBarContentMargin)
                 .safeAreaInset(edge: .bottom, spacing: tabBarContentSpacing) {
                     ControllerFocusedMenuTabBar(

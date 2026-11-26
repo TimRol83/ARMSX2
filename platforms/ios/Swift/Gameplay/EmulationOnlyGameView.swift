@@ -50,7 +50,7 @@ struct EmulationOnlyGameView: View {
     @ObservedObject private var appState = AppState.shared
     @ObservedObject private var session = GameSession.shared
     @ObservedObject private var settings = SettingsStore.shared
-    @ObservedObject private var dynamicSettings = SettingsStore.shared.dynamicThumbsticks
+    private var dynamicSettings = SettingsStore.shared.dynamicThumbsticks
     @State private var touchActionSession = VirtualPadTouchActionSession()
 
     @ViewBuilder

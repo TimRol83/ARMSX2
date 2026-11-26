@@ -587,4 +587,96 @@ public extension View {
     func defersSystemGestures(on edges: Edge.Set) -> some View { self }
 }
 
+
+// MARK: - ProposedViewSize & Liquid Glass / ButtonRepeat Shims for iOS 15
+
+@available(iOS, deprecated: 16.0)
+public struct ProposedViewSize: Equatable, Sendable {
+    public var width: CGFloat?
+    public var height: CGFloat?
+
+    public static let zero = ProposedViewSize(width: 0, height: 0)
+    public static let unspecified = ProposedViewSize(width: nil, height: nil)
+    public static let infinity = ProposedViewSize(width: .infinity, height: .infinity)
+
+    public init(width: CGFloat?, height: CGFloat?) {
+        self.width = width
+        self.height = height
+    }
+
+    public init(_ size: CGSize) {
+        self.width = size.width
+        self.height = size.height
+    }
+
+    public func replacingUnspecifiedDimensions(by size: CGSize = CGSize(width: 10, height: 10)) -> CGSize {
+        CGSize(width: width ?? size.width, height: height ?? size.height)
+    }
+}
+
+@available(iOS, deprecated: 26.0)
+public struct GlassEffectContainer<Content: View>: View {
+    public var spacing: CGFloat?
+    public let content: Content
+
+    public init(spacing: CGFloat? = nil, @ViewBuilder content: () -> Content) {
+        self.spacing = spacing
+        self.content = content()
+    }
+
+    public var body: some View {
+        content
+    }
+}
+
+@available(iOS, deprecated: 26.0)
+public struct GlassCompat: Sendable {
+    public static let regular = GlassCompat()
+    public static let clear = GlassCompat()
+    public static let identity = GlassCompat()
+
+    public init() {}
+
+    public func tint(_ color: Color?) -> GlassCompat { self }
+    public func interactive(_ isEnabled: Bool = true) -> GlassCompat { self }
+}
+
+@available(iOS, deprecated: 26.0)
+public struct GlassEffectShapeCompat: Sendable {
+    public static let circle = GlassEffectShapeCompat()
+    public static let capsule = GlassEffectShapeCompat()
+    public static let rect = GlassEffectShapeCompat()
+
+    public init() {}
+
+    public static func rect(cornerRadius: CGFloat, style: RoundedCornerStyle = .continuous) -> GlassEffectShapeCompat {
+        GlassEffectShapeCompat()
+    }
+    public static func rect(cornerRadii: RectangleCornerRadii, style: RoundedCornerStyle = .continuous) -> GlassEffectShapeCompat {
+        GlassEffectShapeCompat()
+    }
+}
+
+@available(iOS, deprecated: 26.0)
+public enum GlassEffectTransitionCompat: Sendable {
+    case identity
+    case matchedGeometry
+    case materialize
+}
+
+@available(iOS, deprecated: 17.0)
+public enum ButtonRepeatBehaviorCompat: Sendable {
+    case automatic
+    case enabled
+    case disabled
+}
+
+@available(iOS, deprecated: 26.0)
+public extension View {
+    func glassEffect(_ glass: GlassCompat = .regular, in shape: GlassEffectShapeCompat = .capsule) -> some View { self }
+    func glassEffectID<ID: Hashable>(_ id: ID, in namespace: Namespace.ID) -> some View { self }
+    func glassEffectTransition(_ transition: GlassEffectTransitionCompat) -> some View { self }
+    func buttonRepeatBehavior(_ behavior: ButtonRepeatBehaviorCompat) -> some View { self }
+}
+
 #endif
