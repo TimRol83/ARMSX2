@@ -81,6 +81,7 @@ struct TexturePacksView<Options: View>: View {
 
             options
         }
+        .navigationViewStyle(.stack)
         .navigationTitle(settings.localized("Texture Packs"))
         .navigationBarTitleDisplayMode(.inline)
         .task { await reload() }
@@ -88,7 +89,7 @@ struct TexturePacksView<Options: View>: View {
         .controllerAccessibilityTargetOrder(packTargets)
         .onChangeCompat(of: packTargets, initial: true, perform: { _, targets in controllerTargets = targets })
         .sheet(isPresented: $showCatalog, onDismiss: { Task { await reload() } }) {
-            NavigationStack {
+            NavigationView {
                 TextureCatalogView(serial: serial, controllerInput: controllerInput)
             }
         }
