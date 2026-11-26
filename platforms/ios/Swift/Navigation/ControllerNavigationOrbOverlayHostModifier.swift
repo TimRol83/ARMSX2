@@ -84,9 +84,9 @@ private struct ControllerNavigationMovingOrbOverlay: View {
         .onAppear {
             updateDisplayedTarget(target)
         }
-        .onChange(of: target) { _, next in
+        .onChangeCompat(of: target, perform: { _, next in
             updateDisplayedTarget(next)
-        }
+        })
         .onDisappear {
             removalTask?.cancel()
             removalTask = nil

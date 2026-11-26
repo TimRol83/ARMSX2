@@ -236,39 +236,39 @@ struct GameLibraryControllerCommandListener: View {
             .frame(width: 0, height: 0)
             .allowsHitTesting(false)
             .accessibilityHidden(true)
-            .onChange(of: controllerInput?.latestEvent) { _, event in
+            .onChangeCompat(of: controllerInput?.latestEvent, perform: { _, event in
                 guard let event else { return }
                 onCommand(event)
-            }
-            .onChange(of: controllerInput?.latestLibraryEntryRequest) { _, request in
+            })
+            .onChangeCompat(of: controllerInput?.latestLibraryEntryRequest, perform: { _, request in
                 guard let request else { return }
                 onLibraryEntry(request.preferLast)
-            }
-            .onChange(of: controllerInput?.focusReleaseSequence) { _, _ in
+            })
+            .onChangeCompat(of: controllerInput?.focusReleaseSequence, perform: { _, _ in
                 onFocusRelease()
-            }
-            .onChange(
+            })
+            .onChangeCompat(
                 of: controllerInput?.rightStickScrollEndSequence
-            ) { _, _ in
+            , perform: { _, _ in
                 onRightStickScrollEnded()
-            }
-            .onChange(
+            })
+            .onChangeCompat(
                 of: controllerInput?.isControllerNavigationEnabled
-            ) { _, enabled in
+            , perform: { _, enabled in
                 if enabled == false { onFocusRelease() }
                 onInputAvailabilityChanged()
-            }
-            .onChange(of: controllerInput?.navigationZone, initial: true) { _, zone in
+            })
+            .onChangeCompat(of: controllerInput?.navigationZone, initial: true, perform: { _, zone in
                 focusState.setLibraryZoneActive(zone == .library)
                 onInputAvailabilityChanged()
-            }
-            .onChange(of: controllerInput?.isNavigationCaptured, initial: true) { _, _ in
+            })
+            .onChangeCompat(of: controllerInput?.isNavigationCaptured, initial: true, perform: { _, _ in
                 onInputAvailabilityChanged()
-            }
-            .onChange(of: libraryVisible, initial: true) { _, visible in
+            })
+            .onChangeCompat(of: libraryVisible, initial: true, perform: { _, visible in
                 focusState.setLibraryVisible(visible)
                 onInputAvailabilityChanged()
-            }
+            })
     }
 }
 

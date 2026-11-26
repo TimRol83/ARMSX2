@@ -22,13 +22,13 @@ private struct BIOSToolbarFocusReporter: ViewModifier {
     @Environment(\.controllerAccessibilityTargetFocused) private var isFocused
 
     func body(content: Content) -> some View {
-        content.onChange(of: isFocused, initial: true) { _, focused in
+        content.onChangeCompat(of: isFocused, initial: true, perform: { _, focused in
             if focused {
                 focusedID = id
             } else if focusedID == id {
                 focusedID = nil
             }
-        }
+        })
     }
 }
 
@@ -41,14 +41,14 @@ private struct BIOSPromptCommandListener: View {
             .frame(width: 0, height: 0)
             .allowsHitTesting(false)
             .accessibilityHidden(true)
-            .onChange(of: controllerInput.latestEvent) { _, event in
+            .onChangeCompat(of: controllerInput.latestEvent, perform: { _, event in
                 guard let event,
                       event.captureOwner
                         == MenuControllerNavigationCaptureOwner.biosPrompt else {
                     return
                 }
                 onCommand(event.command)
-            }
+            })
     }
 }
 
@@ -402,17 +402,17 @@ struct BIOSListView: View {
                 scheduleBIOSRefresh(after: .milliseconds(0))
             }
         }
-        .onChange(of: menuTabIsActive) { _, isActive in
+        .onChangeCompat(of: menuTabIsActive, perform: { _, isActive in
             if isActive {
                 scheduleBIOSRefresh(after: .milliseconds(0))
             }
-        }
-        .onChange(of: activePrompt) { previous, prompt in
+        })
+        .onChangeCompat(of: activePrompt, perform: { previous, prompt in
             promptSelectedIndex = 0
             updatePromptCapture()
             guard let prompt, prompt != previous else { return }
             MenuAudioPackManager.shared.playEvent(.uiToast)
-        }
+        })
         .onReceive(NotificationCenter.default.publisher(for: InitialContentBootstrap.didChangeNotification)) { _ in
             library.markNeedsRefresh()
             if menuTabIsActive {

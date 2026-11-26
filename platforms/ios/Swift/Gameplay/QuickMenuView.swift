@@ -186,19 +186,19 @@ struct QuickMenuView: View {
                         matchingScopePrefix: "quick-pause."
                     )
                 }
-                .onChange(
+                .onChangeCompat(
                     of: QuickMenuFoldMemory(
                         scope: quickMenuControllerScopeKey(usesLandscapeMap: usesLandscapeMap),
                         large: large,
                         pose: foldPose
                     ),
                     initial: true
-                ) { _, now in rememberFoldScope(now) }
+                , perform: { _, now in rememberFoldScope(now) })
         }
-        .onChange(of: showStopConfirmation) { _, isPresented in
+        .onChangeCompat(of: showStopConfirmation, perform: { _, isPresented in
             guard isPresented else { return }
             MenuAudioPackManager.shared.playEvent(.uiToast)
-        }
+        })
         .environment(
             \.controllerTextAppearance,
             settings.appearance.controllerQuickMenuTextAppearance

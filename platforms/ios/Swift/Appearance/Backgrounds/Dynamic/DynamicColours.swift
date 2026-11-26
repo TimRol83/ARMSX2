@@ -186,9 +186,9 @@ struct ThemePaletteEditor: View {
       .presentationBackground(.clear)
       .presentationDragIndicator(isShowingBackgroundOnly ? .hidden : .visible)
       .onAppear(perform: prepareEditor)
-      .onChange(of: currentEditorSnapshot) { oldSnapshot, newSnapshot in
+      .onChangeCompat(of: currentEditorSnapshot, perform: { oldSnapshot, newSnapshot in
         handleEditorSnapshotChange(from: oldSnapshot, to: newSnapshot)
-      }
+      })
       .onDisappear(perform: tearDownEditor)
   }
 
@@ -242,13 +242,13 @@ struct ThemePaletteEditor: View {
         ScrollView {
           editorSections
         }
-        .onChange(of: scrollToTopRequest) { _, _ in
+        .onChangeCompat(of: scrollToTopRequest, perform: { _, _ in
           var transaction = Transaction(animation: nil)
           transaction.disablesAnimations = true
           withTransaction(transaction) {
             proxy.scrollTo("colours-editor-top", anchor: .top)
           }
-        }
+        })
       }
       .background(
         Color.clear

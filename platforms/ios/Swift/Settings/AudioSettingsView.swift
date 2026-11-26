@@ -107,11 +107,11 @@ struct AudioSettingsView: View {
             message: audioPackMessage?.detail ?? "",
             actions: [.ok]
         )
-        .onChange(of: audioPackMessage?.id) { _, messageID in
+        .onChangeCompat(of: audioPackMessage?.id, perform: { _, messageID in
             guard messageID != nil else { return }
             MenuAudioPackManager.shared.playEvent(.uiToast)
             controllerInput?.playTouchHaptics(.contextMenu)
-        }
+        })
     }
 
     private var audioPackSection: some View {

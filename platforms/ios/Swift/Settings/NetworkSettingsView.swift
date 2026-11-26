@@ -137,12 +137,12 @@ struct NetworkSettingsView: View {
             loadNetworkAdaptersIfNeeded()
             loadHosts()
         }
-        .onChange(of: hosts) { _, newHosts in
+        .onChangeCompat(of: hosts, perform: { _, newHosts in
             guard hasLoadedHosts, newHosts != lastPersistedHosts else {
                 return
             }
             scheduleHostSave()
-        }
+        })
         .onDisappear {
             flushPendingHostSave()
         }

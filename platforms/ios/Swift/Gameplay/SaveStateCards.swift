@@ -54,11 +54,11 @@ struct SaveStateRenameCard: View {
                     .foregroundStyle(OverlayTheme.textPrimary)
                     .submitLabel(.done)
                     .onSubmit(onConfirm)
-                    .onChange(of: text) { _, value in
+                    .onChangeCompat(of: text, perform: { _, value in
                         if value.count > SaveStateSlot.nameLimit {
                             text = String(value.prefix(SaveStateSlot.nameLimit))
                         }
-                    }
+                    })
                     .padding(.leading, 12)
                     .frame(minHeight: 44)
                     .controllerAccessibilityActionTarget(
@@ -248,7 +248,7 @@ struct SaveStateUndoToast: View {
             .accessibilityElement(children: .contain)
             .accessibilityFocused($focused)
             .accessibilityAction(.escape) { undo.finish() }
-            .onChange(of: focused) { _, value in undo.focusHeld = value }
+            .onChangeCompat(of: focused, perform: { _, value in undo.focusHeld = value })
         }
     }
 }

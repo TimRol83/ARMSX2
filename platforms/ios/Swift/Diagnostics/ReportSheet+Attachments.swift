@@ -133,11 +133,11 @@ extension ReportSheet {
                 .init(title: settings.localized("Choose from Files")) { pick(.photo) },
             ])
             .photosPicker(isPresented: $showPhotoPicker, selection: $photoItem, matching: .images)
-            .onChange(of: photoItem) { _, item in
+            .onChangeCompat(of: photoItem, perform: { _, item in
                 guard let item else { return }
                 photoItem = nil
                 setPhoto { try? await item.loadTransferable(type: Data.self) }
-            }
+            })
             .fileImporter(
                 isPresented: $showImporter,
                 allowedContentTypes: pickMode == .crash ? [UTType(filenameExtension: "ips") ?? .json, .json, .plainText] : [.image],

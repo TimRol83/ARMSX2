@@ -107,22 +107,22 @@ struct ThemeGalleryView: View {
             customPreviewSnapshot = gallery.customDraft
             preferences = settings.appearance.dynamicAppearancePreferences
         }
-        .onChange(of: page) { _, page in
+        .onChangeCompat(of: page, perform: { _, page in
             endPreview()
             if page == .shared { paletteTarget = .shared }
             if page == .ribbons { paletteTarget = .ribbons }
-        }
-        .onChange(of: preferences) { _, updated in
+        })
+        .onChangeCompat(of: preferences, perform: { _, updated in
             // A preset synchronizes the binding too; only a user edit differs.
             guard updated != settings.appearance.dynamicAppearancePreferences else { return }
             rememberUndo()
             settings.appearance.beginCustomThemeEditing()
             settings.appearance.dynamicAppearancePreferences = updated
             preview(page.rawValue)
-        }
-        .onChange(of: livePreview) { _, enabled in
+        })
+        .onChangeCompat(of: livePreview, perform: { _, enabled in
             if !enabled { endPreview() }
-        }
+        })
         .onDisappear {
             guard !showsNameKeyboard else { return }
             endPreview()

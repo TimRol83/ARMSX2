@@ -462,9 +462,9 @@ private struct OrbitKeysSelectionDot: View {
       .onAppear {
         pulse(for: trigger)
       }
-      .onChange(of: trigger) { _, newValue in
+      .onChangeCompat(of: trigger, perform: { _, newValue in
         pulse(for: newValue)
-      }
+      })
       .onDisappear {
         pulseTask?.cancel()
         pulseTask = nil

@@ -110,34 +110,34 @@ struct VirtualControllerView: View {
             activeTouchActionSession.refreshHardcoreAutomaticFireRestriction()
             configureAuxiliaryInputs()
         }
-        .onChange(of: skinLibrary.selectedSkinID) { _, _ in
+        .onChangeCompat(of: skinLibrary.selectedSkinID, perform: { _, _ in
             ARMSX2VirtualPadMaskImageCache.prewarm(descriptor: effectiveSkinDescriptor)
-        }
-        .onChange(of: skinDescriptor) { _, _ in
+        })
+        .onChangeCompat(of: skinDescriptor, perform: { _, _ in
             ARMSX2VirtualPadMaskImageCache.prewarm(descriptor: effectiveSkinDescriptor)
-        }
-        .onChange(of: dynamicSettings.swipeCamera) { _, _ in
+        })
+        .onChangeCompat(of: dynamicSettings.swipeCamera, perform: { _, _ in
             resetDynamicInputs()
             configureAuxiliaryInputs()
-        }
-        .onChange(of: dynamicSettings.gyroscopeCamera) { _, _ in
+        })
+        .onChangeCompat(of: dynamicSettings.gyroscopeCamera, perform: { _, _ in
             configureAuxiliaryInputs()
-        }
-        .onChange(of: dynamicSettings.legacyThumbsticks) { _, _ in
+        })
+        .onChangeCompat(of: dynamicSettings.legacyThumbsticks, perform: { _, _ in
             resetDynamicInputs()
-        }
-        .onChange(of: dynamicSettings.dynamicThumbsticks) { _, _ in
+        })
+        .onChangeCompat(of: dynamicSettings.dynamicThumbsticks, perform: { _, _ in
             resetDynamicInputs()
-        }
-        .onChange(of: dynamicSettings.convertSwipeToDynamicJoystick) { _, _ in
+        })
+        .onChangeCompat(of: dynamicSettings.convertSwipeToDynamicJoystick, perform: { _, _ in
             resetDynamicInputs()
-        }
-        .onChange(of: dynamicSettings.leftThumbstickActionsEnabled) { _, _ in
+        })
+        .onChangeCompat(of: dynamicSettings.leftThumbstickActionsEnabled, perform: { _, _ in
             resetDynamicInputs()
-        }
-        .onChange(of: dynamicSettings.rightThumbstickActionsEnabled) { _, _ in
+        })
+        .onChangeCompat(of: dynamicSettings.rightThumbstickActionsEnabled, perform: { _, _ in
             resetDynamicInputs()
-        }
+        })
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
             cancelActiveInputSession()
         }
@@ -164,7 +164,7 @@ struct VirtualControllerView: View {
             )
         }
         // A fold moves the pad to the other screen and its touches never end.
-        .onChange(of: largeLayout) { resetDynamicInputs() }
+        .onChangeCompat(of: largeLayout, perform: { resetDynamicInputs() })
 
     }
 

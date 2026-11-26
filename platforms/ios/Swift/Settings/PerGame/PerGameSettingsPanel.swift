@@ -132,7 +132,7 @@ struct PerGameSettingsPanel: View {
             // Portrait and landscape are different focus graphs, so a rotation rebuilds the probes
             // and the navigation scope at once and Cross cannot activate a control from the old tree.
             .id(layout)
-            .onChange(of: layout) { _, newLayout in
+            .onChangeCompat(of: layout, perform: { _, newLayout in
                 guard AppState.shared.hingePresent else {
                     controller.selectedControllerDetail = nil
                     return
@@ -142,7 +142,7 @@ struct PerGameSettingsPanel: View {
                 controller.selectedControllerDetail = nil
                 guard !newLayout.usesSplitView else { return }
                 controller.pushOpenCategoryAfterLayout()
-            }
+            })
             .controllerAccessibilityTargetOrder(
                 controller.perGameControllerTargetOrder
             )
@@ -238,29 +238,29 @@ struct PerGameSettingsPanel: View {
         .tint(accentColour)
         .accessibilityElement(children: .contain)
         .accessibilityAction(.escape) { _ = handleSharedControllerBack() }
-        .onChange(of: draft.hasPendingChanges) { _, pending in
+        .onChangeCompat(of: draft.hasPendingChanges, perform: { _, pending in
             if pending {
                 saveFeedbackVisible = false
             }
-        }
-        .onChange(of: controller.activeControllerAlertKind) { previous, kind in
+        })
+        .onChangeCompat(of: controller.activeControllerAlertKind, perform: { previous, kind in
             guard let kind, kind != previous else { return }
             MenuAudioPackManager.shared.playEvent(.uiToast)
-        }
+        })
         .onAppear {
             livePreview.beginLivePreviewSessionIfNeeded()
             if initiallySelectsGameController { controller.pushOpenCategoryAfterLayout() }
         }
-        .onChange(of: draft.perGameLivePreviewFingerprint()) { _, fingerprint in
+        .onChangeCompat(of: draft.perGameLivePreviewFingerprint(), perform: { _, fingerprint in
             livePreview.fingerprintChanged(fingerprint)
-        }
-        .onChange(of: livePreviewDismissRequest) { _, _ in
+        })
+        .onChangeCompat(of: livePreviewDismissRequest, perform: { _, _ in
             livePreview.dismissRequested()
-        }
-        .onChange(of: settings.appearance.temporalSaveStateToLivePreviewChanges) {
+        })
+        .onChangeCompat(of: settings.appearance.temporalSaveStateToLivePreviewChanges, perform: {
             _, enabled in
             livePreview.temporalPreviewSettingChanged(enabled)
-        }
+        })
         .onDisappear {
             livePreview.panelDisappeared()
         }

@@ -43,9 +43,9 @@ struct MemoryCardSettingsView: View {
                     selection: $slot1Card,
                     options: cardPickerOptions
                 )
-                .onChange(of: slot1Card) { _, newValue in
+                .onChangeCompat(of: slot1Card, perform: { _, newValue in
                     ARMSX2Bridge.setMemoryCard(name: newValue, forSlot: 1, enabled: !newValue.isEmpty)
-                }
+                })
 
                 Picker(settings.localized("Slot 2"), selection: $slot2Card) {
                     Text(settings.localized("Unplugged")).tag("")
@@ -58,9 +58,9 @@ struct MemoryCardSettingsView: View {
                     selection: $slot2Card,
                     options: cardPickerOptions
                 )
-                .onChange(of: slot2Card) { _, newValue in
+                .onChangeCompat(of: slot2Card, perform: { _, newValue in
                     ARMSX2Bridge.setMemoryCard(name: newValue, forSlot: 2, enabled: !newValue.isEmpty)
-                }
+                })
 
                 Text(settings.localized("Slot changes take effect on the next VM boot."))
                     .font(.caption)

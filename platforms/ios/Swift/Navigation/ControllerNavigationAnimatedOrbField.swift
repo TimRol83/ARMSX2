@@ -98,30 +98,30 @@ struct ControllerNavigationAnimatedOrbField: View {
             retarget(to: MotionTarget(id: targetID, frame: targetFrame))
             updateOrbActivity(isEnabled: showsOrbs)
         }
-        .onChange(of: MotionTarget(id: targetID, frame: targetFrame)) { _, next in
+        .onChangeCompat(of: MotionTarget(id: targetID, frame: targetFrame), perform: { _, next in
             retarget(to: next)
-        }
-        .onChange(of: tracksTargetFrameDirectly) { _, tracksDirectly in
+        })
+        .onChangeCompat(of: tracksTargetFrameDirectly, perform: { _, tracksDirectly in
             guard tracksDirectly else { return }
             retarget(to: MotionTarget(id: targetID, frame: targetFrame))
-        }
-        .onChange(of: resolvedFocusTravelStyle) { _, _ in
+        })
+        .onChangeCompat(of: resolvedFocusTravelStyle, perform: { _, _ in
             // Settle an in-flight effect before the new choice takes over.
             // The session still owns any currently scrolling geometry.
             setFrameDirectly(targetFrame, at: Date.timeIntervalSinceReferenceDate)
-        }
-        .onChange(of: reduceMotion) { _, reducesMotion in
+        })
+        .onChangeCompat(of: reduceMotion, perform: { _, reducesMotion in
             if reducesMotion {
                 setFrameDirectly(targetFrame, at: Date.timeIntervalSinceReferenceDate)
             }
-        }
-        .onChange(of: showsOrbs) { _, isEnabled in
+        })
+        .onChangeCompat(of: showsOrbs, perform: { _, isEnabled in
             updateOrbActivity(isEnabled: isEnabled)
-        }
-        .onChange(of: showsOrbs ? resolvedInteraction : nil) { _, interaction in
+        })
+        .onChangeCompat(of: showsOrbs ? resolvedInteraction : nil, perform: { _, interaction in
             guard let interaction else { return }
             react(to: interaction.command)
-        }
+        })
         .onDisappear {
             releaseOrbResources()
             transitionCompletionTask?.cancel()

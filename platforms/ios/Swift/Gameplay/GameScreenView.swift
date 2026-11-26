@@ -164,7 +164,7 @@ struct GameScreenView: View {
             }
             .preference(key: GameScreenSizePreferenceKey.self, value: screen)
             // Off the safe region, not the preference: the status bar moves one, not the other.
-            .onChange(of: geo.size) { _, _ in syncFullscreenStateFromWindow() }
+            .onChangeCompat(of: geo.size, perform: { _, _ in syncFullscreenStateFromWindow() })
         }
         // An overlay owns focus; the pad and menu button under it stay out of reach.
         .accessibilityHidden(overlay.overlayRoute != .hidden)
@@ -236,7 +236,7 @@ struct GameScreenView: View {
             leaveGameplaySystemChromeMode()
         }
         // VM pause follows `overlayRoute` alone: any route but `.hidden` keeps it paused.
-        .onChange(of: overlay.overlayRoute) { _, route in
+        .onChangeCompat(of: overlay.overlayRoute, perform: { _, route in
             if route == .hidden { (overlay.pauseMenuChild, overlay.pauseCardFoldMemory) = (nil, nil) }
             if route == .paused {
                 // Child dismissal and background re-entry reach the card without an open action.
@@ -245,12 +245,12 @@ struct GameScreenView: View {
             overlay.updateRuntimeOverlayPause()
             updateRuntimeControllerMenuOwnership()
             overlay.scheduleInactiveQuickMenuResourceRelease(for: route, reduceMotion: reduceMotion)
-        }
-        .onChange(of: shortcuts.operationActive) { _, _ in
+        })
+        .onChangeCompat(of: shortcuts.operationActive, perform: { _, _ in
             overlay.updateRuntimeOverlayPause()
             updateRuntimeControllerMenuOwnership()
-        }
-        .onChange(of: controllerInput?.latestQuickPauseRequest) { _, request in
+        })
+        .onChangeCompat(of: controllerInput?.latestQuickPauseRequest, perform: { _, request in
             guard request != nil,
                   overlay.overlayRoute == .hidden,
                   !shortcuts.operationActive else { return }
@@ -259,11 +259,11 @@ struct GameScreenView: View {
             controllerInput?.playFeedback(.tabTransition)
             refreshRuntimeMenuState()
             overlay.overlayRoute = .paused
-        }
-        .onChange(of: controllerInput?.latestEmulationShortcutRequest) { _, request in
+        })
+        .onChangeCompat(of: controllerInput?.latestEmulationShortcutRequest, perform: { _, request in
             guard let request, overlay.overlayRoute == .hidden else { return }
             shortcuts.handleEmulationControllerShortcut(request.shortcut)
-        }
+        })
         // Not scenePhase: this view lives in SDL's UIKit scene, where it stays .background.
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
             wasBackgrounded = true
@@ -277,35 +277,35 @@ struct GameScreenView: View {
             }
             wasBackgrounded = false
         }
-        .onChange(of: fullScreen) { _, isEnabled in
+        .onChangeCompat(of: fullScreen, perform: { _, isEnabled in
             applyFullscreenState(isEnabled)
-        }
-        .onChange(of: session.gameplayLaunchTransition?.id) { previous, current in
+        })
+        .onChangeCompat(of: session.gameplayLaunchTransition?.id, perform: { previous, current in
             // Keep system chrome still until the launch card's transition has faded away.
             guard previous != nil, current == nil else { return }
             applyFullscreenState(fullScreen)
-        }
-        .onChange(of: settings.appearance.hideGameplayStatusBar) { _, _ in
+        })
+        .onChangeCompat(of: settings.appearance.hideGameplayStatusBar, perform: { _, _ in
             updateGameplayStatusBar(forFullscreen: fullScreen)
-        }
-        .onChange(of: settings.controller.hideMenuButton) { _, isHidden in
+        })
+        .onChangeCompat(of: settings.controller.hideMenuButton, perform: { _, isHidden in
             if menuButtonHidden != isHidden {
                 menuButtonHidden = isHidden
             }
             cancelMenuButtonReveal()
-        }
-        .onChange(of: settings.emulationOnlyModeEnabled) { _, isEnabled in
+        })
+        .onChangeCompat(of: settings.emulationOnlyModeEnabled, perform: { _, isEnabled in
             if isEnabled {
                 enterEmulationOnlyModeIfReady()
             } else {
                 session.cancelEmulationOnlyTransition()
             }
-        }
-        .onChange(of: session.emulationOnlyStartupReady) { _, isReady in
+        })
+        .onChangeCompat(of: session.emulationOnlyStartupReady, perform: { _, isReady in
             if isReady {
                 enterEmulationOnlyModeIfReady()
             }
-        }
+        })
         .onReceive(NotificationCenter.default.publisher(for: .ARMSX2iOSRuntimeMenuStateChanged)) { _ in
             refreshRuntimeMenuState()
         }
@@ -605,12 +605,12 @@ struct GameScreenView: View {
                 .transition(.move(edge: .top).combined(with: .opacity))
             }
         }
-        .onChange(of: saveStateUndo.item?.id) { _, id in
+        .onChangeCompat(of: saveStateUndo.item?.id, perform: { _, id in
             controllerInput?.saveStateUndoPending = id != nil
-        }
-        .onChange(of: controllerInput?.saveStateUndoRequest) { _, _ in
+        })
+        .onChangeCompat(of: controllerInput?.saveStateUndoRequest, perform: { _, _ in
             shortcuts.undoSaveStateAction()
-        }
+        })
         .task(id: session.emulationSessionID) {
             SaveStateAutoSave.shared.restart()
             while !Task.isCancelled {

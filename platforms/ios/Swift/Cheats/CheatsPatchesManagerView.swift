@@ -78,12 +78,12 @@ struct CheatsPatchesManagerView: View {
                 .scrollContentBackground(.hidden)
                 .background(Color.clear)
                 .cheatsScrollMemory(session, instance: instance)
-                .onChange(of: controllerTarget) { _, target in
+                .onChangeCompat(of: controllerTarget, perform: { _, target in
                     if session?.shownBy == instance { session?.controllerTarget = target }
                     withAnimation(.snappy(duration: 0.22)) {
                         proxy.scrollTo(target, anchor: .center)
                     }
-                }
+                })
             }
             .navigationTitle(settings.localized("Cheats & Patches"))
             .navigationBarTitleDisplayMode(.inline)
@@ -139,22 +139,22 @@ struct CheatsPatchesManagerView: View {
                     priority: 500
                 )
             }
-            .onChange(of: patchSourcesDraft) { _, drafts in session?.patchSourcesDraft = drafts }
-            .onChange(of: cheatSourcesDraft) { _, drafts in session?.cheatSourcesDraft = drafts }
-            .onChange(of: showAdvanced) { _, shown in session?.showAdvanced = shown }
-            .onChange(of: controllerInput?.latestEvent) { _, event in
+            .onChangeCompat(of: patchSourcesDraft, perform: { _, drafts in session?.patchSourcesDraft = drafts })
+            .onChangeCompat(of: cheatSourcesDraft, perform: { _, drafts in session?.cheatSourcesDraft = drafts })
+            .onChangeCompat(of: showAdvanced, perform: { _, shown in session?.showAdvanced = shown })
+            .onChangeCompat(of: controllerInput?.latestEvent, perform: { _, event in
                 guard let event else { return }
                 handleControllerCommand(event)
-            }
+            })
             // A touch drops the capture, so take it back when the pad returns.
-            .onChange(of: controllerInput?.isControllerNavigationEnabled) { _, enabled in
+            .onChangeCompat(of: controllerInput?.isControllerNavigationEnabled, perform: { _, enabled in
                 guard enabled == true else { return }
                 controllerInput?.setNavigationCaptured(
                     true,
                     owner: MenuControllerNavigationCaptureOwner.cheatsPatchesManager,
                     priority: 500
                 )
-            }
+            })
             .sheet(isPresented: $showImportPicker) {
                 ImportDocumentPicker(
                     allowedContentTypes: FileImportHandler.pnachContentTypes,

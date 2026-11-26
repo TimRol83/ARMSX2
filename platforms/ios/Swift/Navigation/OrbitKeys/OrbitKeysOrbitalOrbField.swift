@@ -129,7 +129,7 @@ struct OrbitKeysOrbitalOrbField: View {
       ]
       lastSettledPosition = selectedPosition
     }
-    .onChange(of: targetStickVector) { _, newValue in
+    .onChangeCompat(of: targetStickVector, perform: { _, newValue in
       let now = Date.timeIntervalSinceReferenceDate
       let currentValue = anchorVector(at: now)
       anchorTransitions.append(
@@ -143,13 +143,13 @@ struct OrbitKeysOrbitalOrbField: View {
       if anchorTransitions.count > 80 {
         anchorTransitions.removeFirst(anchorTransitions.count - 80)
       }
-    }
-    .onChange(of: selectedPosition) { _, _ in
+    })
+    .onChangeCompat(of: selectedPosition, perform: { _, _ in
       updateOrbitFocusForSelection()
-    }
-    .onChange(of: customSelectedAnchor) { _, _ in
+    })
+    .onChangeCompat(of: customSelectedAnchor, perform: { _, _ in
       updateOrbitFocusForSelection()
-    }
+    })
     .task(id: selectedPosition) {
       guard let lastSettledPosition else {
         self.lastSettledPosition = selectedPosition
@@ -174,7 +174,7 @@ struct OrbitKeysOrbitalOrbField: View {
       trailSampleResetTime = now
       self.lastSettledPosition = selectedPosition
     }
-    .onChange(of: characterTrigger) { _, _ in
+    .onChangeCompat(of: characterTrigger, perform: { _, _ in
       guard !reduceMotion,
         customCharacterAnchor != nil || (characterFace != nil && characterPosition != nil)
       else {
@@ -201,7 +201,7 @@ struct OrbitKeysOrbitalOrbField: View {
         )
       )
       trimCharacterAnchorTransitions()
-    }
+    })
   }
 
   @ViewBuilder

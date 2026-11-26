@@ -14,10 +14,10 @@ private struct MenuTabControllerCommandListener: View {
             .frame(width: 0, height: 0)
             .allowsHitTesting(false)
             .accessibilityHidden(true)
-            .onChange(of: controllerInput.latestEvent) { _, event in
+            .onChangeCompat(of: controllerInput.latestEvent, perform: { _, event in
                 guard let event else { return }
                 onEvent(event)
-            }
+            })
     }
 }
 
@@ -518,10 +518,10 @@ struct MenuTabView: View {
                     .onAppear {
                         menuViewportSize = proxy.size
                     }
-                    .onChange(of: proxy.size) { _, size in
+                    .onChangeCompat(of: proxy.size, perform: { _, size in
                         guard menuViewportSize != size else { return }
                         menuViewportSize = size
-                    }
+                    })
             }
             // Otherwise a keyboard shortens the menu and portrait gets the landscape layout.
             .ignoresSafeArea(.keyboard)
@@ -554,15 +554,15 @@ struct MenuTabView: View {
             backgroundHost.reactivateForMenu(isAvailable: settings.hasCustomBackground)
             backgroundHost.setPresentationVisible(selectedTabShowsBackground)
         }
-        .onChange(of: settings.hasCustomBackground) { _, hasBackground in
+        .onChangeCompat(of: settings.hasCustomBackground, perform: { _, hasBackground in
             backgroundHost.setMenuBackgroundAvailable(hasBackground)
-        }
-        .onChange(of: settings.appearance.dynamicBackgroundsEnabled) { _, _ in
+        })
+        .onChangeCompat(of: settings.appearance.dynamicBackgroundsEnabled, perform: { _, _ in
             backgroundHost.setMenuBackgroundAvailable(settings.hasCustomBackground)
-        }
-        .onChange(of: selectedTabShowsBackground) { _, showsBackground in
+        })
+        .onChangeCompat(of: selectedTabShowsBackground, perform: { _, showsBackground in
             backgroundHost.setPresentationVisible(showsBackground)
-        }
+        })
         .onDisappear {
             controllerTabEntryTask?.cancel()
             controllerTabEntryTask = nil

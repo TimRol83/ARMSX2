@@ -205,10 +205,10 @@ struct SaveStatesPanel: View {
             .presentationBackground(.clear)
             .appStatusBarHidden()
         }
-        .onChange(of: landscape) { _, _ in
+        .onChangeCompat(of: landscape, perform: { _, _ in
             // The menu is anchored to a row that a new layout may have scrolled away.
             if menuSlot != nil { closeMenu() }
-        }
+        })
         .task(id: files.isEmpty) {
             // Registering is passive, as in the pause menu, so ask to enter once the rows exist.
             guard !files.isEmpty else { return }

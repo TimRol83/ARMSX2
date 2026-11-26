@@ -323,10 +323,10 @@ struct GameLibraryScrollObserver: View {
             .frame(width: 0, height: 0)
             .allowsHitTesting(false)
             .accessibilityHidden(true)
-            .onChange(
+            .onChangeCompat(
                 of: restoreState.topRequestSequence,
                 initial: true
-            ) { _, sequence in
+            , perform: { _, sequence in
                 guard sequence > 0,
                       restoreState.consumeTopRestore(sequence) else { return }
                 DispatchQueue.main.async {
@@ -336,11 +336,11 @@ struct GameLibraryScrollObserver: View {
                         proxy.scrollTo(Self.topAnchor, anchor: topAlignment)
                     }
                 }
-            }
-            .onChange(
+            })
+            .onChangeCompat(
                 of: focusState.selectionScrollRequest,
                 initial: true
-            ) { _, request in
+            , perform: { _, request in
                 guard let request else { return }
                 // Lazy content is still mounting the focused card, so scroll on
                 // the next main turn; rapid moves coalesce to the newest request.
@@ -387,8 +387,8 @@ struct GameLibraryScrollObserver: View {
                         }
                     }
                 }
-            }
-            .onChange(of: favoriteScrollRequest) { _, request in
+            })
+            .onChangeCompat(of: favoriteScrollRequest, perform: { _, request in
                 guard let request else { return }
                 DispatchQueue.main.async {
                     // Resolve the destination after the favorite-first sort
@@ -424,6 +424,6 @@ struct GameLibraryScrollObserver: View {
                         }
                     }
                 }
-            }
+            })
     }
 }

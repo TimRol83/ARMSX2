@@ -86,7 +86,7 @@ struct TexturePacksView<Options: View>: View {
         .task { await reload() }
         // Without a declared order, focus would stay on a removed pack's button.
         .controllerAccessibilityTargetOrder(packTargets)
-        .onChange(of: packTargets, initial: true) { _, targets in controllerTargets = targets }
+        .onChangeCompat(of: packTargets, initial: true, perform: { _, targets in controllerTargets = targets })
         .sheet(isPresented: $showCatalog, onDismiss: { Task { await reload() } }) {
             NavigationStack {
                 TextureCatalogView(serial: serial, controllerInput: controllerInput)

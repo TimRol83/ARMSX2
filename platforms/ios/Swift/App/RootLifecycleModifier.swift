@@ -61,28 +61,28 @@ struct RootLifecycleModifier: ViewModifier {
         .task {
             session.startAutomaticGameIfNeeded()
         }
-        .onChange(of: session.automaticGameStartupPending) { _, pending in
+        .onChangeCompat(of: session.automaticGameStartupPending, perform: { _, pending in
             // Update the destination before releasing the startup music gate;
             // controller-owned JIT prompts are not an emulation Quick Menu.
             menuControllerInput.setMenuActive(menuScreenActive)
             MenuAudioPackManager.shared.setMainInterfaceActive(mainAudioInterfaceActive)
             MenuAudioPackManager.shared.setAutomaticGameStartupActive(pending)
-        }
-        .onChange(of: settings.appearance.hideIntroStatusBar) { _, hideStatusBar in
+        })
+        .onChangeCompat(of: settings.appearance.hideIntroStatusBar, perform: { _, hideStatusBar in
             guard showBootSplash else { return }
             appState.hideStatusBar = hideStatusBar
-        }
-        .onChange(of: settings.appearance.hideMenuStatusBar) { _, hideStatusBar in
+        })
+        .onChangeCompat(of: settings.appearance.hideMenuStatusBar, perform: { _, hideStatusBar in
             guard !showBootSplash, menuScreenActive else { return }
             appState.hideStatusBar = hideStatusBar
-        }
-        .onChange(of: menuScreenActive) { _, active in
+        })
+        .onChangeCompat(of: menuScreenActive, perform: { _, active in
             handleMenuScreenActiveChange(active)
-        }
-        .onChange(of: mainAudioInterfaceActive) { _, active in
+        })
+        .onChangeCompat(of: mainAudioInterfaceActive, perform: { _, active in
             MenuAudioPackManager.shared.setMainInterfaceActive(active)
-        }
-        .onChange(of: session.gameplayLaunchTransition?.id) { previous, current in
+        })
+        .onChangeCompat(of: session.gameplayLaunchTransition?.id, perform: { previous, current in
             if previous != nil, current == nil {
                 MenuAudioPackManager.shared.setMainInterfaceActive(
                     mainAudioInterfaceActive
@@ -90,10 +90,10 @@ struct RootLifecycleModifier: ViewModifier {
                 MenuAudioPackManager.shared.cancelGameLaunchAudio()
                 scheduleGameplayControllerHelpIfReady()
             }
-        }
-        .onChange(of: session.emulationSessionID) { _, _ in
+        })
+        .onChangeCompat(of: session.emulationSessionID, perform: { _, _ in
             scheduleGameplayControllerHelpIfReady()
-        }
+        })
         .onReceive(
             NotificationCenter.default.publisher(
                 for: UIApplication.didBecomeActiveNotification

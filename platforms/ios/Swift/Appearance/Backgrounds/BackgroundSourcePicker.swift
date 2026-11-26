@@ -30,11 +30,11 @@ struct BackgroundSourcePicker: ViewModifier {
         content
             .controllerPrompt(dialogTitle, isPresented: $isPresented, actions: sourceActions)
             .photosPicker(isPresented: $showPhotoPicker, selection: $selectedPhotoItem, matching: .any(of: [.images, .videos]))
-            .onChange(of: selectedPhotoItem) { _, item in
+            .onChangeCompat(of: selectedPhotoItem, perform: { _, item in
                 guard let item else { return }
                 selectedPhotoItem = nil
                 Task { @MainActor in await importPhotoItem(item) }
-            }
+            })
             .fileImporter(isPresented: $showFilePicker, allowedContentTypes: [.image, .audiovisualContent], allowsMultipleSelection: false) { handleFileImport($0) }
             .controllerPrompt(
                 settings.localized("Large Background File"),

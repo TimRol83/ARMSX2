@@ -14,14 +14,14 @@ private struct RootControllerAlertCommandListener: View {
             .frame(width: 0, height: 0)
             .allowsHitTesting(false)
             .accessibilityHidden(true)
-            .onChange(of: controllerInput.latestEvent) { _, event in
+            .onChangeCompat(of: controllerInput.latestEvent, perform: { _, event in
                 guard let event,
                       event.captureOwner
                         == MenuControllerNavigationCaptureOwner.rootAlert else {
                     return
                 }
                 onCommand(event.command)
-            }
+            })
     }
 }
 
@@ -325,7 +325,7 @@ struct RootView: View {
             scheduleGameplayControllerHelpIfReady: scheduleGameplayControllerHelpIfReady,
             handleMenuScreenActiveChange: handleMenuScreenActiveChange
         ))
-        .onChange(of: activeControllerAlertKind, initial: true) { previous, kind in
+        .onChangeCompat(of: activeControllerAlertKind, initial: true, perform: { previous, kind in
             rootControllerAlertSelection = 0
             updateRootAlertNavigationCapture(isPresented: kind != nil)
             guard let kind, kind != previous else { return }
@@ -341,14 +341,14 @@ struct RootView: View {
             case .navigationMode, .prompt:
                 MenuAudioPackManager.shared.playEvent(.uiToast)
             }
-        }
-        .onChange(
+        })
+        .onChangeCompat(
             of: session.pendingJITGameBoot != nil,
             initial: true
-        ) { _, isPresented in
+        , perform: { _, isPresented in
             guard isPresented else { return }
             presentNoJITWarningEffects()
-        }
+        })
         .onDisappear {
             bootSplashInputReleaseTask?.cancel()
             bootSplashInputReleaseTask = nil

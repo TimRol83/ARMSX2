@@ -155,9 +155,9 @@ struct PadLayoutEditView: View {
                 .zIndex(2)
             }
             .frame(width: geo.size.width, height: geo.size.height, alignment: .top)
-            .onChange(of: splitKey, initial: true) {
+            .onChangeCompat(of: splitKey, initial: true, perform: {
                 heldSplit = liveSplit.map { (key: splitKey, gameHeight: $0.gameHeight, fit: $0.fit) }
-            }
+            })
             .onAppear {
                 if originalSnapshot == nil {
                     originalSnapshot = captureSnapshot()

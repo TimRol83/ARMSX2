@@ -328,10 +328,10 @@ struct SettingsRootView: View {
         .scrollDisabled(false)
         .scrollBounceBehavior(.always)
         .scrollPosition(id: $rootScrollPositionID, anchor: .top)
-        .onChange(of: rootScrollPositionID) { _, _ in
+        .onChangeCompat(of: rootScrollPositionID, perform: { _, _ in
             // Set by finger and controller scrolling alike, so restoring it ignores input mode.
             rememberRootScrollPositionIfAvailable()
-        }
+        })
         .scrollContentBackground(backgroundActive ? .hidden : .automatic)
         .background {
             settingsRightStickScrollTarget(
@@ -390,7 +390,7 @@ struct SettingsRootView: View {
         .safeAreaInset(edge: .top) {
             Color.clear.frame(height: 6)
         }
-        .onChange(of: menuTabIsActive) { _, isActive in
+        .onChangeCompat(of: menuTabIsActive, perform: { _, isActive in
             if isActive,
                rootScrollPositionID == nil,
                !rememberedRootScrollPositionID.isEmpty {
@@ -399,7 +399,7 @@ struct SettingsRootView: View {
                 rememberRootScrollPositionIfAvailable()
                 rememberControllerRootFocusIfAvailable()
             }
-        }
+        })
         .navigationDestination(for: SettingsPane.self) { pane in
             // Earlier pages in a deep path keep their route for Back but are dismantled until
             // they are on top again (Game Controller under Controller Macros, for example).
@@ -423,15 +423,15 @@ struct SettingsRootView: View {
             }
         }
         }
-        .onChange(of: resetToRootRequest) { _, _ in
+        .onChangeCompat(of: resetToRootRequest, perform: { _, _ in
             guard !navigationPath.isEmpty else { return }
             var transaction = Transaction(animation: nil)
             transaction.disablesAnimations = true
             withTransaction(transaction) {
                 navigationPath.removeAll()
             }
-        }
-        .onChange(of: navigationPath) { previousPath, currentPath in
+        })
+        .onChangeCompat(of: navigationPath, perform: { previousPath, currentPath in
             // Read from the route: the List can drop its focused probe before the session sees
             // the scope change, which could leave Language remembered instead of the pane.
             if previousPath.isEmpty, let selectedPane = currentPath.first {
@@ -446,7 +446,7 @@ struct SettingsRootView: View {
             }
             onNavigationPathActivityChanged(!currentPath.isEmpty)
             scheduleControllerDestinationEntry()
-        }
+        })
         .onAppear {
             onNavigationPathActivityChanged(!navigationPath.isEmpty)
             if !navigationPath.isEmpty {

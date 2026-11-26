@@ -13,15 +13,15 @@ private struct ControllerAccessibilityTargetOrderModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .onAppear { publishOrderIfActive() }
-            .onChange(of: navigationIDs) { _, value in
+            .onChangeCompat(of: navigationIDs, perform: { _, value in
                 if isActive, !isSuppressed, session?.ownerDeclaresOrder != true {
                     session?.setDeclaredOrder(value)
                     session?.setPageDirectionalLinks(links)
                 }
-            }
-            .onChange(of: isActive) { _, _ in publishOrderIfActive() }
-            .onChange(of: isSuppressed) { _, _ in publishOrderIfActive() }
-            .onChange(of: session?.scopeRevision) { _, _ in publishOrderIfActive() }
+            })
+            .onChangeCompat(of: isActive, perform: { _, _ in publishOrderIfActive() })
+            .onChangeCompat(of: isSuppressed, perform: { _, _ in publishOrderIfActive() })
+            .onChangeCompat(of: session?.scopeRevision, perform: { _, _ in publishOrderIfActive() })
     }
 
     private func publishOrderIfActive() {

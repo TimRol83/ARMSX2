@@ -333,37 +333,37 @@ private struct ControllerAccessibilityNavigationModifier: ViewModifier {
         _ content: Body
     ) -> some View {
         content
-            .onChange(of: isActive) { _, _ in updateRegistration() }
-            .onChange(of: scopeKey) { _, _ in updateRegistration() }
-            .onChange(of: boundaryRules) { _, _ in updateRegistration() }
-            .onChange(of: directionalLinks) { _, _ in updateRegistration() }
-            .onChange(of: prioritizesDirectionalLinks) { _, _ in
+            .onChangeCompat(of: isActive, perform: { _, _ in updateRegistration() })
+            .onChangeCompat(of: scopeKey, perform: { _, _ in updateRegistration() })
+            .onChangeCompat(of: boundaryRules, perform: { _, _ in updateRegistration() })
+            .onChangeCompat(of: directionalLinks, perform: { _, _ in updateRegistration() })
+            .onChangeCompat(of: prioritizesDirectionalLinks, perform: { _, _ in
                 updateRegistration()
-            }
-            .onChange(of: confinesHorizontalFocusMovement) { _, _ in
+            })
+            .onChangeCompat(of: confinesHorizontalFocusMovement, perform: { _, _ in
                 updateRegistration()
-            }
-            .onChange(of: wrapsAtListEnds) { _, _ in updateRegistration() }
-            .onChange(of: focusScrollBehavior) { _, _ in updateRegistration() }
-            .onChange(of: focusViewportEdgeMargin) { _, _ in
+            })
+            .onChangeCompat(of: wrapsAtListEnds, perform: { _, _ in updateRegistration() })
+            .onChangeCompat(of: focusScrollBehavior, perform: { _, _ in updateRegistration() })
+            .onChangeCompat(of: focusViewportEdgeMargin, perform: { _, _ in
                 updateRegistration()
-            }
-            .onChange(of: focusTopAlignmentMargin) { _, _ in
+            })
+            .onChangeCompat(of: focusTopAlignmentMargin, perform: { _, _ in
                 updateRegistration()
-            }
-            .onChange(of: focusBottomAlignmentMargin) { _, _ in
+            })
+            .onChangeCompat(of: focusBottomAlignmentMargin, perform: { _, _ in
                 updateRegistration()
-            }
-            .onChange(of: preferredInitialFocusLabel) { _, _ in
+            })
+            .onChangeCompat(of: preferredInitialFocusLabel, perform: { _, _ in
                 updateRegistration()
-            }
-            .onChange(of: preferredLastEntryLabel) { _, _ in
+            })
+            .onChangeCompat(of: preferredLastEntryLabel, perform: { _, _ in
                 updateRegistration()
-            }
-            .onChange(of: preferredTrailingFocusLabels) { _, _ in
+            })
+            .onChangeCompat(of: preferredTrailingFocusLabels, perform: { _, _ in
                 updateRegistration()
-            }
-            .onChange(of: declaredTargetOrder) { _, _ in updateRegistration() }
+            })
+            .onChangeCompat(of: declaredTargetOrder, perform: { _, _ in updateRegistration() })
     }
 
     private func inputLifecycle<Body: View>(
@@ -397,25 +397,25 @@ private struct ControllerAccessibilityNavigationModifier: ViewModifier {
                 }
                 updateRegistration()
             }
-            .onChange(of: controllerInput?.hasConnectedController) { _, _ in
+            .onChangeCompat(of: controllerInput?.hasConnectedController, perform: { _, _ in
                 updateRegistration()
-            }
-            .onChange(of: controllerInput?.isMenuActive) { _, _ in
+            })
+            .onChangeCompat(of: controllerInput?.isMenuActive, perform: { _, _ in
                 updateRegistration()
-            }
+            })
             // A touch drops every session, and a screen that keeps its router
             // gets no other signal when the pad takes over again.
-            .onChange(of: controllerInput?.isControllerNavigationEnabled) { _, enabled in
+            .onChangeCompat(of: controllerInput?.isControllerNavigationEnabled, perform: { _, enabled in
                 if enabled == true { updateRegistration() }
-            }
-            .onChange(of: controllerInput?.focusReleaseSequence) { _, _ in
+            })
+            .onChangeCompat(of: controllerInput?.focusReleaseSequence, perform: { _, _ in
                 // Analog begin/end is delivered synchronously to its owner.
                 // A delayed SwiftUI observation must not hide a newer focus.
                 if navigationIsActive,
                    controllerInput?.isControllerNavigationEnabled == false {
                     session.suspendFocusForScrolling()
                 }
-            }
+            })
             .onDisappear {
                 controllerInput?.unregisterNavigationSession(
                     id: registrationID

@@ -45,9 +45,9 @@ struct SafeAreaProtectedMenuTabContent<Content: View>: View {
                 .padding(.leading, layoutDirection == .rightToLeft ? insets.right : insets.left)
                 .padding(.trailing, layoutDirection == .rightToLeft ? insets.left : insets.right)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .onChange(of: geometry.size) { _, _ in
+                .onChangeCompat(of: geometry.size, perform: { _, _ in
                     safeAreaInsets = KeyWindowSafeArea.horizontalInsets()
-                }
+                })
         }
         .onAppear {
             safeAreaInsets = KeyWindowSafeArea.horizontalInsets()

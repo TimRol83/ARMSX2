@@ -499,7 +499,7 @@ private struct LeadingPaneOnFold: ViewModifier {
             .background {
                 GeometryReader { geo in
                     let target = geo.activeFold(book: true).map { $0.minX / 2 - geo.size.width / 2 } ?? 0
-                    Color.clear.onChange(of: target, initial: true) { _, target in shift = target }
+                    Color.clear.onChangeCompat(of: target, initial: true, perform: { _, target in shift = target })
                 }
             }
     }

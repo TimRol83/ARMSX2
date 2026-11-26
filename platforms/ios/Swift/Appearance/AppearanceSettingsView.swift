@@ -377,9 +377,9 @@ struct AppearanceSettingsView: View, AppearanceSettingsEditing {
         .onAppear {
             dynamicPreferences = settings.appearance.dynamicAppearancePreferences
         }
-        .onChange(of: settings.appearance.dynamicAppearancePreferences) { _, preferences in
+        .onChangeCompat(of: settings.appearance.dynamicAppearancePreferences, perform: { _, preferences in
             if presentedEditor == nil { dynamicPreferences = preferences }
-        }
+        })
         .onDisappear {
             ThemeGalleryStore.shared.preserveCustomTheme(settings.appearance)
         }

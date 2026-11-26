@@ -127,11 +127,11 @@ struct FaceButtonsBackground: View {
       }
       .ignoresSafeArea()
     }
-    .onChange(of: theme) { _, newTheme in
+    .onChangeCompat(of: theme, perform: { _, newTheme in
       previousTheme = displayedTheme
       displayedTheme = newTheme
       paletteTransitionStartTime = Date.timeIntervalSinceReferenceDate
-    }
+    })
   }
 
   private var settings: DynamicParticleSettings {

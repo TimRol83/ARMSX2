@@ -72,28 +72,28 @@ struct ShaderWorkspaceView: View, ShaderWorkspaceTargetIDs {
             normalizeSelection()
             publishControllerOrder()
         }
-        .onChange(of: passLibrary.passes) { _, _ in
+        .onChangeCompat(of: passLibrary.passes, perform: { _, _ in
             normalizeSelection()
             publishControllerOrder()
-        }
-        .onChange(of: selectedCategoryID) { _, _ in
+        })
+        .onChangeCompat(of: selectedCategoryID, perform: { _, _ in
             publishControllerOrder()
-        }
-        .onChange(of: detailPresented) { _, _ in
+        })
+        .onChangeCompat(of: detailPresented, perform: { _, _ in
             publishControllerOrder()
-        }
-        .onChange(of: showsExtra) { _, _ in
+        })
+        .onChangeCompat(of: showsExtra, perform: { _, _ in
             publishControllerOrder()
-        }
-        .onChange(of: model.expandedPassIDs) { _, _ in
+        })
+        .onChangeCompat(of: model.expandedPassIDs, perform: { _, _ in
             publishControllerOrder()
-        }
-        .onChange(of: model.expandedLayerIDs) { _, _ in
+        })
+        .onChangeCompat(of: model.expandedLayerIDs, perform: { _, _ in
             publishControllerOrder()
-        }
-        .onChange(of: params.params) { _, _ in
+        })
+        .onChangeCompat(of: params.params, perform: { _, _ in
             publishControllerOrder()
-        }
+        })
         .onAppear { publishControllerOrder() }
         .sheet(item: $browseRequest, onDismiss: { model.validatePreset(host: host) }) { _ in
             NavigationStack {
@@ -205,7 +205,7 @@ struct ShaderWorkspaceView: View, ShaderWorkspaceTargetIDs {
                 )
                 .allowsHitTesting(false)
             }
-            .onChange(of: model.layerScrollRequest) { _, request in
+            .onChangeCompat(of: model.layerScrollRequest, perform: { _, request in
                 guard let request else { return }
                 Task { @MainActor in
                     // First let Form adopt the expanded row height. The
@@ -219,7 +219,7 @@ struct ShaderWorkspaceView: View, ShaderWorkspaceTargetIDs {
                         )
                     }
                 }
-            }
+            })
         }
     }
 

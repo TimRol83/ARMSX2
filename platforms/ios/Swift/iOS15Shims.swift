@@ -187,4 +187,64 @@ public extension Shape {
     }
 }
 
+
+@available(iOS, deprecated: 16.0)
+public extension URL {
+    static var applicationSupportDirectory: URL {
+        FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
+            ?? URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent("Library/Application Support", isDirectory: true)
+    }
+    static var documentsDirectory: URL {
+        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+            ?? URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent("Documents", isDirectory: true)
+    }
+    static var cachesDirectory: URL {
+        FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
+            ?? URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent("Library/Caches", isDirectory: true)
+    }
+    static var temporaryDirectory: URL {
+        FileManager.default.temporaryDirectory
+    }
+    func appending(path: String, directoryHint: URL.DirectoryHint = .inferFromPath) -> URL {
+        self.appendingPathComponent(path)
+    }
+    @available(iOS, deprecated: 16.0)
+    enum DirectoryHint {
+        case isDirectory, notDirectory, checkFileSystem, inferFromPath
+    }
+}
+
+public extension View {
+    @ViewBuilder
+    func onChangeCompat<V: Equatable>(of value: V, initial: Bool = false, perform action: @escaping () -> Void) -> some View {
+        self.onChange(of: value) { _ in action() }
+            .onAppear { if initial { action() } }
+    }
+
+    @ViewBuilder
+    func onChangeCompat<V: Equatable>(of value: V, initial: Bool = false, perform action: @escaping (V, V) -> Void) -> some View {
+        self.modifier(OnChangeTwoArgModifier(value: value, initial: initial, action: action))
+    }
+}
+
+private struct OnChangeTwoArgModifier<V: Equatable>: ViewModifier {
+    let value: V
+    let initial: Bool
+    let action: (V, V) -> Void
+    @State private var previous: V?
+
+    func body(content: Content) -> some View {
+        content
+            .onAppear {
+                previous = value
+                if initial { action(value, value) }
+            }
+            .onChange(of: value) { newValue in
+                let oldValue = previous ?? newValue
+                previous = newValue
+                action(oldValue, newValue)
+            }
+    }
+}
+
 #endif

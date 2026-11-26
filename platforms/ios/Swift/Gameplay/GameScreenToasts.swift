@@ -118,7 +118,7 @@ struct PerGameLivePreviewExitOverlay: View {
                 priority: 1_000
             )
         }
-        .onChange(of: controllerInput?.latestEvent) { _, event in
+        .onChangeCompat(of: controllerInput?.latestEvent, perform: { _, event in
             guard let event,
                   event.captureOwner
                     == MenuControllerNavigationCaptureOwner
@@ -131,7 +131,7 @@ struct PerGameLivePreviewExitOverlay: View {
             } else if !stopsWithCircle {
                 requestExit(fromController: true)
             }
-        }
+        })
     }
 
     private func requestExit(fromController: Bool) {

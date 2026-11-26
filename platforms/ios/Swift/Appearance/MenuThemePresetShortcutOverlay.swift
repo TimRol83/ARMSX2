@@ -119,7 +119,7 @@ struct MenuThemePresetShortcutOverlay: View {
         .allowsHitTesting(pendingChange != nil)
         .accessibilityElement(children: .combine)
         .animation(focusAnimation, value: presentation)
-        .onChange(of: controllerInput.latestThemePresetRequest) { _, request in
+        .onChangeCompat(of: controllerInput.latestThemePresetRequest, perform: { _, request in
             guard let request, isEnabled, controllerInput.canChangeMainMenuTheme else { return }
             let selections = themeGallery.orderedSelections
             let current = themeGallery.currentSelection(for: settings.appearance)
@@ -148,15 +148,15 @@ struct MenuThemePresetShortcutOverlay: View {
                 priority: 400
             )
             controllerInput.playFeedback(.contextMenu)
-        }
-        .onChange(of: controllerInput.latestEvent) { _, event in
+        })
+        .onChangeCompat(of: controllerInput.latestEvent, perform: { _, event in
             guard let event,
                   event.captureOwner
                     == MenuControllerNavigationCaptureOwner.themePresetShortcut,
                   pendingChange != nil,
                   !showsThemeNameKeyboard else { return }
             handleControllerCommand(event.command)
-        }
+        })
         .task(id: presentation?.sequence) {
             guard presentation != nil else { return }
             do {
@@ -164,12 +164,12 @@ struct MenuThemePresetShortcutOverlay: View {
                 presentation = nil
             } catch { }
         }
-        .onChange(of: isEnabled) { _, enabled in
+        .onChangeCompat(of: isEnabled, perform: { _, enabled in
             if !enabled {
                 presentation = nil
                 cancelPendingChange(playsFeedback: false)
             }
-        }
+        })
         .fullScreenCover(isPresented: $showsThemeNameKeyboard) {
             OrbitKeysKeyboardView(
                 title: "Save Custom Theme",

@@ -58,7 +58,7 @@ private struct StorageExternalGamesAlertCommandListener: View {
             .frame(width: 0, height: 0)
             .allowsHitTesting(false)
             .accessibilityHidden(true)
-            .onChange(of: controllerInput.latestEvent) { _, event in
+            .onChangeCompat(of: controllerInput.latestEvent, perform: { _, event in
                 guard let event,
                       event.captureOwner
                         == MenuControllerNavigationCaptureOwner
@@ -66,7 +66,7 @@ private struct StorageExternalGamesAlertCommandListener: View {
                     return
                 }
                 onCommand(event.command)
-            }
+            })
     }
 }
 
@@ -461,12 +461,12 @@ struct StorageSettingsView: View {
             externalLibrary.reload()
             await refreshReport()
         }
-        .onChange(of: externalActionMessage) { _, _ in
+        .onChangeCompat(of: externalActionMessage, perform: { _, _ in
             updateExternalGamesAlertCapture()
-        }
-        .onChange(of: controllerInput?.hasConnectedController) { _, _ in
+        })
+        .onChangeCompat(of: controllerInput?.hasConnectedController, perform: { _, _ in
             updateExternalGamesAlertCapture()
-        }
+        })
         .onDisappear {
             controllerInput?.setNavigationCaptured(
                 false,

@@ -635,10 +635,10 @@ private struct OrbitKeysFullQwertyKeyButton: View {
         .buttonStyle(.plain)
       }
     }
-    .onChange(of: feedbackTrigger) { _, newValue in
+    .onChangeCompat(of: feedbackTrigger, perform: { _, newValue in
       guard newValue > 0 else { return }
       pulse()
-    }
+    })
     .onDisappear {
       if isTouchHeld {
         isTouchHeld = false

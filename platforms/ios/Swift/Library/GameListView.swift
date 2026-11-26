@@ -242,10 +242,10 @@ struct GameListView: View {
                             pushControllerContext()
                             controller.handleLibraryContainerAppear(geo: geo)
                         }
-                        .onChange(of: geo.size) { previousSize, size in
+                        .onChangeCompat(of: geo.size, perform: { previousSize, size in
                             pushControllerContext()
                             controller.handleLibraryContainerSizeChange(previousSize, size)
-                        }
+                        })
                     }
                     // Otherwise the Cover Source keyboard shortens the library and portrait switches to cover flow.
                     .ignoresSafeArea(.keyboard)
@@ -441,12 +441,12 @@ struct GameListView: View {
                 selection: $controller.selectedCoverPhotoItem,
                 matching: .images
             )
-            .onChange(of: controller.selectedCoverPhotoItem) { _, photoItem in
+            .onChangeCompat(of: controller.selectedCoverPhotoItem, perform: { _, photoItem in
                 guard let photoItem, let gameName = controller.pendingCoverPhotoGameName else { return }
                 controller.selectedCoverPhotoItem = nil
                 controller.pendingCoverPhotoGameName = nil
                 controller.importCoverPhoto(photoItem, forGameNamed: gameName)
-            }
+            })
             .fullScreenCover(item: $controller.gameInfoTarget) { game in
                 GameLibraryForegroundPanel(
                     maximumWidth: 620,
@@ -588,31 +588,31 @@ struct GameListView: View {
             }
 			}
         let contextObservers = presentation
-        .onChange(of: controllerInput.map(ObjectIdentifier.init), initial: true) { pushControllerContext() }
-        .onChange(of: menuTabIsActive, initial: true) { pushControllerContext() }
-        .onChange(of: reduceMotion, initial: true) { pushControllerContext() }
-        .onChange(of: layoutDirection, initial: true) { pushControllerContext() }
-        .onChange(of: sharedMenuControllerInput.map(ObjectIdentifier.init), initial: true) { pushControllerContext() }
+        .onChangeCompat(of: controllerInput.map(ObjectIdentifier.init), initial: true, perform: { pushControllerContext() })
+        .onChangeCompat(of: menuTabIsActive, initial: true, perform: { pushControllerContext() })
+        .onChangeCompat(of: reduceMotion, initial: true, perform: { pushControllerContext() })
+        .onChangeCompat(of: layoutDirection, initial: true, perform: { pushControllerContext() })
+        .onChangeCompat(of: sharedMenuControllerInput.map(ObjectIdentifier.init), initial: true, perform: { pushControllerContext() })
         let libraryObservers = contextObservers
         .onAppear {
             pushControllerContext()
             controller.handleLibraryAppear()
         }
-        .onChange(of: controller.renameTarget != nil, initial: true) { _, isPresented in
+        .onChangeCompat(of: controller.renameTarget != nil, initial: true, perform: { _, isPresented in
             onRenamePresentationChanged(isPresented)
-        }
-        .onChange(of: controllerInput?.navigationZone) { _, zone in
+        })
+        .onChangeCompat(of: controllerInput?.navigationZone, perform: { _, zone in
             pushControllerContext()
             controller.handleNavigationZoneChange(zone)
-        }
-        .onChange(of: controller.controllerContextMenuState.gameID) { _, gameID in
+        })
+        .onChangeCompat(of: controller.controllerContextMenuState.gameID, perform: { _, gameID in
             pushControllerContext()
             controller.handleContextMenuGameChange(gameID)
-        }
-        .onChange(of: controller.controllerToolbarFocusState.selectedAction) { _, _ in
+        })
+        .onChangeCompat(of: controller.controllerToolbarFocusState.selectedAction, perform: { _, _ in
             pushControllerContext()
             controller.handleToolbarSelectionChange()
-        }
+        })
         .onReceive(
             NotificationCenter.default.publisher(for: ExternalGameLibrary.didChangeNotification)
         ) { _ in library.handleExternalLibraryDidChange() }
@@ -627,34 +627,34 @@ struct GameListView: View {
         }
 
         return libraryObservers
-        .onChange(of: library.games) { _, updatedGames in
+        .onChangeCompat(of: library.games, perform: { _, updatedGames in
             pushControllerContext()
             controller.handleGamesChange(updatedGames)
-        }
-        .onChange(of: controller.displayedRunningGameName) { _, runningGame in
+        })
+        .onChangeCompat(of: controller.displayedRunningGameName, perform: { _, runningGame in
             pushControllerContext()
             controller.handleRunningGameChange(runningGame)
-        }
-        .onChange(of: controllerInput?.hasConnectedController) { _, connected in
+        })
+        .onChangeCompat(of: controllerInput?.hasConnectedController, perform: { _, connected in
             pushControllerContext()
             controller.handleControllerConnectionChange(connected)
-        }
-        .onChange(of: menuTabIsActive) { _, active in
+        })
+        .onChangeCompat(of: menuTabIsActive, perform: { _, active in
             pushControllerContext()
             controller.handleMenuTabActiveChange(active)
-        }
-        .onChange(of: controller.manuallyCapturedControllerPresentationActive) { _, active in
+        })
+        .onChangeCompat(of: controller.manuallyCapturedControllerPresentationActive, perform: { _, active in
             pushControllerContext()
             controller.handleCapturedPresentationChange(active)
-        }
-        .onChange(of: controller.controllerNavigationPresentationActive) { _, active in
+        })
+        .onChangeCompat(of: controller.controllerNavigationPresentationActive, perform: { _, active in
             pushControllerContext()
             controller.handleNavigationPresentationChange(active)
-        }
-        .onChange(of: controller.activeControllerAlertKind) { previous, kind in
+        })
+        .onChangeCompat(of: controller.activeControllerAlertKind, perform: { previous, kind in
             pushControllerContext()
             controller.handleAlertKindChange(previous, kind)
-        }
+        })
         .onDisappear {
             GameCoverThemePreviewStore.shared.clear()
             onRenamePresentationChanged(false)

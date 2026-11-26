@@ -32,9 +32,9 @@ struct DynamicParticleSettingsControls: View {
         showsBackgroundSettings = true
         migrateLegacyLogoStyleIfNeeded()
       }
-      .onChange(of: dynamicBackground) { _, _ in
+      .onChangeCompat(of: dynamicBackground, perform: { _, _ in
         showsBackgroundSettings = true
-      }
+      })
   }
 
   private var particleSection: some View {
