@@ -202,14 +202,6 @@ public extension URL {
     static var temporaryDirectory: URL {
         FileManager.default.temporaryDirectory
     }
-    func appending(path: String, directoryHint: URL.DirectoryHint = .inferFromPath) -> URL {
-        self.appendingPathComponent(path)
-    }
-    @available(iOS, deprecated: 16.0)
-    enum DirectoryHint {
-        case isDirectory, notDirectory, checkFileSystem, inferFromPath
-    }
-}
 
 public extension View {
     func onChangeCompat<V: Equatable>(of value: V, initial: Bool = false, perform action: @escaping () -> Void) -> some View {
@@ -219,26 +211,6 @@ public extension View {
 
     func onChangeCompat<V: Equatable>(of value: V, initial: Bool = false, perform action: @escaping (V, V) -> Void) -> some View {
         self.modifier(OnChangeTwoArgModifier(value: value, initial: initial, action: action))
-    }
-}
-
-private struct OnChangeTwoArgModifier<V: Equatable>: ViewModifier {
-    let value: V
-    let initial: Bool
-    let action: (V, V) -> Void
-    @State private var previous: V?
-
-    func body(content: Content) -> some View {
-        content
-            .onAppear {
-                previous = value
-                if initial { action(value, value) }
-            }
-            .onChange(of: value) { newValue in
-                let oldValue = previous ?? newValue
-                previous = newValue
-                action(oldValue, newValue)
-            }
     }
 }
 
@@ -293,34 +265,6 @@ public extension OSAllocatedUnfairLock where State == Void {
 // MARK: - Complete iOS 16/17 UI & Layout Backports for iOS 15
 
 @available(iOS, deprecated: 16.0)
-public struct LabeledContent<Label: View, Content: View>: View {
-    let label: Label
-    let content: Content
-
-    public init(@ViewBuilder content: () -> Content, @ViewBuilder label: () -> Label) {
-        self.label = label()
-        self.content = content()
-    }
-
-    public var body: some View {
-        HStack {
-            label
-            Spacer()
-            content
-                .foregroundColor(.secondary)
-        }
-    }
-}
-
-@available(iOS, deprecated: 16.0)
-public extension LabeledContent where Label == Text {
-    init<S: StringProtocol>(_ title: S, @ViewBuilder content: () -> Content) {
-        self.label = Text(title)
-        self.content = content()
-    }
-}
-
-@available(iOS, deprecated: 16.0)
 public extension LabeledContent where Label == Text, Content == Text {
     init<S1: StringProtocol, S2: StringProtocol>(_ title: S1, value: S2) {
         self.label = Text(title)
@@ -328,47 +272,10 @@ public extension LabeledContent where Label == Text, Content == Text {
     }
 }
 
-@available(iOS, deprecated: 17.0)
-public struct ContentUnavailableView<Label: View, Description: View, Actions: View>: View {
-    let label: Label
-    let description: Description
-    let actions: Actions
-
-    public init(@ViewBuilder label: () -> Label,
-                @ViewBuilder description: () -> Description = { EmptyView() },
-                @ViewBuilder actions: () -> Actions = { EmptyView() }) {
-        self.label = label()
-        self.description = description()
-        self.actions = actions()
-    }
-
-    public var body: some View {
-        VStack(spacing: 12) {
-            label
-                .font(.headline)
-            description
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-            actions
-        }
-        .padding()
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-}
-
-@available(iOS, deprecated: 17.0)
-public extension ContentUnavailableView where Label == SwiftUI.Label<Text, Image>, Description == Text?, Actions == EmptyView {
-    init<S: StringProtocol>(_ title: S, systemImage: String, description: Text? = nil) {
-        self.label = SwiftUI.Label(title, systemImage: systemImage)
-        self.description = description
-        self.actions = EmptyView()
-    }
-}
 
 @available(iOS, deprecated: 16.0)
 public protocol LayoutCompat {
-    associatedtype Body: View
+    associatedtype Body: View = AnyView
     func makeBody<Content: View>(@ViewBuilder content: () -> Content) -> Body
 }
 
@@ -446,7 +353,6 @@ public extension View {
     func toolbarBackground<S: ShapeStyle>(_ style: S, for bars: ToolbarPlacementCompat...) -> some View { self }
     func presentationBackground<S: ShapeStyle>(_ style: S) -> some View { self }
     func presentationBackground<V: View>(alignment: Alignment = .center, @ViewBuilder content: () -> V) -> some View { self }
-    func presentationDragIndicator(_ visibility: Visibility) -> some View { self }
     func fontWeight(_ weight: Font.Weight?) -> some View { self }
     func contentTransition(_ transition: ContentTransitionCompat) -> some View { self }
     func scrollPosition<ID: Hashable>(id: Binding<ID?>, anchor: UnitPoint? = nil) -> some View { self }
