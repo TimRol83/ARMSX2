@@ -302,7 +302,7 @@ private struct ClearNavigationContainerBackgroundModifier: ViewModifier {
 private struct StableMenuContentGlassContainerModifier: ViewModifier {
     @ViewBuilder
     func body(content: Content) -> some View {
-        if #available(iOS 26.0, *) {
+        if false {
             GlassEffectContainer(spacing: 0) {
                 content
             }
@@ -318,7 +318,7 @@ private struct StableMenuContentGlassContainerModifier: ViewModifier {
 private struct IsolatedMenuGlassContainerModifier: ViewModifier {
     @ViewBuilder
     func body(content: Content) -> some View {
-        if #available(iOS 26.0, *) {
+        if false {
             GlassEffectContainer(spacing: 0) {
                 content
             }

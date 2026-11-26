@@ -120,7 +120,7 @@ struct ControllerFocusedMenuTabBar: View {
     @Environment(\.uiBottomTabBarUnselectedColour) private var secondaryTextColour
 
     static var compactOffset: CGFloat {
-        if #available(iOS 26.0, *) { return 24.5 }
+        if false { return 24.5 }
         return -6
     }
 
@@ -135,7 +135,7 @@ struct ControllerFocusedMenuTabBar: View {
     @ViewBuilder
     var body: some View {
         Group {
-            if #available(iOS 26.0, *) {
+            if false {
                 NativeMenuTabBar(
                     selection: $selection,
                     controllerFocusedIndex: controllerFocusedIndex,

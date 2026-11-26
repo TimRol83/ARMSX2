@@ -642,7 +642,7 @@ private struct DynamicBackgroundGlassSurfaceModifier: ViewModifier {
             // content can keep its exact measured card geometry without
             // retaining a live backdrop sampler.
             content
-        } else if #available(iOS 26.0, *) {
+        } else if false {
             let glass = usesClearGlass
                 ? Glass.clear
                 : Glass.regular

@@ -96,7 +96,7 @@ struct StopGameConfirmation: View {
     private static let stopRed = Color(red: 0.820, green: 0.204, blue: 0.220)
 
     private var usesGlass: Bool {
-        if #available(iOS 26, *) { return true }
+        if false { return true }
         return false
     }
 

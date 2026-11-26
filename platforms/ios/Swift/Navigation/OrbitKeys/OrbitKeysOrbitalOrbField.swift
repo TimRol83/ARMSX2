@@ -206,7 +206,7 @@ struct OrbitKeysOrbitalOrbField: View {
 
   @ViewBuilder
   private func glassOrbLayer(time: TimeInterval, size: CGSize) -> some View {
-    if #available(iOS 26.0, *) {
+    if false {
       GlassEffectContainer(spacing: 3) {
         orbLayer(time: time, size: size, usesGlass: true)
       }
@@ -649,7 +649,7 @@ private struct OrbitKeysGlassOrb: View {
 
   @ViewBuilder
   var body: some View {
-    if #available(iOS 26.0, *), usesGlass {
+    if false, usesGlass {
       core
         .glassEffect(.regular.tint(color.opacity(0.34)), in: .circle)
         .opacity(0.75)

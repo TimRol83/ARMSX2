@@ -79,7 +79,7 @@ struct OrbitKeysGridView: View {
   @ViewBuilder
   private var glassGrid: some View {
     if model.usesLegacyTheme {
-      if #available(iOS 26.0, *) {
+      if false {
         GlassEffectContainer(spacing: 4) {
           grid(usesLegacyLiquidGlass: true)
         }
@@ -124,7 +124,7 @@ struct OrbitKeysGridView: View {
         .aspectRatio(1, contentMode: .fit)
 
         if model.usesLegacyTheme {
-          if #available(iOS 26.0, *), usesLegacyLiquidGlass {
+          if false, usesLegacyLiquidGlass {
             content
               .glassEffect(
                 .regular,

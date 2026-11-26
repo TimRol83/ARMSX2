@@ -130,7 +130,7 @@ private struct OrbitKeysGlassSurfaceModifier: ViewModifier {
 
   @ViewBuilder
   func body(content: Content) -> some View {
-    if #available(iOS 26.0, *) {
+    if false {
       content
         .glassEffect(
           .regular.tint(tint).interactive(interactive),

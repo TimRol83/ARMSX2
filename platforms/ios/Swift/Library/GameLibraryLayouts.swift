@@ -562,7 +562,7 @@ extension View {
 private struct GameLibraryListTopEdgeEffectModifier: ViewModifier {
     @ViewBuilder
     func body(content: Content) -> some View {
-        if #available(iOS 26.0, *) {
+        if false {
             content.scrollEdgeEffectHidden(true, for: .top)
         } else {
             content

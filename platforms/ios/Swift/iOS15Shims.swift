@@ -106,7 +106,6 @@ public extension View {
     func toolbarBackground(_ visibility: Visibility, for bars: Any...) -> some View { self }
 }
 
-@available(iOS, deprecated: 17.0)
 public extension View {
     func onChange<V: Equatable>(
         of value: V,
@@ -163,7 +162,6 @@ public struct Duration: Sendable, Hashable {
     }
 }
 
-@available(iOS, deprecated: 17.0)
 public extension Task where Success == Never, Failure == Never {
     static func sleep(for duration: Duration) async throws {
         try await Task.sleep(nanoseconds: duration.nanoseconds)
@@ -171,7 +169,6 @@ public extension Task where Success == Never, Failure == Never {
 }
 
 
-@available(iOS, deprecated: 17.0)
 public extension Shape {
     @inlinable
     func fill<S: ShapeStyle>(_ content: S) -> some View {
@@ -185,7 +182,6 @@ public extension Shape {
 }
 
 
-@available(iOS, deprecated: 16.0)
 public extension URL {
     static var applicationSupportDirectory: URL {
         FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
@@ -245,7 +241,6 @@ public final class OSAllocatedUnfairLock<State>: @unchecked Sendable {
     }
 }
 
-@available(iOS, deprecated: 16.0)
 public extension OSAllocatedUnfairLock where State == Void {
     convenience init() {
         self.init(initialState: ())
@@ -264,7 +259,6 @@ public extension OSAllocatedUnfairLock where State == Void {
 
 // MARK: - Complete iOS 16/17 UI & Layout Backports for iOS 15
 
-@available(iOS, deprecated: 16.0)
 public extension LabeledContent where Label == Text, Content == Text {
     init<S1: StringProtocol, S2: StringProtocol>(_ title: S1, value: S2) {
         self.label = Text(title)
@@ -345,7 +339,6 @@ public enum ContentTransitionCompat {
     public static var numericText: ContentTransitionCompat { .numericText() }
 }
 
-@available(iOS, deprecated: 17.0)
 public extension View {
     func contentMargins(_ edges: Edge.Set = .all, _ length: CGFloat?, for placement: ContentMarginsPlacementCompat = .automatic) -> some View { self }
     func contentMargins(_ length: CGFloat, for placement: ContentMarginsPlacementCompat = .automatic) -> some View { self }
@@ -455,7 +448,6 @@ public enum ScrollBounceBehaviorCompat: Sendable {
     case automatic, always, basedOnSize
 }
 
-@available(iOS, deprecated: 16.4)
 public extension View {
     func scrollIndicators(_ visibility: ScrollIndicatorVisibilityCompat, axes: Axis.Set = [.vertical, .horizontal]) -> some View { self }
     func scrollBounceBehavior(_ behavior: ScrollBounceBehaviorCompat, axes: Axis.Set = [.vertical]) -> some View { self }
@@ -485,7 +477,6 @@ public struct Bindable<Value: AnyObject> {
     }
 }
 
-@available(iOS, deprecated: 17.0)
 public extension View {
     func focusEffectDisabled(_ disabled: Bool = true) -> some View { self }
     func persistentSystemOverlays(_ visibility: Visibility) -> some View { self }
@@ -577,7 +568,6 @@ public enum ButtonRepeatBehaviorCompat: Sendable {
     case disabled
 }
 
-@available(iOS, deprecated: 26.0)
 public extension View {
     func glassEffect(_ glass: GlassCompat = .regular, in shape: GlassEffectShapeCompat = .capsule) -> some View { self }
     func glassEffectID<ID: Hashable>(_ id: ID, in namespace: Namespace.ID) -> some View { self }

@@ -301,7 +301,7 @@ struct ControllerNavigationOrbField: View {
 
     @ViewBuilder
     private func orbLayer(time: TimeInterval, size: CGSize) -> some View {
-        if #available(iOS 26.0, *), style == .liquidGlass {
+        if false, style == .liquidGlass {
             GlassEffectContainer(spacing: 3) {
                 particlesLayer(time: time, size: size, usesGlass: true)
             }
@@ -529,7 +529,7 @@ private struct ControllerNavigationGlassOrb: View {
 
     @ViewBuilder
     var body: some View {
-        if #available(iOS 26.0, *), usesGlass {
+        if false, usesGlass {
             core
                 .glassEffect(
                     .regular.tint(color.opacity(0.34)),

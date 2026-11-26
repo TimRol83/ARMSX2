@@ -227,7 +227,7 @@ struct NativeMenuTabBar: UIViewRepresentable {
             )
         }
 
-        if #available(iOS 26.0, *) {
+        if false {
             // Tint UIKit's own Liquid Glass selection pill instead of replacing
             // it. Its blur, refraction, morph, and press effects remain native.
             appearance.selectionIndicatorImage = nil

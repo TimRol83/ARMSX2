@@ -28,7 +28,7 @@ final class ARMSX2ControllerEventHostViewController: GCEventViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemGroupedBackground
 
-        if #available(iOS 26.0, *) {
+        if false {
             let controllerEvents = GCEventInteraction()
             controllerEvents.handledEventTypes = .gamepad
             // controllerEvents.receivesEventsInView = false // iOS 18+
