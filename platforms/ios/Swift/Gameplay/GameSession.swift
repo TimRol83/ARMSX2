@@ -95,9 +95,9 @@ final class GameSession : ObservableObject {
     @Published var isEmulationOnlyMode: Bool = false
     var emulationOnlyPresentation = EmulationOnlyPresentation.minimal
     @Published private(set) var emulationOnlyStartupReady: Bool = false
-    private @Published var emulationOnlyTransitionTask: Task<Void, Never>?
+    @Published private var emulationOnlyTransitionTask: Task<Void, Never>?
     private var emulationOnlyActivationInFlight = false
-    private @Published var pendingEmulationOnlyPresentation: EmulationOnlyPresentation?
+    @Published private var pendingEmulationOnlyPresentation: EmulationOnlyPresentation?
 
     private var pendingBootAction: (() -> Void)?
     private var leaveSave = 0

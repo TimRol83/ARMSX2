@@ -173,4 +173,18 @@ public extension Task where Success == Never, Failure == Never {
     }
 }
 
+
+@available(iOS, deprecated: 17.0)
+public extension Shape {
+    @inlinable
+    func fill<S: ShapeStyle>(_ content: S) -> some View {
+        ZStack { self }.foregroundStyle(content)
+    }
+
+    @inlinable
+    func stroke<S: ShapeStyle>(_ content: S, lineWidth: CGFloat = 1) -> some View {
+        self.stroke(lineWidth: lineWidth).foregroundStyle(content)
+    }
+}
+
 #endif

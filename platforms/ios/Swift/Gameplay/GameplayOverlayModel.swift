@@ -22,7 +22,7 @@ final class GameplayOverlayModel : ObservableObject {
     @Published var pauseMenuChild: QuickMenuDestination?
     @Published var pauseCardFoldMemory: QuickMenuFoldMemory?
     @Published var reportRequest: ReportSheetRequest?
-    private @Published var reportCapture: Task<Void, Never>?
+    @Published private var reportCapture: Task<Void, Never>?
     var cheatsSession = CheatsPatchesSession()
     @Published var runtimePerGameSettingsEntry: ISOEntry?
     @Published var runtimePerGameSettings: [ARMSX2PerGameKey: Any]?
@@ -35,7 +35,7 @@ final class GameplayOverlayModel : ObservableObject {
     var runtimePerGameLivePreviewToast:
         PerGameLivePreviewToastState?
     @Published var resumeGameplayTask: Task<Void, Never>?
-    private @Published var quickMenuResourceReleaseTask: Task<Void, Never>?
+    @Published private var quickMenuResourceReleaseTask: Task<Void, Never>?
     @Published var runtimePadLayoutIdentity: PadLayoutGameIdentity?
     private(set) var runtimeOverlayPauseActive = false
 

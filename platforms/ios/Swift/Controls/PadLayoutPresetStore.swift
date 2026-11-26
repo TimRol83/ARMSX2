@@ -291,7 +291,7 @@ final class PadLayoutPresetStore : ObservableObject {
             }
         }
     }
-    private @Published var gameAssignments: [String: VPadGameAssignment] = [:]
+    @Published private var gameAssignments: [String: VPadGameAssignment] = [:]
 
     init(
         libraryURL: URL? = nil,

@@ -260,7 +260,7 @@ final class SaveStateUndoModel : ObservableObject {
     @Published private(set) var remaining: Double = 0
     /// Set while the toast holds VoiceOver focus.
     var focusHeld = false
-    private @Published var timer: Task<Void, Never>?
+    @Published private var timer: Task<Void, Never>?
 
     var slot: Int? {
         switch item?.action {
