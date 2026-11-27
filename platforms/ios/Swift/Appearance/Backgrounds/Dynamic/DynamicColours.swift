@@ -75,7 +75,7 @@ struct ThemePaletteEditorHeader: View {
         .help(Text("Redo"))
 
         Button("Apply", action: apply)
-          .fontWeight(.semibold)
+          .fontWeightCompat(.semibold)
           .padding(.horizontal, 7)
       }
       .font(.subheadline.weight(.medium))

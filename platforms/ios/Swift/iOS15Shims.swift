@@ -99,7 +99,6 @@ public enum Visibility {
     case automatic, visible, hidden
 }
 
-}
 public extension View {
     func presentationDetents(_ detents: Set<PresentationDetent>) -> some View { self }
     func presentationDragIndicator(_ visibility: Visibility) -> some View { self }
@@ -200,6 +199,7 @@ public extension URL {
         FileManager.default.temporaryDirectory
     }
 
+}
 public extension View {
     func onChangeCompat<V: Equatable>(of value: V, initial: Bool = false, perform action: @escaping () -> Void) -> some View {
         self.onChange(of: value) { _ in action() }
@@ -577,3 +577,14 @@ public extension View {
 }
 
 #endif
+
+public extension View {
+    @ViewBuilder
+    func fontWeightCompat(_ weight: Font.Weight) -> some View {
+        if #available(iOS 16.0, *) {
+            fontWeight(weight)
+        } else {
+            self
+        }
+    }
+}

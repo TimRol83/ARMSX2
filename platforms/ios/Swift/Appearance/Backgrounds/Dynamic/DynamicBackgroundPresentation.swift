@@ -608,7 +608,6 @@ extension View {
                 materializeTransition: materializeTransition,
                 isEnabled: isEnabled,
                 cornerRadius: cornerRadius,
-                cornerRadii: cornerRadii
             )
         )
     }
