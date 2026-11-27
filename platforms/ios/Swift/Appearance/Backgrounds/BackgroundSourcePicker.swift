@@ -40,11 +40,10 @@ struct BackgroundSourcePicker: ViewModifier {
                 settings.localized("Large Background File"),
                 isPresented: $showLargeFileWarning,
                 message: settings.localized("This background file is very large and may affect performance or battery life."),
-                actions: [ControllerPrompt.Action][
+                actions: [ControllerPrompt.Action]([
                     .init(title: settings.localized("Cancel"), isCancel: true) { pendingFileURL = nil },
                     .init(title: settings.localized("Import Anyway")) { importPendingFileURL() },
-                ]
-            )
+                ]))
             .controllerPrompt(
                 settings.localized("Background image could not be loaded."),
                 isPresented: $showLoadError,

@@ -120,10 +120,10 @@ struct TexturePacksView<Options: View>: View {
 
     private func confirmRemoval(_ pack: TexturePack) {
         let title = String(format: settings.localized("Remove %@"), name(pack))
-        ControllerPrompt.shared.ask(title, message: settings.localized("This cannot be undone."), actions: [ControllerPrompt.Action][
+        ControllerPrompt.shared.ask(title, message: settings.localized("This cannot be undone."), actions: [ControllerPrompt.Action]([
             .cancel,
             .init(title: settings.localized("Remove"), isDestructive: true) { Task { await remove(pack) } },
-        ])
+        ]))
     }
 
     private func fail(_ message: String) {

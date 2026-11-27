@@ -586,3 +586,9 @@ public extension View {
         }
     }
 }
+
+// Disambiguate Darwin vs CoreGraphics sin/cos across the module
+@inlinable public func cos(_ x: Double) -> Double { Darwin.cos(x) }
+@inlinable public func sin(_ x: Double) -> Double { Darwin.sin(x) }
+@inlinable public func cos(_ x: CGFloat) -> CGFloat { CoreGraphics.cos(x) }
+@inlinable public func sin(_ x: CGFloat) -> CGFloat { CoreGraphics.sin(x) }
