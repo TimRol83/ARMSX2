@@ -178,3 +178,56 @@ extension View {
     }
 }
 #endif
+
+
+#if os(iOS)
+@available(iOS 15.0, *)
+public extension View {
+    @ViewBuilder
+    func onChangeCompat<V: Equatable>(of value: V, perform action: @escaping (_ oldValue: V, _ newValue: V) -> Void) -> some View {
+        self.modifier(OnChangeTwoArgModifier(value: value, action: action))
+    }
+    @ViewBuilder
+    func onChangeCompat<V: Equatable>(of value: V, perform action: @escaping (_ newValue: V) -> Void) -> some View {
+        self.onChange(of: value, perform: action)
+    }
+    @ViewBuilder
+    func onChangeCompat<V: Equatable>(of value: V, initial: Bool = false, _ action: @escaping (_ oldValue: V, _ newValue: V) -> Void) -> some View {
+        self.modifier(OnChangeTwoArgModifier(value: value, action: action))
+    }
+}
+
+@available(iOS 15.0, *)
+private struct OnChangeTwoArgModifier<V: Equatable>: ViewModifier {
+    let value: V
+    let action: (V, V) -> Void
+    @State private var prev: V
+    init(value: V, action: @escaping (V, V) -> Void) {
+        self.value = value
+        self.action = action
+        _prev = State(initialValue: value)
+    }
+    func body(content: Content) -> some View {
+        content.onChange(of: value) { newVal in
+            let oldVal = prev
+            prev = newVal
+            action(oldVal, newVal)
+        }
+    }
+}
+
+@propertyWrapper
+public struct Bindable<Value: AnyObject> {
+    public var wrappedValue: Value
+    public init(wrappedValue: Value) { self.wrappedValue = wrappedValue }
+    public init(_ wrappedValue: Value) { self.wrappedValue = wrappedValue }
+    public var projectedValue: Wrapper { Wrapper(value: wrappedValue) }
+    @dynamicMemberLookup
+    public struct Wrapper {
+        let value: Value
+        public subscript<Subject>(dynamicMember keyPath: ReferenceWritableKeyPath<Value, Subject>) -> Binding<Subject> {
+            Binding(get: { value[keyPath: keyPath] }, set: { value[keyPath: keyPath] = $0 })
+        }
+    }
+}
+#endif
