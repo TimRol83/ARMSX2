@@ -105,7 +105,7 @@ struct MenuTabView: View {
                                             : (selectedTab == 1 ? "BIOS" : "Games")
                                     )
                                 )
-                                .toolbarBackground(
+                                .toolbarBackgroundCompat(
                                     (selectedTab == 0
                                         ? settings.hasCustomBackground
                                         : biosBackgroundActive) ? .hidden : .automatic,

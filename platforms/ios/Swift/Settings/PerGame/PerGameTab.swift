@@ -16,7 +16,7 @@ struct PerGameTab<Content: View>: View {
         .background(Color.clear)
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(.hidden, for: .navigationBar)
+        .toolbarBackgroundCompat(.hidden, for: .navigationBar)
     }
 }
 

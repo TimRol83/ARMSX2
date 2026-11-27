@@ -277,7 +277,7 @@ private struct OptionalMenuNavigationChromeModifier: ViewModifier {
         } else {
             content
                 .navigationTitle(title)
-                .toolbarBackground(
+                .toolbarBackgroundCompat(
                     backgroundHidden ? .hidden : .automatic,
                     for: .navigationBar
                 )

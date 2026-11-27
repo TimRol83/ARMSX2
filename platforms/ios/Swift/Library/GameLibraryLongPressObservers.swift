@@ -173,7 +173,7 @@ struct GameLibraryCardLongPressObserver: UIViewRepresentable {
     }
 
     func sizeThatFits(
-        _ proposal: ProposedViewSize,
+        _ proposal: _ProposedViewSize,
         uiView: MarkerView,
         context: Context
     ) -> CGSize? {

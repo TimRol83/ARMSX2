@@ -138,7 +138,7 @@ struct ReportSheet: View {
                 },
                 onCancel: { keyboardField = nil }
             )
-            .presentationBackground(.clear)
+            .presentationBackgroundCompat(.clear)
             .appStatusBarHidden()
         }
         .controllerAccessibilityTargetOrder(controllerTargetOrder)

@@ -465,7 +465,7 @@ struct GameListView: View {
                 ) {
                     GameInfoPanel(game: game)
                 }
-                .presentationBackground(.clear)
+                .presentationBackgroundCompat(.clear)
                 .appStatusBarHidden()
             }
             .fullScreenCover(isPresented: $controller.gameLibraryViewOptionsPresented) {
@@ -477,7 +477,7 @@ struct GameListView: View {
                     logoStore: logoStore,
                     controllerInput: controllerInput
                 )
-                .presentationBackground(.clear)
+                .presentationBackgroundCompat(.clear)
                 .appStatusBarHidden()
             }
             // Scene level, since a page overlay cannot outrank the navigation chrome or tab bar.
@@ -498,7 +498,7 @@ struct GameListView: View {
                     library: library,
                     controllerInput: controllerInput
                 )
-                .presentationBackground(.clear)
+                .presentationBackgroundCompat(.clear)
                 .appStatusBarHidden()
             }
             // Scene level for the same reason as the context menu.
@@ -520,7 +520,7 @@ struct GameListView: View {
                         settings: settings,
                         kind: kind
                     )
-                    .presentationBackground(.clear)
+                    .presentationBackgroundCompat(.clear)
                     .appStatusBarHidden()
                 }
             }
@@ -544,7 +544,7 @@ struct GameListView: View {
                         controller.releasePreparedGameSettings()
                     }
                 )
-                .presentationBackground(.clear)
+                .presentationBackgroundCompat(.clear)
                 .appStatusBarHidden()
             }
             .fullScreenCover(item: $controller.renameTarget) { game in
@@ -561,7 +561,7 @@ struct GameListView: View {
                         controller.renameTarget = nil
                     }
                 )
-                .presentationBackground(.clear)
+                .presentationBackgroundCompat(.clear)
                 .appStatusBarHidden()
             }
             .fullScreenCover(item: $controller.discLinkTarget) { game in
@@ -577,7 +577,7 @@ struct GameListView: View {
                         library.setLinkedDisc(selected, for: game)
                     }
                 }
-                .presentationBackground(.clear)
+                .presentationBackgroundCompat(.clear)
                 .appStatusBarHidden()
             }
             .fullScreenCover(item: $controller.cheatsManagerTarget) { game in
@@ -593,7 +593,7 @@ struct GameListView: View {
                         controllerInput: controllerInput
                     )
                 }
-                .presentationBackground(.clear)
+                .presentationBackgroundCompat(.clear)
                 .appStatusBarHidden()
             }
 			}

@@ -308,7 +308,7 @@ struct AppearanceSettingsView: View, AppearanceSettingsEditing {
         // Explicit large-title ownership lets NavigationStack inset the Form's
         // scroll edge instead of putting the first section under the bar.
         .navigationBarTitleDisplayMode(.large)
-        .toolbarBackground(.hidden, for: .navigationBar)
+        .toolbarBackgroundCompat(.hidden, for: .navigationBar)
         .sheet(item: $presentedEditor, onDismiss: paletteEditorDidDismiss) { editor in
             switch editor {
             case .colours:
@@ -334,7 +334,7 @@ struct AppearanceSettingsView: View, AppearanceSettingsEditing {
                 },
                 onCancel: { showsThemeNameKeyboard = false }
             )
-            .presentationBackground(.clear)
+            .presentationBackgroundCompat(.clear)
             .appStatusBarHidden()
         }
         .controllerPrompt(

@@ -56,40 +56,40 @@ final class MenuTabBarAppearance : ObservableObject {
 
     func activeBottomNavigationTabBarHeightBinding(isLandscape: Bool) -> Binding<Double> {
         GameLibraryAppearance.orientationDoubleBinding(
-            portrait: Bindable(self).portraitBottomNavigationTabBarHeight,
-            landscape: Bindable(self).landscapeBottomNavigationTabBarHeight,
+            portrait: Binding(get: { self.portraitBottomNavigationTabBarHeight }, set: { self.portraitBottomNavigationTabBarHeight = $0 }),
+            landscape: Binding(get: { self.landscapeBottomNavigationTabBarHeight }, set: { self.landscapeBottomNavigationTabBarHeight = $0 }),
             isLandscape: isLandscape
         )
     }
 
     func activeBottomNavigationTabBarIconScaleBinding(isLandscape: Bool) -> Binding<Double> {
         GameLibraryAppearance.orientationDoubleBinding(
-            portrait: Bindable(self).portraitBottomNavigationTabBarIconScale,
-            landscape: Bindable(self).landscapeBottomNavigationTabBarIconScale,
+            portrait: Binding(get: { self.portraitBottomNavigationTabBarIconScale }, set: { self.portraitBottomNavigationTabBarIconScale = $0 }),
+            landscape: Binding(get: { self.landscapeBottomNavigationTabBarIconScale }, set: { self.landscapeBottomNavigationTabBarIconScale = $0 }),
             isLandscape: isLandscape
         )
     }
 
     func activeBottomNavigationTabBarLabelScaleBinding(isLandscape: Bool) -> Binding<Double> {
         GameLibraryAppearance.orientationDoubleBinding(
-            portrait: Bindable(self).portraitBottomNavigationTabBarLabelScale,
-            landscape: Bindable(self).landscapeBottomNavigationTabBarLabelScale,
+            portrait: Binding(get: { self.portraitBottomNavigationTabBarLabelScale }, set: { self.portraitBottomNavigationTabBarLabelScale = $0 }),
+            landscape: Binding(get: { self.landscapeBottomNavigationTabBarLabelScale }, set: { self.landscapeBottomNavigationTabBarLabelScale = $0 }),
             isLandscape: isLandscape
         )
     }
 
     func activeBottomNavigationTabBarClearanceBinding(isLandscape: Bool) -> Binding<Double> {
         GameLibraryAppearance.orientationDoubleBinding(
-            portrait: Bindable(self).portraitBottomNavigationTabBarClearance,
-            landscape: Bindable(self).landscapeBottomNavigationTabBarClearance,
+            portrait: Binding(get: { self.portraitBottomNavigationTabBarClearance }, set: { self.portraitBottomNavigationTabBarClearance = $0 }),
+            landscape: Binding(get: { self.landscapeBottomNavigationTabBarClearance }, set: { self.landscapeBottomNavigationTabBarClearance = $0 }),
             isLandscape: isLandscape
         )
     }
 
     func activeBottomNavigationTabBarShowsLabelsBinding(isLandscape: Bool) -> Binding<Bool> {
         GameLibraryAppearance.orientationBoolBinding(
-            portrait: Bindable(self).portraitBottomNavigationTabBarShowsLabels,
-            landscape: Bindable(self).landscapeBottomNavigationTabBarShowsLabels,
+            portrait: Binding(get: { self.portraitBottomNavigationTabBarShowsLabels }, set: { self.portraitBottomNavigationTabBarShowsLabels = $0 }),
+            landscape: Binding(get: { self.landscapeBottomNavigationTabBarShowsLabels }, set: { self.landscapeBottomNavigationTabBarShowsLabels = $0 }),
             fallback: true,
             isLandscape: isLandscape
         )

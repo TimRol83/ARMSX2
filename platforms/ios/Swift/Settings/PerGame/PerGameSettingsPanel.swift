@@ -389,7 +389,7 @@ struct PerGameSettingsPanel: View {
                     }
                     .navigationTitle(settings.localized(panelTitleKey))
                     .navigationBarTitleDisplayMode(.inline)
-                    .toolbarBackground(.hidden, for: .navigationBar)
+                    .toolbarBackgroundCompat(.hidden, for: .navigationBar)
             }
             // The destination Forms are transparent. Without clearing the
             // NavigationStack container, UIKit inserts a pale backing view

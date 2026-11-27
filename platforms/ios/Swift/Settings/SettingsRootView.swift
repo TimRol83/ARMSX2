@@ -387,7 +387,7 @@ struct SettingsRootView: View {
                 }
             }
         }
-        .toolbarBackground(
+        .toolbarBackgroundCompat(
             backgroundActive ? .hidden : .automatic,
             for: .navigationBar
         )

@@ -521,7 +521,7 @@ private struct RetroAchievementsLoginSheet: View {
                 },
                 onCancel: { keyboardField = nil }
             )
-            .presentationBackground(.clear)
+            .presentationBackgroundCompat(.clear)
             .appStatusBarHidden()
         }
         .interactiveDismissDisabled(loggingIn)

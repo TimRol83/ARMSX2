@@ -29,7 +29,7 @@ struct TexturesTab: View {
         }
         .perGameRightStickScroll()
         .scrollContentBackground(.hidden)
-        .toolbarBackground(.hidden, for: .navigationBar)
+        .toolbarBackgroundCompat(.hidden, for: .navigationBar)
     }
 
     private func override(_ title: String, id: String, selection: Binding<Int>) -> some View {

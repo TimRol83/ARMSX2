@@ -420,6 +420,6 @@ struct SettingsDetailClearLiquidGlassModifier: ViewModifier {
             }
             .stableMenuContentGlassContainer()
             .clearNavigationContainerBackground()
-            .toolbarBackground(.hidden, for: .navigationBar)
+            .toolbarBackgroundCompat(.hidden, for: .navigationBar)
     }
 }

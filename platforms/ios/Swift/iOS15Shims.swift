@@ -5,7 +5,6 @@ import SwiftUI
 @available(iOS, deprecated: 16.0)
 public struct NavigationStack<Root: View>: View {
     let root: Root
-    public init(@ViewBuilder root: () -> Root) { self.root = root() }
     public init(path: Any? = nil, @ViewBuilder root: () -> Root) { self.root = root() }
     public init<P>(path: Binding<P>, @ViewBuilder root: () -> Root) { self.root = root() }
     public var body: some View {
@@ -227,6 +226,29 @@ public struct Bindable<Value: AnyObject> {
         let value: Value
         public subscript<Subject>(dynamicMember keyPath: ReferenceWritableKeyPath<Value, Subject>) -> Binding<Subject> {
             Binding(get: { value[keyPath: keyPath] }, set: { value[keyPath: keyPath] = $0 })
+        }
+    }
+}
+#endif
+
+
+#if os(iOS)
+@available(iOS 15.0, *)
+public extension View {
+    @ViewBuilder
+    func toolbarBackgroundCompat(_ visibility: Visibility, for bars: Any...) -> some View {
+        if #available(iOS 16.0, *) {
+            self
+        } else {
+            self
+        }
+    }
+    @ViewBuilder
+    func presentationBackgroundCompat<S: ShapeStyle>(_ style: S) -> some View {
+        if #available(iOS 16.4, *) {
+            self.presentationBackground(style)
+        } else {
+            self
         }
     }
 }

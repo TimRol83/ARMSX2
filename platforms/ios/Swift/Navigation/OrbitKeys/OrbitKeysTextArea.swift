@@ -413,7 +413,7 @@ struct OrbitKeysThinCaretTextView: UIViewRepresentable {
   }
 
   func sizeThatFits(
-    _ proposal: ProposedViewSize,
+    _ proposal: _ProposedViewSize,
     uiView textView: OrbitKeysCaretTextView,
     context: Context
   ) -> CGSize? {

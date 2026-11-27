@@ -97,7 +97,7 @@ struct ThemeGalleryView: View {
             }
         }
         .preferredColorScheme(.dark)
-        .presentationBackground(.clear)
+        .presentationBackgroundCompat(.clear)
         .presentationDragIndicator(isPreviewing ? .hidden : .visible)
         .onAppear {
             guard original == nil else { return }
@@ -143,7 +143,7 @@ struct ThemeGalleryView: View {
                 },
                 onCancel: { showsNameKeyboard = false }
             )
-            .presentationBackground(.clear)
+            .presentationBackgroundCompat(.clear)
             .appStatusBarHidden()
         }
         .controllerPrompt(
