@@ -172,7 +172,6 @@ struct GameListView: View {
         return "grid-\(orientation)"
     }
 
-    var body: some View {
     @ViewBuilder
     private var libraryZStack: some View {
             ZStack {
@@ -296,6 +295,7 @@ struct GameListView: View {
     }
 
         // A concrete type before the modifier chain keeps the Release type-check in budget.
+    var body: some View {
         let presentation = OptionalMenuNavigationStack(
             embedded: embeddedInMenuNavigation
         ) {

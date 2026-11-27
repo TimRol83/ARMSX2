@@ -19,7 +19,7 @@ private struct MenuTabControllerCommandListener: View {
                 onEvent(event)
             })
     }
-
+}
 
 @MainActor
 final class MenuControllerTabFocusState : ObservableObject {

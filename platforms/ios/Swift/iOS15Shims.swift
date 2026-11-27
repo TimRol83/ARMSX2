@@ -600,3 +600,38 @@ extension View {
         }
     }
 }
+
+enum AxisCompat {
+    case horizontal
+    case vertical
+}
+
+extension TextField where Label == Text {
+    init(_ titleKey: LocalizedStringKey, text: Binding<String>, axis: AxisCompat) {
+        if #available(iOS 16.0, *) {
+            self.init(titleKey, text: text, axis: axis == .vertical ? .vertical : .horizontal)
+        } else {
+            self.init(titleKey, text: text)
+        }
+    }
+}
+
+extension Shape {
+    @ViewBuilder
+    func stroke<S: ShapeStyle>(_ content: S, lineWidth: CGFloat = 1, antialiased: Bool) -> some View {
+        if #available(iOS 17.0, *) {
+            self.stroke(content, lineWidth: lineWidth, antialiased: antialiased)
+        } else {
+            self.stroke(content, lineWidth: lineWidth)
+        }
+    }
+
+    @ViewBuilder
+    func fill<S: ShapeStyle>(_ content: S, style: FillStyle) -> some View {
+        if #available(iOS 17.0, *) {
+            self.fill(content, style: style)
+        } else {
+            self.fill(content)
+        }
+    }
+}
