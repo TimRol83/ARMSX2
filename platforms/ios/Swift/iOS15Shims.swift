@@ -270,8 +270,7 @@ public extension LabeledContent where Label == Text, Content == Text {
 
 @available(iOS, deprecated: 16.0)
 public protocol LayoutCompat {
-    associatedtype Body: View = AnyView
-    func makeBody<Content: View>(@ViewBuilder content: () -> Content) -> Body
+    func makeBody<Content: View>(@ViewBuilder content: () -> Content) -> AnyView
 }
 
 @available(iOS, deprecated: 16.0)
@@ -282,8 +281,8 @@ public struct HStackLayout: LayoutCompat {
         self.alignment = alignment
         self.spacing = spacing
     }
-    public func makeBody<Content: View>(@ViewBuilder content: () -> Content) -> some View {
-        HStack(alignment: alignment, spacing: spacing, content: content)
+    public func makeBody<Content: View>(@ViewBuilder content: () -> Content) -> AnyView {
+        AnyView(HStack(alignment: alignment, spacing: spacing, content: content))
     }
 }
 
@@ -295,8 +294,8 @@ public struct VStackLayout: LayoutCompat {
         self.alignment = alignment
         self.spacing = spacing
     }
-    public func makeBody<Content: View>(@ViewBuilder content: () -> Content) -> some View {
-        VStack(alignment: alignment, spacing: spacing, content: content)
+    public func makeBody<Content: View>(@ViewBuilder content: () -> Content) -> AnyView {
+        AnyView(VStack(alignment: alignment, spacing: spacing, content: content))
     }
 }
 
@@ -306,8 +305,8 @@ public struct ZStackLayout: LayoutCompat {
     public init(alignment: Alignment = .center) {
         self.alignment = alignment
     }
-    public func makeBody<Content: View>(@ViewBuilder content: () -> Content) -> some View {
-        ZStack(alignment: alignment, content: content)
+    public func makeBody<Content: View>(@ViewBuilder content: () -> Content) -> AnyView {
+        AnyView(ZStack(alignment: alignment, content: content))
     }
 }
 
@@ -316,7 +315,7 @@ public struct AnyLayout {
     private let builder: (AnyView) -> AnyView
     public init<L: LayoutCompat>(_ layout: L) {
         self.builder = { content in
-            AnyView(layout.makeBody { content })
+            layout.makeBody { content }
         }
     }
     public func callAsFunction<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {
@@ -347,7 +346,6 @@ public extension View {
     func toolbarBackground<S: ShapeStyle>(_ style: S, for bars: ToolbarPlacementCompat...) -> some View { self }
     func presentationBackground<S: ShapeStyle>(_ style: S) -> some View { self }
     func presentationBackground<V: View>(alignment: Alignment = .center, @ViewBuilder content: () -> V) -> some View { self }
-    func fontWeight(_ weight: Font.Weight?) -> some View { self }
     func contentTransition(_ transition: ContentTransitionCompat) -> some View { self }
     func scrollPosition<ID: Hashable>(id: Binding<ID?>, anchor: UnitPoint? = nil) -> some View { self }
     func foregroundStyle<S1: ShapeStyle, S2: ShapeStyle>(_ primary: S1, _ secondary: S2) -> some View {
