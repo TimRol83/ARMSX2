@@ -272,7 +272,7 @@ private struct LegacyGlassMenuTabBar: View {
                         ZStack {
                             if selection == index {
                                 Capsule()
-                                    .fill(.ultraThinMaterial)
+                                    .fill(Material.ultraThinMaterial)
                                     .overlay {
                                         Capsule()
                                             .stroke(
@@ -378,7 +378,7 @@ private struct OriginalLegacyGlassMenuTabBar: View {
                     .background {
                         if selection == index {
                             Capsule()
-                                .fill(.ultraThinMaterial)
+                                .fill(Material.ultraThinMaterial)
                                 .overlay {
                                     Capsule()
                                         .fill(accentColour.opacity(0.075))

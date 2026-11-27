@@ -122,8 +122,8 @@ private struct FaceGlyph: View {
 
             ZStack {
                 Circle()
-                    .fill(.black.opacity(0.08))
-                    .stroke(.white.opacity(0.52), lineWidth: max(1.2, side * 0.04))
+                    .fill(Color.black.opacity(0.08))
+                    .stroke(Color.white.opacity(0.52), lineWidth: max(1.2, side * 0.04))
 
                 switch kind {
                 case .cross:
@@ -193,11 +193,11 @@ private struct DPadGlyph: View {
 
             ZStack {
                 RoundedRectangle(cornerRadius: side * 0.20, style: .continuous)
-                    .fill(.black.opacity(0.18))
-                    .stroke(.white.opacity(0.22), lineWidth: max(1.2, side * 0.045))
+                    .fill(Color.black.opacity(0.18))
+                    .stroke(Color.white.opacity(0.22), lineWidth: max(1.2, side * 0.045))
 
                 TriangleShape()
-                    .fill(.white.opacity(0.72))
+                    .fill(Color.white.opacity(0.72))
                     .frame(width: side * 0.30, height: side * 0.24)
                     .rotationEffect(direction.angle)
             }
@@ -215,8 +215,8 @@ private struct ShoulderGlyph: View {
 
             ZStack {
                 RoundedRectangle(cornerRadius: corner, style: .continuous)
-                    .fill(.black.opacity(0.16))
-                    .stroke(.white.opacity(0.28), lineWidth: 1.6)
+                    .fill(Color.black.opacity(0.16))
+                    .stroke(Color.white.opacity(0.28), lineWidth: 1.6)
 
                 Text(label)
                     .font(.system(size: max(11, geo.size.height * 0.42), weight: .semibold, design: .rounded))
@@ -240,8 +240,8 @@ private struct CapsuleGlyph: View {
         GeometryReader { geo in
             ZStack {
                 Capsule()
-                    .fill(.black.opacity(0.14))
-                    .stroke(.white.opacity(0.26), lineWidth: 1.4)
+                    .fill(Color.black.opacity(0.14))
+                    .stroke(Color.white.opacity(0.26), lineWidth: 1.4)
 
                 if geo.size.width < 34 {
                     symbolView
@@ -260,12 +260,12 @@ private struct CapsuleGlyph: View {
         switch symbol {
         case .play:
             TriangleShape()
-                .fill(.white.opacity(0.72))
+                .fill(Color.white.opacity(0.72))
                 .rotationEffect(.degrees(90))
                 .padding(6)
         case .minus:
             Capsule()
-                .fill(.white.opacity(0.72))
+                .fill(Color.white.opacity(0.72))
                 .frame(width: 14, height: 3)
         }
     }
@@ -280,8 +280,8 @@ private struct CircleLabelGlyph: View {
 
             ZStack {
                 Circle()
-                    .fill(.black.opacity(0.16))
-                    .stroke(.white.opacity(0.26), lineWidth: max(1, side * 0.055))
+                    .fill(Color.black.opacity(0.16))
+                    .stroke(Color.white.opacity(0.26), lineWidth: max(1, side * 0.055))
 
                 Text(label)
                     .font(.system(size: max(6, side * 0.32), weight: .bold, design: .rounded))
@@ -300,11 +300,11 @@ private struct AnalogBaseGlyph: View {
 
             ZStack {
                 Circle()
-                    .fill(.black.opacity(0.14))
-                    .stroke(.white.opacity(0.20), lineWidth: max(1, side * 0.018))
+                    .fill(Color.black.opacity(0.14))
+                    .stroke(Color.white.opacity(0.20), lineWidth: max(1, side * 0.018))
 
                 Circle()
-                    .stroke(.white.opacity(0.08), lineWidth: max(1, side * 0.035))
+                    .stroke(Color.white.opacity(0.08), lineWidth: max(1, side * 0.035))
                     .frame(width: side * 0.78, height: side * 0.78)
             }
             .frame(width: geo.size.width, height: geo.size.height)
@@ -317,11 +317,11 @@ private struct AnalogStickGlyph: View {
         GeometryReader { geo in
             ZStack {
                 Circle()
-                    .fill(.white.opacity(0.22))
-                    .stroke(.white.opacity(0.18), lineWidth: 1.2)
+                    .fill(Color.white.opacity(0.22))
+                    .stroke(Color.white.opacity(0.18), lineWidth: 1.2)
 
                 Circle()
-                    .fill(.white.opacity(0.10))
+                    .fill(Color.white.opacity(0.10))
                     .padding(6)
             }
             .frame(width: geo.size.width, height: geo.size.height)

@@ -636,7 +636,7 @@ private struct ControllerCustomColourEditor: View {
                                 cornerRadius: 14,
                                 style: .continuous
                             )
-                            .stroke(.white.opacity(0.55), lineWidth: 1)
+                            .stroke(Color.white.opacity(0.55), lineWidth: 1)
                         }
                         .accessibilityHidden(true)
                 } footer: {

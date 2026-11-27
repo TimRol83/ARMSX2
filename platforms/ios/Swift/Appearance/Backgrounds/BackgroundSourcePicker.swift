@@ -20,21 +20,13 @@ struct BackgroundSourcePicker: ViewModifier {
     @State private var showFilePicker = false
     @State private var showLargeFileWarning = false
     @State private var showLoadError = false
-    @State private var selectedPhotoItem: PhotosPickerItem?
     @State private var pendingFileURL: URL?
 
     private var settings: SettingsStore { SettingsStore.shared }
     private var currentAsset: BackgroundAsset? { existingAsset() }
 
     func body(content: Content) -> some View {
-        content
-            .controllerPrompt(dialogTitle, isPresented: $isPresented, actions: sourceActions)
-            .photosPicker(isPresented: $showPhotoPicker, selection: $selectedPhotoItem, matching: .any(of: [.images, .videos]))
-            .onChangeCompat(of: selectedPhotoItem, perform: { _, item in
-                guard let item else { return }
-                selectedPhotoItem = nil
-                Task { @MainActor in await importPhotoItem(item) }
-            })
+        baseContent(content)
             .fileImporter(isPresented: $showFilePicker, allowedContentTypes: [.image, .audiovisualContent], allowsMultipleSelection: false) { handleFileImport($0) }
             .controllerPrompt(
                 settings.localized("Large Background File"),
@@ -47,16 +39,31 @@ struct BackgroundSourcePicker: ViewModifier {
             .controllerPrompt(
                 settings.localized("Background image could not be loaded."),
                 isPresented: $showLoadError,
-                actions: [ControllerPrompt.Action]([.ok])
-            )
+                actions: [ControllerPrompt.Action]([.ok]))
+    }
+
+    @ViewBuilder
+    private func baseContent(_ content: Content) -> some View {
+        let prompted = content
+            .controllerPrompt(dialogTitle, isPresented: $isPresented, actions: sourceActions)
+        if #available(iOS 16.0, *) {
+            prompted.modifier(PhotoLibraryPickerBridge(
+                isPresented: $showPhotoPicker,
+                showLoadError: $showLoadError,
+                existingAsset: existingAsset,
+                onImport: onImport
+            ))
+        } else {
+            prompted
+        }
     }
 
     private var sourceActions: [ControllerPrompt.Action] {
-        var actions: [ControllerPrompt.Action] = [
-            .cancel,
-            .init(title: settings.localized("Choose from Photos")) { showPhotoPicker = true },
-            .init(title: settings.localized("Choose from Files")) { showFilePicker = true },
-        ]
+        var actions: [ControllerPrompt.Action] = [.cancel]
+        if #available(iOS 16.0, *) {
+            actions.append(.init(title: settings.localized("Choose from Photos")) { showPhotoPicker = true })
+        }
+        actions.append(.init(title: settings.localized("Choose from Files")) { showFilePicker = true })
         if currentAsset != nil {
             actions.append(.init(title: settings.localized("Remove"), isDestructive: true) { onImport(nil) })
         }
@@ -70,23 +77,6 @@ struct BackgroundSourcePicker: ViewModifier {
         }
     }
 
-    private func importPhotoItem(_ item: PhotosPickerItem) async {
-        do {
-            guard let data = try await item.loadTransferable(type: Data.self) else {
-                showLoadError = true
-                return
-            }
-            let ext = await item.supportedContentTypes.first?.preferredFilenameExtension ?? "jpg"
-            let replacing = currentAsset
-            let asset = try await Task.detached(priority: .userInitiated) {
-                try BackgroundStorage.importData(data, fileExtension: ext, replacing: replacing)
-            }.value
-            onImport(asset)
-        } catch {
-            showLoadError = true
-            NSLog("[ARMSX2 Background] photo import failed: %@", error.localizedDescription)
-        }
-    }
 
     private func handleFileImport(_ result: Result<[URL], Error>) {
         switch result {
@@ -124,5 +114,43 @@ struct BackgroundSourcePicker: ViewModifier {
     private func isUserCancelled(_ error: Error) -> Bool {
         let ns = error as NSError
         return ns.domain == "NSCocoaErrorDomain" && ns.code == 3072
+    }
+}
+
+@available(iOS 16.0, *)
+private struct PhotoLibraryPickerBridge: ViewModifier {
+    @Binding var isPresented: Bool
+    @Binding var showLoadError: Bool
+    let existingAsset: () -> BackgroundAsset?
+    let onImport: (BackgroundAsset?) -> Void
+
+    @State private var selectedPhotoItem: PhotosPickerItem?
+
+    func body(content: Content) -> some View {
+        content
+            .photosPicker(isPresented: $isPresented, selection: $selectedPhotoItem, matching: .any(of: [.images, .videos]))
+            .onChangeCompat(of: selectedPhotoItem, perform: { _, item in
+                guard let item else { return }
+                selectedPhotoItem = nil
+                Task { @MainActor in await importPhotoItem(item) }
+            })
+    }
+
+    private func importPhotoItem(_ item: PhotosPickerItem) async {
+        do {
+            guard let data = try await item.loadTransferable(type: Data.self) else {
+                showLoadError = true
+                return
+            }
+            let ext = await item.supportedContentTypes.first?.preferredFilenameExtension ?? "jpg"
+            let replacing = existingAsset()
+            let asset = try await Task.detached(priority: .userInitiated) {
+                try BackgroundStorage.importData(data, fileExtension: ext, replacing: replacing)
+            }.value
+            onImport(asset)
+        } catch {
+            showLoadError = true
+            NSLog("[ARMSX2 Background] photo import failed: %@", error.localizedDescription)
+        }
     }
 }

@@ -91,7 +91,7 @@ struct DraggableGroup: View {
         let isVisible = layout.isControlVisible(id)
         ZStack {
             RoundedRectangle(cornerRadius: 8)
-                .fill(.white.opacity(isSelected ? 0.10 : 0.04))
+                .fill(Color.white.opacity(isSelected ? 0.10 : 0.04))
                 .frame(width: visibleSize.width + 12, height: visibleSize.height + 12)
                 .overlay {
                     RoundedRectangle(cornerRadius: 8)
@@ -265,7 +265,7 @@ struct DraggableButton: View {
         let isVisible = layout.isControlVisible(id)
         ZStack {
             RoundedRectangle(cornerRadius: 6)
-                .fill(.white.opacity(isSelected ? 0.10 : 0.04))
+                .fill(Color.white.opacity(isSelected ? 0.10 : 0.04))
                 .frame(width: visibleSize.width + 10, height: visibleSize.height + 10)
                 .overlay {
                     RoundedRectangle(cornerRadius: 6)

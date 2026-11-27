@@ -98,7 +98,7 @@ private struct ControllerNavigationAlertDetailRow: View {
                         .frame(width: 48, height: 28)
                         .overlay(alignment: isOn ? .trailing : .leading) {
                             Circle()
-                                .fill(.white)
+                                .fill(Color.white)
                                 .padding(3)
                         }
                         .animation(.easeOut(duration: 0.16), value: isOn)

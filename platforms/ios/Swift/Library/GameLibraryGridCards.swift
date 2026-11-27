@@ -410,7 +410,7 @@ struct GameLibraryFavoriteButton: View {
             .padding(padding)
             .background {
                 if let backgroundOpacity {
-                    Circle().fill(.black.opacity(backgroundOpacity))
+                    Circle().fill(Color.black.opacity(backgroundOpacity))
                 }
             }
             .frame(minWidth: 44, minHeight: 44)

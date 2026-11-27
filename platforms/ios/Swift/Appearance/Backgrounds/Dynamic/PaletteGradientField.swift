@@ -266,7 +266,7 @@ struct PaletteGradientEditor: View {
             .background(Circle().fill(colors[index]))
             .overlay {
               Circle()
-                .stroke(.black.opacity(0.85), lineWidth: 3)
+                .stroke(Color.black.opacity(0.85), lineWidth: 3)
                 .allowsHitTesting(false)
             }
             .clipShape(Circle())

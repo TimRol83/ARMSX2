@@ -332,7 +332,7 @@ struct ControllerFocusBoxArtwork: View {
                 )
                 .overlay(alignment: .top) {
                     Capsule()
-                        .fill(.white.opacity(0.62))
+                        .fill(Color.white.opacity(0.62))
                         .frame(height: 1.2)
                         .padding(.horizontal, max(8, cornerRadius * 0.8))
                         .padding(.top, 2)

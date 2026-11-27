@@ -125,7 +125,7 @@ struct PSBtn: View {
             // Ellipse (not Circle) so the press-mask shape matches a non-uniform
             // visible frame; degenerates to a circle when the axes are equal.
             Ellipse()
-                .fill(.clear)
+                .fill(Color.clear)
 
             if !padUsesFullSkin || on {
                 ARMSX2SkinMaskPressEffect(button: btn, skin: padSkin, descriptor: padSkinDescriptor, color: clr, isPressed: on, opacity: padUsesFullSkin ? padOpacity * 0.75 : padOpacity)
@@ -214,7 +214,7 @@ struct PadButtonFace: View {
         let shape = RoundedRectangle(cornerRadius: min(visibleW, visibleH) * 0.28, style: .continuous)
         return ZStack {
             shape
-                .fill(.clear)
+                .fill(Color.clear)
 
             if !padUsesFullSkin || isPressed {
                 ARMSX2SkinMaskPressEffect(button: button, skin: padSkin, descriptor: padSkinDescriptor, color: .white, isPressed: isPressed, opacity: padUsesFullSkin ? padOpacity * 0.75 : padOpacity)
@@ -364,13 +364,13 @@ struct StickView: View {
     var body: some View {
         ZStack {
             Circle()
-                .fill(.clear)
+                .fill(Color.clear)
                 .frame(width: sz, height: sz)
 
             if isDragging {
                 Circle()
-                    .fill(.black.opacity((isDragging ? 0.26 : 0.18) * padOpacity))
-                    .stroke(.white.opacity((isDragging ? 0.34 : 0.18) * padOpacity), lineWidth: isDragging ? 1.8 : 1)
+                    .fill(Color.black.opacity((isDragging ? 0.26 : 0.18) * padOpacity))
+                    .stroke(Color.white.opacity((isDragging ? 0.34 : 0.18) * padOpacity), lineWidth: isDragging ? 1.8 : 1)
                     .shadow(color: .white.opacity(isDragging ? 0.22 * padOpacity : 0.05 * padOpacity), radius: isDragging ? 8 : 2)
                     .frame(width: sz, height: sz)
             }
@@ -423,8 +423,8 @@ struct StickView: View {
                     .offset(off)
             } else if isDragging {
                 Circle()
-                    .fill(.white.opacity(0.22 * padOpacity))
-                    .stroke(.white.opacity(0.34 * padOpacity), lineWidth: 1.4)
+                    .fill(Color.white.opacity(0.22 * padOpacity))
+                    .stroke(Color.white.opacity(0.34 * padOpacity), lineWidth: 1.4)
                     .frame(width: knob, height: knob)
                     .offset(off)
             }

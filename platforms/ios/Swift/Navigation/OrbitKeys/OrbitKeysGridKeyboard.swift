@@ -133,7 +133,7 @@ struct OrbitKeysGridView: View {
               .glassEffectID(position.id, in: glassNamespace)
               .overlay {
                 RoundedRectangle(cornerRadius: 22, style: .continuous)
-                  .stroke(.white.opacity(0.08), lineWidth: 0.7)
+                  .stroke(Color.white.opacity(0.08), lineWidth: 0.7)
               }
           } else {
             content
@@ -143,7 +143,7 @@ struct OrbitKeysGridView: View {
               )
               .overlay {
                 RoundedRectangle(cornerRadius: 22, style: .continuous)
-                  .stroke(.white.opacity(0.08), lineWidth: 0.7)
+                  .stroke(Color.white.opacity(0.08), lineWidth: 0.7)
               }
           }
         } else {
@@ -215,13 +215,13 @@ private struct OrbitKeysCellView: View {
       ZStack {
         if isSelected {
           RoundedRectangle(cornerRadius: 22, style: .continuous)
-            .stroke(.white.opacity(0.22), lineWidth: 1)
+            .stroke(Color.white.opacity(0.22), lineWidth: 1)
             .shadow(color: themeAccent.opacity(0.42), radius: 8)
             .padding(1)
 
         } else {
           RoundedRectangle(cornerRadius: 22, style: .continuous)
-            .stroke(.white.opacity(0.08), lineWidth: 0.7)
+            .stroke(Color.white.opacity(0.08), lineWidth: 0.7)
         }
 
         directionalKey(.triangle, diameter: keyDiameter)
@@ -251,7 +251,7 @@ private struct OrbitKeysCellView: View {
             )
         } else {
           Circle()
-            .fill(.white.opacity(0.18))
+            .fill(Color.white.opacity(0.18))
             .frame(width: 3, height: 3)
         }
 
@@ -379,7 +379,7 @@ private struct OrbitKeysCellView: View {
         }
     } else {
       Circle()
-        .fill(.clear)
+        .fill(Color.clear)
         .keyboardGlassCircleStyle(clearGlassLevel: clearGlassLevel, lineWidth: 0)
         .overlay {
           Circle()

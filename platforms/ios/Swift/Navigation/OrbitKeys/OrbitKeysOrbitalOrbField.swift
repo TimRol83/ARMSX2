@@ -632,15 +632,15 @@ private struct OrbitKeysGlassOrb: View {
 
   private var core: some View {
     Circle()
-      .fill(.white.opacity(0.08))
+      .fill(Color.white.opacity(0.08))
       .frame(width: diameter, height: diameter)
       .overlay {
         Circle()
-          .stroke(.white.opacity(0.62), lineWidth: 0.65)
+          .stroke(Color.white.opacity(0.62), lineWidth: 0.65)
       }
       .overlay(alignment: .topLeading) {
         Circle()
-          .fill(.white.opacity(0.38))
+          .fill(Color.white.opacity(0.38))
           .frame(width: diameter * 0.24, height: diameter * 0.24)
           .padding(diameter * 0.18)
       }

@@ -85,7 +85,7 @@ struct OverlayFrostBackground: View {
             gradient
         } else {
             ZStack {
-                Rectangle().fill(.regularMaterial)
+                Rectangle().fill(Material.regularMaterial)
                 gradient.opacity(OverlayTheme.shellGlassTint)
             }
             .overlay(alignment: .top) {

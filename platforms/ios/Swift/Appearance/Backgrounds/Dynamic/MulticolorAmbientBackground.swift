@@ -54,7 +54,7 @@ struct MulticolorAmbientBackground: View {
           )
 
         Circle()
-          .fill(.white.opacity(0.12))
+          .fill(Color.white.opacity(0.12))
           .frame(width: 250, height: 250)
           .blur(radius: 70)
           .offset(

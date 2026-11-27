@@ -169,12 +169,12 @@ private struct OrbitKeysGlassStyleModifier<Surface: Shape>: ViewModifier {
     content
       .background {
         ZStack {
-          surface.fill(.black.opacity(glass.blackOpacity))
-          surface.fill(.white.opacity(glass.highlightOpacity))
+          surface.fill(Color.black.opacity(glass.blackOpacity))
+          surface.fill(Color.white.opacity(glass.highlightOpacity))
         }
       }
       .overlay {
-        surface.stroke(.white.opacity(glass.strokeOpacity), lineWidth: lineWidth)
+        surface.stroke(Color.white.opacity(glass.strokeOpacity), lineWidth: lineWidth)
       }
       .clipShape(surface)
   }
@@ -222,7 +222,7 @@ private struct OrbitKeysKeySurfaceModifier: ViewModifier {
       content
         .background {
           RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-            .fill(.black.opacity(0.2))
+            .fill(Color.black.opacity(0.2))
         }
         .clipShape(
           RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)

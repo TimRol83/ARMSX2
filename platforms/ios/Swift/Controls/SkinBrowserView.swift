@@ -289,7 +289,7 @@ struct SkinBrowserView: View {
                         image.resizable().aspectRatio(contentMode: .fit)
                     } placeholder: {
                         RoundedRectangle(cornerRadius: 8)
-                            .fill(.quaternary)
+                            .fill(HierarchicalShapeStyle.quaternary)
                             .overlay(Image(systemName: "photo").foregroundStyle(.secondary))
                     }
                     .frame(width: 80, height: 50)

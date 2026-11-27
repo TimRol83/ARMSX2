@@ -141,7 +141,7 @@ struct ThemePaletteControls: View {
           .font(.caption.weight(.black))
           .foregroundStyle(.black)
           .frame(width: 24, height: 24)
-          .background(Circle().fill(.white.opacity(0.94)))
+          .background(Circle().fill(Color.white.opacity(0.94)))
           .shadow(radius: 4)
       }
     } else if isSelected(palette) {
