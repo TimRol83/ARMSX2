@@ -589,3 +589,14 @@ public extension View {
 @inlinable public func sin(_ x: Double) -> Double { Darwin.sin(x) }
 @inlinable public func cos(_ x: CGFloat) -> CGFloat { CoreGraphics.cos(x) }
 @inlinable public func sin(_ x: CGFloat) -> CGFloat { CoreGraphics.sin(x) }
+
+extension View {
+    @ViewBuilder
+    func contentTransitionSymbolReplace() -> some View {
+        if #available(iOS 17.0, *) {
+            self.contentTransitionSymbolReplace()
+        } else {
+            self
+        }
+    }
+}

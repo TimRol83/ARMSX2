@@ -110,34 +110,8 @@ struct SettingsRootView: View {
         SettingsPane(rawValue: rememberedRootPaneRawValue)
     }
 
-    var body: some View {
-#if targetEnvironment(macCatalyst)
-        NavigationSplitView {
-            List(SettingsPane.rootCases, selection: $selectedPane) { pane in
-                Label(settings.localized(pane.title), systemImage: pane.icon)
-                    .tag(pane)
-            }
-            .navigationTitle(settings.localized("Settings"))
-            .listStyle(.sidebar)
-        } detail: {
-            presentedSettingsDetail(for: selectedPane)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        }
-        .navigationSplitViewStyle(.balanced)
-        .containerBackground(backgroundActive ? Color.clear : Color(uiColor: .systemGroupedBackground), for: .navigation)
-#else
-        NavigationStack(path: $navigationPath) {
-        ZStack {
-            // Always in the tree, isActive or not: inserting it ahead of the List under a pushed
-            // page could invalidate the NavigationStack and detach its controller session.
-            MenuBackgroundLayer(
-                isActive: menuTabIsActive && backgroundConfigured
-            )
-            .opacity(backgroundConfigured ? 1 : 0)
-
-            // NavigationStack keeps the root alive under a pushed page, so the List is removed,
-            // not hidden, or its rows, probes and collection view stay mounted behind it.
-            if navigationPath.isEmpty {
+    @ViewBuilder
+    private var iosSettingsList: some View {
             List {
             // A landscape phone has no room for it: it pushed Language to the bottom.
             if controllerInput != nil, verticalSizeClass != .compact {
@@ -322,6 +296,37 @@ struct SettingsRootView: View {
                 .listRowBackground(Color.clear)
                 .accessibilityHidden(true)
         }
+    }
+
+    var body: some View {
+#if targetEnvironment(macCatalyst)
+        NavigationSplitView {
+            List(SettingsPane.rootCases, selection: $selectedPane) { pane in
+                Label(settings.localized(pane.title), systemImage: pane.icon)
+                    .tag(pane)
+            }
+            .navigationTitle(settings.localized("Settings"))
+            .listStyle(.sidebar)
+        } detail: {
+            presentedSettingsDetail(for: selectedPane)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        }
+        .navigationSplitViewStyle(.balanced)
+        .containerBackground(backgroundActive ? Color.clear : Color(uiColor: .systemGroupedBackground), for: .navigation)
+#else
+        NavigationStack(path: $navigationPath) {
+        ZStack {
+            // Always in the tree, isActive or not: inserting it ahead of the List under a pushed
+            // page could invalidate the NavigationStack and detach its controller session.
+            MenuBackgroundLayer(
+                isActive: menuTabIsActive && backgroundConfigured
+            )
+            .opacity(backgroundConfigured ? 1 : 0)
+
+            // NavigationStack keeps the root alive under a pushed page, so the List is removed,
+            // not hidden, or its rows, probes and collection view stay mounted behind it.
+            if navigationPath.isEmpty {
+                iosSettingsList
         // The tail row clears the tab bar. Zero keeps RootView's library margin
         // from adding a second, empty scroll range below Help.
         .contentMargins(.bottom, 0, for: .scrollContent)

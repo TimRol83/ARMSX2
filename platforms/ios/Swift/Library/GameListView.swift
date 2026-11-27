@@ -173,10 +173,8 @@ struct GameListView: View {
     }
 
     var body: some View {
-        // A concrete type before the modifier chain keeps the Release type-check in budget.
-        let presentation = OptionalMenuNavigationStack(
-            embedded: embeddedInMenuNavigation
-        ) {
+    @ViewBuilder
+    private var libraryZStack: some View {
             ZStack {
                 if hasCustomBackground {
                     MenuBackgroundLayer(isActive: menuTabIsActive)
@@ -255,44 +253,56 @@ struct GameListView: View {
                 }
 
             }
+    }
+
+    @ViewBuilder
+    private var libraryMenuOverlay: some View {
+        Group {
+                    if controller.controllerLayoutMenuPresented {
+                        ControllerNavigationAlert(
+                            title: settings.localized("Library Layout"),
+                            dimsBackground: false,
+                            message: "",
+                            actions: controller.controllerLayoutMenuActions,
+                            selectedIndex: controller.controllerLayoutMenuSelectedIndex,
+                            onSelect: controller.performControllerLayoutMenuAction,
+                            onDismiss: {
+                                controller.dismissControllerLayoutMenu()
+                            }
+                        )
+                        .zIndex(20_000)
+                    }
+                    if controller.controllerMoreMenuPresented {
+                        ControllerNavigationAlert(
+                            title: settings.localized("More"),
+                            titleColour: settings.appearance.controllerContextMenuColor,
+                            contentColour: settings.appearance.controllerContextMenuColor,
+                            secondaryContentColour:
+                                settings.appearance.controllerContextMenuSecondaryColor,
+                            usesClearGlass: false,
+                            showsActionButtonBackgrounds: true,
+                            dimsBackground: false,
+                            message: "",
+                            actions: controller.controllerMoreMenuActions,
+                            selectedIndex: controller.controllerMoreMenuSelectedIndex,
+                            onSelect: controller.performControllerMoreMenuAction,
+                            onDismiss: {
+                                controller.dismissControllerMoreMenu()
+                            }
+                        )
+                        .ignoresSafeArea(.container, edges: .all)
+                        .zIndex(20_000)
+        }
+    }
+
+        // A concrete type before the modifier chain keeps the Release type-check in budget.
+        let presentation = OptionalMenuNavigationStack(
+            embedded: embeddedInMenuNavigation
+        ) {
+        libraryZStack
             .environment(\.stopConfirmationPresented, controller.showStopAlert)
             .onPreferenceChange(StopConfirmationAnchorKey.self) { stopConfirmationAnchor = $0 }
-            .overlay {
-                if controller.controllerLayoutMenuPresented {
-                    ControllerNavigationAlert(
-                        title: settings.localized("Library Layout"),
-                        dimsBackground: false,
-                        message: "",
-                        actions: controller.controllerLayoutMenuActions,
-                        selectedIndex: controller.controllerLayoutMenuSelectedIndex,
-                        onSelect: controller.performControllerLayoutMenuAction,
-                        onDismiss: {
-                            controller.dismissControllerLayoutMenu()
-                        }
-                    )
-                    .zIndex(20_000)
-                }
-                if controller.controllerMoreMenuPresented {
-                    ControllerNavigationAlert(
-                        title: settings.localized("More"),
-                        titleColour: settings.appearance.controllerContextMenuColor,
-                        contentColour: settings.appearance.controllerContextMenuColor,
-                        secondaryContentColour:
-                            settings.appearance.controllerContextMenuSecondaryColor,
-                        usesClearGlass: false,
-                        showsActionButtonBackgrounds: true,
-                        dimsBackground: false,
-                        message: "",
-                        actions: controller.controllerMoreMenuActions,
-                        selectedIndex: controller.controllerMoreMenuSelectedIndex,
-                        onSelect: controller.performControllerMoreMenuAction,
-                        onDismiss: {
-                            controller.dismissControllerMoreMenu()
-                        }
-                    )
-                    .ignoresSafeArea(.container, edges: .all)
-                    .zIndex(20_000)
-                }
+        .overlay { libraryMenuOverlay }
             }
             .overlay {
                 if controller.activeControllerAlertKind == .stop {
