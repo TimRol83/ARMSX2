@@ -216,7 +216,7 @@ struct ControllerGameContextMenu: View {
                 .contentShape(RoundedRectangle(cornerRadius: isCompact ? 9 : 12))
             }
             .buttonStyle(.plain)
-            .focusEffectDisabled()
+            .focusEffectDisabledCompat()
             .controllerNavigationOrbTarget(
                 id: "context.play-or-stop",
                 isActive: playOrStopSelected,
@@ -333,7 +333,7 @@ struct ControllerGameContextMenu: View {
             )
         }
         .buttonStyle(.plain)
-        .focusEffectDisabled()
+        .focusEffectDisabledCompat()
         .accessibilityAddTraits(isSelected ? .isSelected : [])
         // Read the final button bounds after its focus transform. Anchoring
         // inside the label omitted Button/List adjustments and displaced the

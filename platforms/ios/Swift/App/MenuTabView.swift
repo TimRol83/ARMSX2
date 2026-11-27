@@ -183,7 +183,6 @@ struct MenuTabView: View {
                     )
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-    }
     @ObservedObject private var settings = SettingsStore.shared
     @ObservedObject private var logoStore = ARMSX2LogoStore.shared
     @Binding var selectedTab: Int

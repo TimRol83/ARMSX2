@@ -167,6 +167,13 @@ public extension Task where Success == Never, Failure == Never {
         try await Task.sleep(nanoseconds: duration.nanoseconds)
     }
 }
-
-
-public
+extension View {
+    @ViewBuilder
+    func focusEffectDisabledCompat(_ disabled: Bool = true) -> some View {
+        if #available(iOS 17.0, *) {
+            self.focusEffectDisabled(disabled)
+        } else {
+            self
+        }
+    }
+}

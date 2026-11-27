@@ -81,7 +81,7 @@ struct GameLibraryNowRunningControllerFocusModifier: ViewModifier {
                     .foregroundStyle(action == .stop ? Color.red : Color.white)
             }
         }
-            .focusEffectDisabled()
+            .focusEffectDisabledCompat()
             .controllerNavigationOrbTarget(
                 id: "library.now-running.\(action.rawValue)",
                 isActive: isFocused,
@@ -375,7 +375,7 @@ struct GameLibraryControllerFocusModifier: ViewModifier {
             let selectedScale = focusedScale
                 ?? (performanceOptimized ? 1.08 : 1.12)
             content
-                .focusEffectDisabled()
+                .focusEffectDisabledCompat()
                 .scaleEffect(
                     isFocused ? selectedScale : 1
                 )

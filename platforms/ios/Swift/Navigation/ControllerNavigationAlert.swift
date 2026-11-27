@@ -644,7 +644,7 @@ struct ControllerNavigationAlert: View {
                     ) {
                         onSelect(index)
                     }
-                    .focusEffectDisabled()
+                    .focusEffectDisabledCompat()
                     .accessibilityAddTraits(isSelected ? .isSelected : [])
                     .controllerNavigationOrbTarget(
                         id: "alert.\(action.id)",

@@ -21,7 +21,7 @@ struct ControllerToolbarFocusVisualModifier: ViewModifier {
             ? textAppearance.focusedShadowStrength
             : textAppearance.normalShadowStrength
         let focusedLabel = content
-            .focusEffectDisabled()
+            .focusEffectDisabledCompat()
             // Toolbar buttons are actions, not body copy. Match master by
             // keeping Boot BIOS and every toolbar symbol in the semantic
             // accent in both focused and unfocused states.
@@ -86,7 +86,7 @@ private struct ControllerAccessibilityToolbarFocusVisualModifier: ViewModifier {
             : textAppearance.normalShadowStrength
         if navigationActive, usesWindowFocusVisual {
             let focusedLabel = content
-                .focusEffectDisabled()
+                .focusEffectDisabledCompat()
                 .foregroundStyle(accentColour)
                 .shadow(
                     color: (visuallyFocused

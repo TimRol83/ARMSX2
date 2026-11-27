@@ -485,7 +485,7 @@ struct GameLibraryEmptyState: View {
                 )
             }
             .buttonStyle(.plain)
-            .focusEffectDisabled()
+            .focusEffectDisabledCompat()
             .accessibilityAddTraits(controllerFocused ? .isSelected : [])
             .modifier(
                 GameLibraryControllerFocusModifier(

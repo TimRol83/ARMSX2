@@ -285,7 +285,7 @@ private struct LegacyGlassMenuTabBar: View {
                     }
                 }
                 .buttonStyle(LegacyGlassTabButtonStyle())
-                .focusEffectDisabled()
+                .focusEffectDisabledCompat()
                 .accessibilityLabel(
                     titles.indices.contains(index) ? titles[index] : ""
                 )

@@ -40,7 +40,7 @@ struct PerGameCategoryList: View {
                     ) {
                         controller.enterControllerDetail(category)
                     }
-                    .focusEffectDisabled()
+                    .focusEffectDisabledCompat()
                 }
             }
             .padding(.vertical, 8)
@@ -89,7 +89,7 @@ struct PerGameCategoryList: View {
                     ) {
                         controller.enterControllerDetail(category)
                     }
-                    .focusEffectDisabled()
+                    .focusEffectDisabledCompat()
                 }
             }
         }

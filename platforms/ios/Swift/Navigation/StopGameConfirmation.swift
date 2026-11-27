@@ -236,7 +236,7 @@ struct StopGameConfirmation: View {
         ) {
             onSelect(index)
         }
-        .focusEffectDisabled()
+        .focusEffectDisabledCompat()
         .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
