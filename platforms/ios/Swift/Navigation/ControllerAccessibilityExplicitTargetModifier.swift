@@ -238,10 +238,19 @@ private struct ControllerAccessibilityExplicitTargetModifier: ViewModifier {
     }
 
     func body(content: Content) -> some View {
-        ControllerAccessibilityFocusedTextTint(
-            content: content.focusable(false),
-            focusedColor: focusedColor
-        )
+        Group {
+            if #available(iOS 17.0, *) {
+                ControllerAccessibilityFocusedTextTint(
+                    content: content.focusable(false),
+                    focusedColor: focusedColor
+                )
+            } else {
+                ControllerAccessibilityFocusedTextTint(
+                    content: content,
+                    focusedColor: focusedColor
+                )
+            }
+        }
         // An explicit row owns the logical target. Prevent a nested SwiftUI
         // Button/Toggle (Picker included) from synthesizing a second UUID
         // probe over the same geometry through the navigation-wide styles.

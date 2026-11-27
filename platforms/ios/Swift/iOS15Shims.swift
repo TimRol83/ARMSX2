@@ -348,9 +348,6 @@ public extension View {
     func presentationBackground<V: View>(alignment: Alignment = .center, @ViewBuilder content: () -> V) -> some View { self }
     func contentTransition(_ transition: ContentTransitionCompat) -> some View { self }
     func scrollPosition<ID: Hashable>(id: Binding<ID?>, anchor: UnitPoint? = nil) -> some View { self }
-    func foregroundStyle<S1: ShapeStyle, S2: ShapeStyle>(_ primary: S1, _ secondary: S2) -> some View {
-        self.foregroundStyle(primary)
-    }
     func navigationDestination<V: View>(isPresented: Binding<Bool>, destination: () -> V) -> some View {
         self.background(
             NavigationLink(destination: destination(), isActive: isPresented) { EmptyView() }.hidden()

@@ -29,8 +29,8 @@ struct ShaderSettingsView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(detailPresented)
         .toolbar {
-            if detailPresented {
-                ToolbarItem(placement: .topBarLeading) {
+            ToolbarItem(placement: .topBarLeading) {
+                if detailPresented {
                     Button {
                         detailPresented = false
                     } label: {
