@@ -37,7 +37,7 @@ struct SpatialRetroBackground: View {
         )
 
         Circle()
-          .fill(secondary.opacity(0.24))
+          .fillCompat(secondary.opacity(0.24))
           .frame(width: 720, height: 720)
           .blur(radius: 150)
           .offset(

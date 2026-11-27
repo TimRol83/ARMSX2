@@ -42,7 +42,7 @@ struct SettingsJITStatusSection: View {
     private var jitStatusRow: some View {
         HStack(spacing: 12) {
             Circle()
-                .fill(jitStatusColor)
+                .fillCompat(jitStatusColor)
                 .frame(width: 12, height: 12)
                 .shadow(color: jitStatusColor.opacity(0.45), radius: 5)
 

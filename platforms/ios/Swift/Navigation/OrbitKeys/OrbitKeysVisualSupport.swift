@@ -200,7 +200,7 @@ private struct OrbitKeysThemeSurfaceModifier: ViewModifier {
         )
         .overlay {
           RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-            .stroke(legacyStrokeColor, lineWidth: legacyLineWidth)
+            .strokeCompat(legacyStrokeColor, lineWidth: legacyLineWidth)
         }
     } else {
       content.keyboardGlassStyle(
@@ -222,7 +222,7 @@ private struct OrbitKeysKeySurfaceModifier: ViewModifier {
       content
         .background {
           RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-            .fill(Color.black.opacity(0.2))
+            .fillCompat(Color.black.opacity(0.2))
         }
         .clipShape(
           RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
@@ -287,17 +287,17 @@ struct OrbitKeysFaceGlyph: View {
       switch face {
       case .square:
         RoundedRectangle(cornerRadius: 2.5, style: .continuous)
-          .stroke(tint, lineWidth: 1.7)
+          .strokeCompat(tint, lineWidth: 1.7)
       case .cross:
         Image(systemName: "xmark")
           .font(.system(size: 13.5, weight: .black))
           .foregroundStyle(tint)
       case .circle:
         Circle()
-          .stroke(tint, lineWidth: 1.7)
+          .strokeCompat(tint, lineWidth: 1.7)
       case .triangle:
         OrbitKeysTriangleShape()
-          .stroke(tint, lineWidth: 1.7)
+          .strokeCompat(tint, lineWidth: 1.7)
       }
     }
     .frame(width: 13, height: 13)

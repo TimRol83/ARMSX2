@@ -36,7 +36,7 @@ struct MulticolorAmbientBackground: View {
         )
 
         Circle()
-          .fill(primaryColor.opacity(0.34))
+          .fillCompat(primaryColor.opacity(0.34))
           .frame(width: 330, height: 330)
           .blur(radius: 80)
           .offset(
@@ -45,7 +45,7 @@ struct MulticolorAmbientBackground: View {
           )
 
         Circle()
-          .fill(secondaryColor.opacity(0.24))
+          .fillCompat(secondaryColor.opacity(0.24))
           .frame(width: 300, height: 300)
           .blur(radius: 90)
           .offset(
@@ -54,7 +54,7 @@ struct MulticolorAmbientBackground: View {
           )
 
         Circle()
-          .fill(Color.white.opacity(0.12))
+          .fillCompat(Color.white.opacity(0.12))
           .frame(width: 250, height: 250)
           .blur(radius: 70)
           .offset(
@@ -75,7 +75,7 @@ struct MulticolorAmbientBackground: View {
         }
 
         Rectangle()
-          .fill(theme.paletteDarkOverlay(opacity: 0.08))
+          .fillCompat(theme.paletteDarkOverlay(opacity: 0.08))
       }
       .ignoresSafeArea()
     }

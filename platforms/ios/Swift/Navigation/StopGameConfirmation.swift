@@ -59,7 +59,7 @@ private struct StopConfirmationSourceModifier: ViewModifier {
             .overlay {
                 if isPresented {
                     Capsule()
-                        .stroke(
+                        .strokeCompat(
                             Color(red: 1, green: 0.388, blue: 0.412).opacity(0.25),
                             lineWidth: 4
                         )
@@ -224,7 +224,7 @@ struct StopGameConfirmation: View {
         .overlay {
             if isSelected {
                 RoundedRectangle(cornerRadius: radius, style: .continuous)
-                    .stroke(Color.white.opacity(0.9), lineWidth: 2)
+                    .strokeCompat(Color.white.opacity(0.9), lineWidth: 2)
             }
         }
         .controllerAccessibilityActionTarget(

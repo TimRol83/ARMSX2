@@ -25,7 +25,7 @@ struct BackgroundAssetRow: View {
                 .frame(width: 64, height: 40)
                 .clipped()
                 .cornerRadius(6)
-                .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.secondary.opacity(0.2), lineWidth: 1))
+                .overlay(RoundedRectangle(cornerRadius: 6).strokeCompat(Color.secondary.opacity(0.2), lineWidth: 1))
 
                 VStack(alignment: .leading, spacing: 2) {
                     HStack(spacing: 6) {

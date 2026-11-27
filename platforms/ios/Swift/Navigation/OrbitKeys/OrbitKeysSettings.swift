@@ -199,11 +199,11 @@ private struct OrbitKeysSettingsControls: View {
       .frame(maxWidth: .infinity, alignment: .leading)
       .background {
         RoundedRectangle(cornerRadius: 12, style: .continuous)
-          .fill(isSelected ? model.mode.color.opacity(0.17) : Color.white.opacity(0.001))
+          .fillCompat(isSelected ? model.mode.color.opacity(0.17) : Color.white.opacity(0.001))
       }
       .overlay {
         RoundedRectangle(cornerRadius: 12, style: .continuous)
-          .stroke(isSelected ? model.mode.color.opacity(0.42) : .clear, lineWidth: 0.8)
+          .strokeCompat(isSelected ? model.mode.color.opacity(0.42) : .clear, lineWidth: 0.8)
           .allowsHitTesting(false)
       }
       .contentShape(Rectangle())

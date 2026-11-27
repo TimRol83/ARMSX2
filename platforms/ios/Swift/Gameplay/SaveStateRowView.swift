@@ -104,7 +104,7 @@ struct SaveStateRowView: View {
         let size = layout.thumbnail
         return ZStack(alignment: .bottomLeading) {
             RoundedRectangle(cornerRadius: 7, style: .continuous)
-                .fill(row.occupied ? Color.black : Color.white.opacity(0.03))
+                .fillCompat(row.occupied ? Color.black : Color.white.opacity(0.03))
             if let data = row.file.preview, let image = UIImage(data: data) {
                 Image(uiImage: image)
                     .resizable()
@@ -254,7 +254,7 @@ struct SaveStateRowView: View {
                     .foregroundStyle(OverlayTheme.textPrimary)
                     .frame(width: 44, height: 44)
                     .background(Color.white.opacity(0.10), in: Circle())
-                    .overlay(Circle().stroke(Color.white.opacity(0.14), lineWidth: 1))
+                    .overlay(Circle().strokeCompat(Color.white.opacity(0.14), lineWidth: 1))
                     .contentShape(Circle())
             }
             .buttonStyle(.plain)
@@ -368,14 +368,14 @@ private struct SaveStateButtonLabel: View {
         .frame(minWidth: width ?? 44, maxWidth: width == nil ? .infinity : nil, minHeight: 44)
         .background {
             Capsule()
-                .fill(
+                .fillCompat(
                     filled ? accentColour
                         : !isEnabled ? Color.white.opacity(0.05)
                         : tonal ? Color.white.opacity(0.10) : accentColour.opacity(0.2)
                 )
         }
         .overlay {
-            Capsule().stroke(Color.white.opacity(tonal && isEnabled && !filled ? 0.14 : 0), lineWidth: 1)
+            Capsule().strokeCompat(Color.white.opacity(tonal && isEnabled && !filled ? 0.14 : 0), lineWidth: 1)
         }
         .contentShape(Capsule())
     }

@@ -18,7 +18,7 @@ struct CheatsControllerFocusModifier: ViewModifier {
             .foregroundStyle(isFocused ? accentColour : Color.primary)
             .background {
                 RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                    .fill(isFocused ? Color.black.opacity(0.2) : .clear)
+                    .fillCompat(isFocused ? Color.black.opacity(0.2) : .clear)
             }
             .controllerFocusBoxPresentation(
                 isVisible: isFocused,

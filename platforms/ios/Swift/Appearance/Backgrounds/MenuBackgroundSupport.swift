@@ -182,13 +182,13 @@ struct MenuImportActionLabel: View {
             .frame(minHeight: 44)
             .background {
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(accentColour.opacity(isFocused ? 0.22 : 0.12))
+                    .fillCompat(accentColour.opacity(isFocused ? 0.22 : 0.12))
                     .overlay {
                         RoundedRectangle(
                             cornerRadius: 12,
                             style: .continuous
                         )
-                        .stroke(
+                        .strokeCompat(
                             accentColour.opacity(isFocused ? 0.78 : 0.34),
                             lineWidth: isFocused ? 1.2 : 0.7
                         )

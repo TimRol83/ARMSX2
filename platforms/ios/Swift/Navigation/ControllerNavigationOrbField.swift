@@ -509,15 +509,15 @@ private struct ControllerNavigationGlassOrb: View {
 
     private var core: some View {
         Circle()
-            .fill(Color.white.opacity(isPlain ? 0.16 : 0.08))
+            .fillCompat(Color.white.opacity(isPlain ? 0.16 : 0.08))
             .frame(width: diameter, height: diameter)
             .overlay {
                 Circle()
-                    .stroke(Color.white.opacity(0.62), lineWidth: 0.65)
+                    .strokeCompat(Color.white.opacity(0.62), lineWidth: 0.65)
             }
             .overlay(alignment: .topLeading) {
                 Circle()
-                    .fill(Color.white.opacity(0.38))
+                    .fillCompat(Color.white.opacity(0.38))
                     .frame(
                         width: diameter * 0.24,
                         height: diameter * 0.24
@@ -539,14 +539,14 @@ private struct ControllerNavigationGlassOrb: View {
         } else if isPlain {
             core
                 .overlay {
-                    Circle().fill(color.opacity(0.32))
+                    Circle().fillCompat(color.opacity(0.32))
                 }
                 .opacity(0.9)
         } else {
             core
                 .background(.ultraThinMaterial, in: Circle())
                 .overlay {
-                    Circle().fill(color.opacity(0.2))
+                    Circle().fillCompat(color.opacity(0.2))
                 }
                 .opacity(0.75)
         }

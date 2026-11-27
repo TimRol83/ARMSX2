@@ -133,7 +133,7 @@ struct OrbitKeysGridView: View {
               .glassEffectID(position.id, in: glassNamespace)
               .overlay {
                 RoundedRectangle(cornerRadius: 22, style: .continuous)
-                  .stroke(Color.white.opacity(0.08), lineWidth: 0.7)
+                  .strokeCompat(Color.white.opacity(0.08), lineWidth: 0.7)
               }
           } else {
             content
@@ -143,7 +143,7 @@ struct OrbitKeysGridView: View {
               )
               .overlay {
                 RoundedRectangle(cornerRadius: 22, style: .continuous)
-                  .stroke(Color.white.opacity(0.08), lineWidth: 0.7)
+                  .strokeCompat(Color.white.opacity(0.08), lineWidth: 0.7)
               }
           }
         } else {
@@ -215,13 +215,13 @@ private struct OrbitKeysCellView: View {
       ZStack {
         if isSelected {
           RoundedRectangle(cornerRadius: 22, style: .continuous)
-            .stroke(Color.white.opacity(0.22), lineWidth: 1)
+            .strokeCompat(Color.white.opacity(0.22), lineWidth: 1)
             .shadow(color: themeAccent.opacity(0.42), radius: 8)
             .padding(1)
 
         } else {
           RoundedRectangle(cornerRadius: 22, style: .continuous)
-            .stroke(Color.white.opacity(0.08), lineWidth: 0.7)
+            .strokeCompat(Color.white.opacity(0.08), lineWidth: 0.7)
         }
 
         directionalKey(.triangle, diameter: keyDiameter)
@@ -251,7 +251,7 @@ private struct OrbitKeysCellView: View {
             )
         } else {
           Circle()
-            .fill(Color.white.opacity(0.18))
+            .fillCompat(Color.white.opacity(0.18))
             .frame(width: 3, height: 3)
         }
 
@@ -365,25 +365,25 @@ private struct OrbitKeysCellView: View {
   ) -> some View {
     if usesLegacyTheme {
       Circle()
-        .fill(
+        .fillCompat(
           isPressed
             ? face.color.opacity(0.5)
             : .black.opacity(0.2)
         )
         .overlay {
           Circle()
-            .stroke(
+            .strokeCompat(
               keyColor.opacity(isSelected ? 0.42 : 0.18),
               lineWidth: isPressed ? 1.7 : 0.7
             )
         }
     } else {
       Circle()
-        .fill(Color.clear)
+        .fillCompat(Color.clear)
         .keyboardGlassCircleStyle(clearGlassLevel: clearGlassLevel, lineWidth: 0)
         .overlay {
           Circle()
-            .stroke(
+            .strokeCompat(
               circleStrokeColor(keyColor: keyColor, isPressed: isPressed),
               lineWidth: isPressed ? 1.7 : 0.7
             )
@@ -452,7 +452,7 @@ private struct OrbitKeysSelectionDot: View {
 
   var body: some View {
     Circle()
-      .fill(themeAccent)
+      .fillCompat(themeAccent)
       .frame(width: 6, height: 6)
       .clipShape(Circle())
       .contentShape(Circle())

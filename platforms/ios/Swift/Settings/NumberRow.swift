@@ -381,7 +381,7 @@ struct NumberRow: View {
                 .padding(.vertical, style == .field ? 5 : 0)
                 .background(
                     RoundedRectangle(cornerRadius: 7)
-                        .fill(Color.secondary.opacity(style == .field ? 0.12 : 0))
+                        .fillCompat(Color.secondary.opacity(style == .field ? 0.12 : 0))
                 )
                 .frame(minHeight: rowStyle.readoutMinHeight)
                 .toolbar {
@@ -408,7 +408,7 @@ struct NumberRow: View {
                 .padding(.vertical, style == .field ? 5 : 0)
                 .background(
                     RoundedRectangle(cornerRadius: 7)
-                        .fill(Color.secondary.opacity(style == .field ? 0.12 : 0))
+                        .fillCompat(Color.secondary.opacity(style == .field ? 0.12 : 0))
                 )
                 .frame(minHeight: rowStyle.readoutMinHeight)
                 // Out and straight back, so the target reaches a finger without the row growing.

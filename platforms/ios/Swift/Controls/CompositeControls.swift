@@ -387,7 +387,7 @@ private struct PSButtonFace: View {
             // Ellipse (not Circle) so the press-mask shape matches a non-uniform
             // visible frame; degenerates to a circle when the axes are equal.
             Ellipse()
-                .fill(Color.clear)
+                .fillCompat(Color.clear)
 
             if !padUsesFullSkin || isPressed {
                 ARMSX2SkinMaskPressEffect(button: button, skin: padSkin, descriptor: padSkinDescriptor, color: color, isPressed: isPressed, opacity: padUsesFullSkin ? padOpacity * 0.75 : padOpacity)

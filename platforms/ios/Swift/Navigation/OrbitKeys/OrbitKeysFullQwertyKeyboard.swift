@@ -654,10 +654,10 @@ private struct OrbitKeysFullQwertyKeyButton: View {
   private var keySurface: some View {
     ZStack {
       RoundedRectangle(cornerRadius: 11, style: .continuous)
-        .fill(Color.clear)
+        .fillCompat(Color.clear)
         .overlay {
           RoundedRectangle(cornerRadius: 11, style: .continuous)
-            .stroke(
+            .strokeCompat(
               keyAccent.opacity(isSelected ? 0.78 : 0.18),
               lineWidth: isSelected ? 1.35 : 0.7
             )
@@ -665,7 +665,7 @@ private struct OrbitKeysFullQwertyKeyButton: View {
 
       if isSelected {
         RoundedRectangle(cornerRadius: 11, style: .continuous)
-          .stroke(Color.white.opacity(0.18), lineWidth: 1.2)
+          .strokeCompat(Color.white.opacity(0.18), lineWidth: 1.2)
       }
 
       keyLabel

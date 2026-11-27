@@ -100,7 +100,7 @@ struct GameplayControllerShortcutHelpOverlay: View {
                 )
                 .overlay {
                     Capsule(style: .continuous)
-                        .stroke(
+                        .strokeCompat(
                             Color.primary.opacity(0.13),
                             lineWidth: 0.65
                         )

@@ -479,7 +479,7 @@ struct PerGameSettingsPanel: View {
             Spacer(minLength: 8)
             if draft.hasPendingChanges {
                 Circle()
-                    .fill(accentColour)
+                    .fillCompat(accentColour)
                     .frame(width: 7, height: 7)
             }
         }

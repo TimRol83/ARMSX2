@@ -268,7 +268,7 @@ private struct DynamicThumbstickVisual: View {
                 let progress = DynamicThumbstickMath.trailDotPositionProgress(index: index, rawDistance: dragDistance, maximumRadius: maximumRadius)
                 if scale > 0 {
                     Circle()
-                        .fill(Color(white: 0.82).opacity(trailOpacity * Double(scale)))
+                        .fillCompat(Color(white: 0.82).opacity(trailOpacity * Double(scale)))
                         .frame(width: 7.5, height: 7.5)
                         .scaleEffect(scale)
                         .offset(x: dragOffset.width * progress, y: dragOffset.height * progress)
@@ -277,11 +277,11 @@ private struct DynamicThumbstickVisual: View {
             }
 
             Circle()
-                .fill(Color(white: 0.72).opacity(baseOpacity))
+                .fillCompat(Color(white: 0.72).opacity(baseOpacity))
                 .frame(width: radius * 0.42, height: radius * 0.42)
                 .overlay {
                     Circle()
-                        .stroke(
+                        .strokeCompat(
                             Color.white.opacity(0.55 * maximumPullPulseProgress),
                             lineWidth: 1.5
                         )
@@ -290,7 +290,7 @@ private struct DynamicThumbstickVisual: View {
                 .scaleEffect(1 + 0.28 * maximumPullPulseProgress)
 
             Circle()
-                .fill(Color(white: 0.88).opacity(thumbstickOpacity))
+                .fillCompat(Color(white: 0.88).opacity(thumbstickOpacity))
                 .frame(width: radius * 0.64, height: radius * 0.64)
                 .offset(dragOffset)
         }

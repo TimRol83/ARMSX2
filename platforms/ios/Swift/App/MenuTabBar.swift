@@ -272,10 +272,10 @@ private struct LegacyGlassMenuTabBar: View {
                         ZStack {
                             if selection == index {
                                 Capsule()
-                                    .fill(Material.ultraThinMaterial)
+                                    .fillCompat(Material.ultraThinMaterial)
                                     .overlay {
                                         Capsule()
-                                            .stroke(
+                                            .strokeCompat(
                                                 Color.primary.opacity(0.14),
                                                 lineWidth: 0.65
                                             )
@@ -300,7 +300,7 @@ private struct LegacyGlassMenuTabBar: View {
         .background(.ultraThinMaterial, in: Capsule())
         .overlay {
             Capsule()
-                .stroke(Color.primary.opacity(0.13), lineWidth: 0.65)
+                .strokeCompat(Color.primary.opacity(0.13), lineWidth: 0.65)
         }
         .shadow(color: .black.opacity(0.12), radius: 12, y: 5)
     }
@@ -378,14 +378,14 @@ private struct OriginalLegacyGlassMenuTabBar: View {
                     .background {
                         if selection == index {
                             Capsule()
-                                .fill(Material.ultraThinMaterial)
+                                .fillCompat(Material.ultraThinMaterial)
                                 .overlay {
                                     Capsule()
-                                        .fill(accentColour.opacity(0.075))
+                                        .fillCompat(accentColour.opacity(0.075))
                                 }
                                 .overlay {
                                     Capsule()
-                                        .stroke(
+                                        .strokeCompat(
                                             accentColour.opacity(0.2),
                                             lineWidth: 0.65
                                         )
@@ -412,7 +412,7 @@ private struct OriginalLegacyGlassMenuTabBar: View {
         .background(.ultraThinMaterial, in: Capsule())
         .overlay {
             Capsule()
-                .stroke(Color.primary.opacity(0.13), lineWidth: 0.65)
+                .strokeCompat(Color.primary.opacity(0.13), lineWidth: 0.65)
         }
         .shadow(color: .black.opacity(0.12), radius: 12, y: 5)
         .animation(selectionSpring, value: selection)
@@ -462,7 +462,7 @@ struct CatalystMenuTabBar: View {
                         .background {
                             if selectedTab == tab.0 {
                                 Capsule()
-                                    .fill(Color.primary.opacity(0.12))
+                                    .fillCompat(Color.primary.opacity(0.12))
                             }
                         }
                 }

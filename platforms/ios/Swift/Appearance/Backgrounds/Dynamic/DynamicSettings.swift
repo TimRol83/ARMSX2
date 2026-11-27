@@ -697,11 +697,11 @@ extension View {
     padding(14)
       .background {
         RoundedRectangle(cornerRadius: 16, style: .continuous)
-          .fill(Color.gray.opacity(0.16))
+          .fillCompat(Color.gray.opacity(0.16))
       }
       .overlay {
         RoundedRectangle(cornerRadius: 16, style: .continuous)
-          .stroke(Color.white.opacity(0.09), lineWidth: 0.7)
+          .strokeCompat(Color.white.opacity(0.09), lineWidth: 0.7)
       }
   }
 }

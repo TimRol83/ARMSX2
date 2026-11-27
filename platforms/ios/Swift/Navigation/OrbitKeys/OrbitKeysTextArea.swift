@@ -185,7 +185,7 @@ struct OrbitKeysEditorPanel: View {
     .frame(height: usesExpandedMetrics ? 42 : 28)
     .background(isActive ? color : color.opacity(0.08), in: Capsule())
     .overlay {
-      Capsule().stroke(color.opacity(isActive ? 0 : 0.3), lineWidth: 0.8)
+      Capsule().strokeCompat(color.opacity(isActive ? 0 : 0.3), lineWidth: 0.8)
     }
   }
 
@@ -289,11 +289,11 @@ private struct OrbitKeysEditorToolbarFocusModifier: ViewModifier {
     content
       .background {
         RoundedRectangle(cornerRadius: 8, style: .continuous)
-          .fill(isSelected ? color.opacity(0.24) : .clear)
+          .fillCompat(isSelected ? color.opacity(0.24) : .clear)
       }
       .overlay {
         RoundedRectangle(cornerRadius: 8, style: .continuous)
-          .stroke(isSelected ? themeAccent : .clear, lineWidth: 1.5)
+          .strokeCompat(isSelected ? themeAccent : .clear, lineWidth: 1.5)
           .shadow(
             color: isSelected ? themeAccent.opacity(0.9) : .clear,
             radius: 5

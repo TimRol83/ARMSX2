@@ -236,10 +236,9 @@ public struct Bindable<Value: AnyObject> {
 @available(iOS 15.0, *)
 public extension View {
     @ViewBuilder
-    func toolbarBackgroundCompat(_ visibility: Visibility, for bars: Any...) -> some View {
-        if #available(iOS 16.0, *) {
-            self
-        } else {
+    func toolbarBackgroundCompat(_ visibility: Visibility, for bars: ToolbarPlacementCompat...) -> some View {
+        self
+    } else {
             self
         }
     }

@@ -332,7 +332,7 @@ struct ControllerFocusBoxArtwork: View {
                 )
                 .overlay(alignment: .top) {
                     Capsule()
-                        .fill(Color.white.opacity(0.62))
+                        .fillCompat(Color.white.opacity(0.62))
                         .frame(height: 1.2)
                         .padding(.horizontal, max(8, cornerRadius * 0.8))
                         .padding(.top, 2)
@@ -540,7 +540,7 @@ struct ControllerFocusBoxArtwork: View {
 
             GeometryReader { proxy in
                 Rectangle()
-                    .fill(
+                    .fillCompat(
                         LinearGradient(
                             colors: [
                                 .clear,

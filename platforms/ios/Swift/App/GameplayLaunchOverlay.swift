@@ -199,7 +199,7 @@ struct FluidGameplayLaunchCard: View {
     private var cover: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .fill(Color(.secondarySystemGroupedBackground))
+                .fillCompat(Color(.secondarySystemGroupedBackground))
 
             if let image = transition.coverImage {
                 Image(uiImage: image)

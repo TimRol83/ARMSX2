@@ -329,7 +329,7 @@ struct ThemeGalleryView: View {
     private func themeTile(_ name: String, colors: [Color], selected: Bool = false) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             RoundedRectangle(cornerRadius: 14)
-                .fill(LinearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing))
+                .fillCompat(LinearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing))
                 .frame(height: 62)
                 .overlay(alignment: .topTrailing) {
                     if selected { Image(systemName: "checkmark.circle.fill").padding(8) }

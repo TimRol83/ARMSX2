@@ -94,7 +94,7 @@ struct GameplayToastOverlays: View {
             .background(.black.opacity(0.78), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
             .overlay {
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .stroke(Color.white.opacity(0.12), lineWidth: 1)
+                    .strokeCompat(Color.white.opacity(0.12), lineWidth: 1)
             }
             .padding(.top, max(displaySafeAreaInsets.top, 54))
             .padding(.horizontal, max(max(displaySafeAreaInsets.left, displaySafeAreaInsets.right), 14))

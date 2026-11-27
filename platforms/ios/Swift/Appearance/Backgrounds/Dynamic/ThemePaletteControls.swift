@@ -81,7 +81,7 @@ struct ThemePaletteControls: View {
         } label: {
           VStack(spacing: 6) {
             RoundedRectangle(cornerRadius: 12, style: .continuous)
-              .fill(
+              .fillCompat(
                 LinearGradient(
                   colors: palettePreviewColors(for: palette),
                   startPoint: palettePreviewGradientPoints.start,
@@ -141,7 +141,7 @@ struct ThemePaletteControls: View {
           .font(.caption.weight(.black))
           .foregroundStyle(.black)
           .frame(width: 24, height: 24)
-          .background(Circle().fill(Color.white.opacity(0.94)))
+          .background(Circle().fillCompat(Color.white.opacity(0.94)))
           .shadow(radius: 4)
       }
     } else if isSelected(palette) {
@@ -190,7 +190,7 @@ struct ThemePaletteControls: View {
               apply(savedColor)
             } label: {
               RoundedRectangle(cornerRadius: 11, style: .continuous)
-                .fill(
+                .fillCompat(
                   LinearGradient(
                     colors: palettePreviewColors(for: savedColor),
                     startPoint: customColorPreviewGradientPoints.start,
@@ -271,7 +271,7 @@ struct ThemePaletteControls: View {
               apply(palette)
             } label: {
               RoundedRectangle(cornerRadius: 11, style: .continuous)
-                .fill(
+                .fillCompat(
                   LinearGradient(
                     colors: palettePreviewColors(for: palette),
                     startPoint: palettePreviewGradientPoints.start,

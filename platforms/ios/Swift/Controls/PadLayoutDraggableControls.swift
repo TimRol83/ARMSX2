@@ -91,15 +91,15 @@ struct DraggableGroup: View {
         let isVisible = layout.isControlVisible(id)
         ZStack {
             RoundedRectangle(cornerRadius: 8)
-                .fill(Color.white.opacity(isSelected ? 0.10 : 0.04))
+                .fillCompat(Color.white.opacity(isSelected ? 0.10 : 0.04))
                 .frame(width: visibleSize.width + 12, height: visibleSize.height + 12)
                 .overlay {
                     RoundedRectangle(cornerRadius: 8)
-                        .stroke(accentColour.opacity(isSelected ? 0.95 : 0.45), lineWidth: isSelected ? 2.4 : 1.4)
+                        .strokeCompat(accentColour.opacity(isSelected ? 0.95 : 0.45), lineWidth: isSelected ? 2.4 : 1.4)
                 }
 
             RoundedRectangle(cornerRadius: 8)
-                .stroke((isOverlapping ? Color.red : Color.yellow).opacity(isSelected || isOverlapping ? 0.92 : 0.42), style: StrokeStyle(lineWidth: isSelected || isOverlapping ? 2.0 : 1.2, dash: [6, 4]))
+                .strokeCompat((isOverlapping ? Color.red : Color.yellow).opacity(isSelected || isOverlapping ? 0.92 : 0.42), style: StrokeStyle(lineWidth: isSelected || isOverlapping ? 2.0 : 1.2, dash: [6, 4]))
                 .frame(width: hitSize.width, height: hitSize.height)
 
             groupContent
@@ -265,15 +265,15 @@ struct DraggableButton: View {
         let isVisible = layout.isControlVisible(id)
         ZStack {
             RoundedRectangle(cornerRadius: 6)
-                .fill(Color.white.opacity(isSelected ? 0.10 : 0.04))
+                .fillCompat(Color.white.opacity(isSelected ? 0.10 : 0.04))
                 .frame(width: visibleSize.width + 10, height: visibleSize.height + 10)
                 .overlay {
                     RoundedRectangle(cornerRadius: 6)
-                        .stroke(accentColour.opacity(isSelected ? 0.95 : 0.45), lineWidth: isSelected ? 2.3 : 1.3)
+                        .strokeCompat(accentColour.opacity(isSelected ? 0.95 : 0.45), lineWidth: isSelected ? 2.3 : 1.3)
                 }
 
             RoundedRectangle(cornerRadius: 6)
-                .stroke((isOverlapping ? Color.red : Color.yellow).opacity(isSelected || isOverlapping ? 0.92 : 0.42), style: StrokeStyle(lineWidth: isSelected || isOverlapping ? 2.0 : 1.2, dash: [6, 4]))
+                .strokeCompat((isOverlapping ? Color.red : Color.yellow).opacity(isSelected || isOverlapping ? 0.92 : 0.42), style: StrokeStyle(lineWidth: isSelected || isOverlapping ? 2.0 : 1.2, dash: [6, 4]))
                 .frame(width: hitSize.width, height: hitSize.height)
 
             buttonContent

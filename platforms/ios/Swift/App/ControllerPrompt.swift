@@ -92,7 +92,7 @@ struct ControllerButtonGlyph: View {
                 .background(tint.opacity(0.10), in: Capsule(style: .continuous))
                 .overlay {
                     Capsule(style: .continuous)
-                        .stroke(tint.opacity(0.22), lineWidth: 0.65)
+                        .strokeCompat(tint.opacity(0.22), lineWidth: 0.65)
                 }
                 .accessibilityLabel(title)
         } else if let element, let symbol = element.sfSymbolsName, !symbol.isEmpty {

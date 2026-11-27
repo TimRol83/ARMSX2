@@ -629,14 +629,14 @@ private struct ControllerCustomColourEditor: View {
                     )
 
                     RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .fill(colour)
+                        .fillCompat(colour)
                         .frame(height: 74)
                         .overlay {
                             RoundedRectangle(
                                 cornerRadius: 14,
                                 style: .continuous
                             )
-                            .stroke(Color.white.opacity(0.55), lineWidth: 1)
+                            .strokeCompat(Color.white.opacity(0.55), lineWidth: 1)
                         }
                         .accessibilityHidden(true)
                 } footer: {

@@ -49,7 +49,7 @@ struct AppearanceColourPickerRow<Value: Hashable>: View {
                 }
             } label: {
                 HStack(spacing: 8) {
-                    Circle().fill(preview).frame(width: 12, height: 12)
+                    Circle().fillCompat(preview).frame(width: 12, height: 12)
                         .accessibilityHidden(true)
                     Text(title)
                 }

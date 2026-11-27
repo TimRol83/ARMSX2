@@ -78,7 +78,7 @@ struct GameLibraryForegroundPanel<Content: View>: View {
                             cornerRadius: 26,
                             style: .continuous
                         )
-                        .stroke(Color.primary.opacity(0.12), lineWidth: 0.7)
+                        .strokeCompat(Color.primary.opacity(0.12), lineWidth: 0.7)
                     }
                     .shadow(color: .black.opacity(0.24), radius: 22, y: 10)
                     // Keep the controls mounted while previewing. An invisible

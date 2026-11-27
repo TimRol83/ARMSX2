@@ -94,11 +94,11 @@ private struct ControllerNavigationAlertDetailRow: View {
                     }
                 } label: {
                     Capsule(style: .continuous)
-                        .fill(isOn ? accentColour : Color.secondary.opacity(0.45))
+                        .fillCompat(isOn ? accentColour : Color.secondary.opacity(0.45))
                         .frame(width: 48, height: 28)
                         .overlay(alignment: isOn ? .trailing : .leading) {
                             Circle()
-                                .fill(Color.white)
+                                .fillCompat(Color.white)
                                 .padding(3)
                         }
                         .animation(.easeOut(duration: 0.16), value: isOn)
@@ -122,7 +122,7 @@ private struct ControllerNavigationAlertDetailRow: View {
         .frame(minHeight: isDense ? 30 : (isCompact ? 38 : 44))
         .background {
             RoundedRectangle(cornerRadius: 11, style: .continuous)
-                .fill(isSelected ? Color.black.opacity(0.24) : .clear)
+                .fillCompat(isSelected ? Color.black.opacity(0.24) : .clear)
         }
         .controllerFocusBoxPresentation(isVisible: isSelected, cornerRadius: 11)
         .contentShape(RoundedRectangle(cornerRadius: 11, style: .continuous))
@@ -313,7 +313,7 @@ struct ControllerNavigationAlert: View {
                 )
                 .overlay {
                     RoundedRectangle(cornerRadius: 26, style: .continuous)
-                        .stroke(Color.primary.opacity(0.12), lineWidth: 0.7)
+                        .strokeCompat(Color.primary.opacity(0.12), lineWidth: 0.7)
                 }
                 .shadow(color: .black.opacity(0.24), radius: 22, y: 10)
                 .padding(.top, topInset)
@@ -611,7 +611,7 @@ struct ControllerNavigationAlert: View {
                             )
                             .background {
                                 RoundedRectangle(cornerRadius: 11, style: .continuous)
-                                    .fill(
+                                    .fillCompat(
                                         showsActionButtonBackgrounds
                                             ? buttonTint.opacity(
                                                 isSelected ? 0.30 : 0.14
@@ -627,7 +627,7 @@ struct ControllerNavigationAlert: View {
                                         cornerRadius: 11,
                                         style: .continuous
                                     )
-                                    .stroke(buttonTint.opacity(0.48), lineWidth: 0.8)
+                                    .strokeCompat(buttonTint.opacity(0.48), lineWidth: 0.8)
                                 }
                             }
                             .controllerFocusBoxPresentation(isVisible: isSelected, cornerRadius: 11)

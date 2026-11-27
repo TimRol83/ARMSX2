@@ -147,7 +147,7 @@ struct AppIconSettingsView: View {
             if let image = logoStore.image {
                 HStack(spacing: 14) {
                     RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .fill(Color(.tertiarySystemFill))
+                        .fillCompat(Color(.tertiarySystemFill))
                         .frame(width: 92, height: 52)
                         .overlay {
                             Image(uiImage: image)
@@ -262,7 +262,7 @@ struct AppIconSettingsView: View {
 
     private func previewThumbnail(for option: AppIconOption) -> some View {
         previewShape
-            .fill(Color(.tertiarySystemFill))
+            .fillCompat(Color(.tertiarySystemFill))
             .frame(width: 60, height: 60)
             .overlay {
                 if let image = AppIconPreview.image(for: option) {

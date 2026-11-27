@@ -245,7 +245,7 @@ struct PaletteGradientEditor: View {
 
         ZStack {
           RoundedRectangle(cornerRadius: 16, style: .continuous)
-            .fill(
+            .fillCompat(
               LinearGradient(
                 colors: colors,
                 startPoint: .leading,
@@ -263,10 +263,10 @@ struct PaletteGradientEditor: View {
             )
             .labelsHidden()
             .frame(width: handleDiameter, height: handleDiameter)
-            .background(Circle().fill(colors[index]))
+            .background(Circle().fillCompat(colors[index]))
             .overlay {
               Circle()
-                .stroke(Color.black.opacity(0.85), lineWidth: 3)
+                .strokeCompat(Color.black.opacity(0.85), lineWidth: 3)
                 .allowsHitTesting(false)
             }
             .clipShape(Circle())

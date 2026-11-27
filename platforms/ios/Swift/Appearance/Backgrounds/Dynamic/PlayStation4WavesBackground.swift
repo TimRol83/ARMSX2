@@ -41,7 +41,7 @@ struct PlayStation4WavesBackground: View {
 
         if settings.showsAmbientGlows {
           Ellipse()
-            .fill(
+            .fillCompat(
               theme.ribbonColor(index: 0, time: time)
                 .opacity(0.3 * settings.ambientGlowIntensity)
             )
@@ -56,7 +56,7 @@ struct PlayStation4WavesBackground: View {
             )
 
           Circle()
-            .fill(highlight.opacity(0.13 * settings.ambientGlowIntensity))
+            .fillCompat(highlight.opacity(0.13 * settings.ambientGlowIntensity))
             .frame(
               width: 230 * settings.ambientGlowScale,
               height: 230 * settings.ambientGlowScale

@@ -37,7 +37,7 @@ struct SaveStateRenameCard: View {
         .padding(.horizontal, 14)
         .padding(.vertical, 12)
         .background(OverlayTheme.card, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: 20, style: .continuous).stroke(Color.white.opacity(0.14)))
+        .overlay(RoundedRectangle(cornerRadius: 20, style: .continuous).strokeCompat(Color.white.opacity(0.14)))
         .shadow(color: .black.opacity(0.5), radius: 25, y: 20)
         .accessibilityElement(children: .contain)
         .accessibilityAddTraits(.isModal)
@@ -81,7 +81,7 @@ struct SaveStateRenameCard: View {
                 ) { text = "" }
             }
             .background(Color.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 12))
-            .overlay(RoundedRectangle(cornerRadius: 12).stroke(accentColour, lineWidth: 2))
+            .overlay(RoundedRectangle(cornerRadius: 12).strokeCompat(accentColour, lineWidth: 2))
             HStack {
                 Text(String(format: settings.localized("Empty shows “%@”. Saving over keeps the name."), placeholder))
                 Spacer(minLength: 8)
@@ -162,7 +162,7 @@ struct SaveStateAutoSaveCard: View {
         .padding(.horizontal, 14)
         .padding(.vertical, 12)
         .background(OverlayTheme.card, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: 20, style: .continuous).stroke(Color.white.opacity(0.14)))
+        .overlay(RoundedRectangle(cornerRadius: 20, style: .continuous).strokeCompat(Color.white.opacity(0.14)))
         .shadow(color: .black.opacity(0.5), radius: 25, y: 20)
         .accessibilityElement(children: .contain)
         .accessibilityAddTraits(.isModal)
@@ -219,7 +219,7 @@ struct SaveStateUndoToast: View {
                         .foregroundStyle(.white)
                         .frame(width: 104, height: 44)
                         .background(Color.white.opacity(0.14), in: Capsule())
-                        .overlay(Capsule().stroke(Color.white.opacity(0.2)))
+                        .overlay(Capsule().strokeCompat(Color.white.opacity(0.2)))
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel(item.undoLabel)
@@ -229,9 +229,9 @@ struct SaveStateUndoToast: View {
                 // Reduce Motion leaves the draining bar out; the window is just as long.
                 if !reduceMotion {
                     GeometryReader { proxy in
-                        Capsule().fill(Color.white.opacity(0.14))
+                        Capsule().fillCompat(Color.white.opacity(0.14))
                             .overlay(alignment: .leading) {
-                                Capsule().fill(Color.white.opacity(0.75))
+                                Capsule().fillCompat(Color.white.opacity(0.75))
                                     .frame(width: proxy.size.width * max(0, undo.remaining) / undo.duration)
                             }
                     }
@@ -242,7 +242,7 @@ struct SaveStateUndoToast: View {
                 }
             }
             .background(Color(red: 0.133, green: 0.149, blue: 0.180), in: RoundedRectangle(cornerRadius: 20, style: .continuous))
-            .overlay(RoundedRectangle(cornerRadius: 20, style: .continuous).stroke(Color.white.opacity(0.14)))
+            .overlay(RoundedRectangle(cornerRadius: 20, style: .continuous).strokeCompat(Color.white.opacity(0.14)))
             .shadow(color: .black.opacity(0.5), radius: 18, y: 14)
             .frame(maxWidth: 460)
             .accessibilityElement(children: .contain)

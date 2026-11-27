@@ -565,7 +565,7 @@ private struct StaticDynamicBackgroundView: View {
             )
 
             Circle()
-                .fill(accent.opacity(0.18))
+                .fillCompat(accent.opacity(0.18))
                 .frame(width: 520, height: 520)
                 .blur(radius: 130)
                 .offset(x: 140, y: -90)

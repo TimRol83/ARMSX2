@@ -243,7 +243,7 @@ struct SaveStatesPanel: View {
             .padding(.vertical, 7)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(OverlayTheme.warm.opacity(0.14), in: RoundedRectangle(cornerRadius: 12))
-            .overlay(RoundedRectangle(cornerRadius: 12).stroke(OverlayTheme.warm.opacity(0.35)))
+            .overlay(RoundedRectangle(cornerRadius: 12).strokeCompat(OverlayTheme.warm.opacity(0.35)))
             .padding(.horizontal, 14)
             .padding(.top, 8)
         }
@@ -748,7 +748,7 @@ private struct SaveStateMenuView: View {
         }
         .padding(4)
         .background(OverlayTheme.card, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: 16, style: .continuous).stroke(Color.white.opacity(0.12)))
+        .overlay(RoundedRectangle(cornerRadius: 16, style: .continuous).strokeCompat(Color.white.opacity(0.12)))
         .shadow(color: .black.opacity(0.55), radius: 24, y: 18)
         .accessibilityElement(children: .contain)
         .accessibilityAddTraits(.isModal)

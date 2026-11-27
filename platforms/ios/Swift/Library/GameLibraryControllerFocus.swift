@@ -68,7 +68,7 @@ struct GameLibraryNowRunningControllerFocusModifier: ViewModifier {
                     .foregroundStyle(action == .stop ? Color.red : Color.white)
                     .background {
                         RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .fill(Color.black.opacity(0.2))
+                            .fillCompat(Color.black.opacity(0.2))
                     }
                     .controllerFocusBoxPresentation(
                         isVisible: true,

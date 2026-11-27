@@ -42,7 +42,7 @@ struct SkinManifestControllerOverlay<InputZones: View>: View {
                 ForEach(layout.controls) { control in
                     let hit = v2HitRect(control, transform: transform)
                     Rectangle()
-                        .stroke(Color.yellow.opacity(0.5), lineWidth: 1)
+                        .strokeCompat(Color.yellow.opacity(0.5), lineWidth: 1)
                         .frame(width: hit.width, height: hit.height)
                         .position(x: hit.midX, y: hit.midY)
                         .allowsHitTesting(false)

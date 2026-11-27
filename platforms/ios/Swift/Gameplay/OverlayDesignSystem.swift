@@ -85,7 +85,7 @@ struct OverlayFrostBackground: View {
             gradient
         } else {
             ZStack {
-                Rectangle().fill(Material.regularMaterial)
+                Rectangle().fillCompat(Material.regularMaterial)
                 gradient.opacity(OverlayTheme.shellGlassTint)
             }
             .overlay(alignment: .top) {
@@ -209,7 +209,7 @@ struct OverlaySectionCard<Content: View>: View {
         )
         .overlay {
             RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .stroke(OverlayTheme.cardTopHighlight, lineWidth: 1)
+                .strokeCompat(OverlayTheme.cardTopHighlight, lineWidth: 1)
                 .opacity(accessible ? 0 : 1)
         }
         .shadow(color: OverlayTheme.cardShadow.opacity(accessible ? 0 : 1), radius: 4, x: 0, y: 2)

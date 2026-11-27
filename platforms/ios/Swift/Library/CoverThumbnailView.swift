@@ -22,7 +22,7 @@ struct CoverThumbnailView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                .fill(Color(.secondarySystemGroupedBackground))
+                .fillCompat(Color(.secondarySystemGroupedBackground))
             RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
                 .strokeBorder(.white.opacity(0.12), lineWidth: 1)
 

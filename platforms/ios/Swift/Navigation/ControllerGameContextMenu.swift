@@ -207,7 +207,7 @@ struct ControllerGameContextMenu: View {
                 .frame(width: coverWidth, height: coverHeight)
                 .background {
                     RoundedRectangle(cornerRadius: isCompact ? 9 : 12, style: .continuous)
-                        .fill(Color.black.opacity(playOrStopSelected ? 0.32 : 0.20))
+                        .fillCompat(Color.black.opacity(playOrStopSelected ? 0.32 : 0.20))
                 }
                 .controllerFocusBoxPresentation(
                     isVisible: playOrStopSelected,
@@ -313,7 +313,7 @@ struct ControllerGameContextMenu: View {
             .contentShape(Rectangle())
             .background {
                 RoundedRectangle(cornerRadius: isCompact ? 11 : 14, style: .continuous)
-                    .fill(isSelected ? Color.black.opacity(0.28) : .clear)
+                    .fillCompat(isSelected ? Color.black.opacity(0.28) : .clear)
             }
             .controllerFocusBoxPresentation(
                 isVisible: isSelected,

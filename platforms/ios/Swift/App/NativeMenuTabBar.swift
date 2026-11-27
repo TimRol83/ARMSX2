@@ -111,8 +111,9 @@ struct NativeMenuTabBar: UIViewRepresentable {
         }
     }
 
+    @available(iOS 16.0, *)
     func sizeThatFits(
-        _ proposal: _ProposedViewSize,
+        _ proposal: ProposedViewSize,
         uiView: LegacyCompatibleMenuTabBar,
         context: Context
     ) -> CGSize? {

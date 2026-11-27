@@ -77,7 +77,7 @@ struct FaceButtonsBackground: View {
           )
 
           Circle()
-            .fill(lightColor.opacity(0.18))
+            .fillCompat(lightColor.opacity(0.18))
             .frame(width: 780, height: 780)
             .blur(radius: 160)
             .offset(

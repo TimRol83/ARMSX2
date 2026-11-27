@@ -38,7 +38,7 @@ struct PlayStationRibbonsBackground: View {
         )
 
         Circle()
-          .fill(primary.opacity(0.22 * settings.ambientGlowIntensity))
+          .fillCompat(primary.opacity(0.22 * settings.ambientGlowIntensity))
           .frame(
             width: 430 * settings.ambientGlowScale,
             height: 430 * settings.ambientGlowScale

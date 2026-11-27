@@ -43,7 +43,7 @@ struct ControllerToolbarFocusVisualModifier: ViewModifier {
             .frame(minWidth: minimumWidth, minHeight: 36)
             .background {
                 Capsule(style: .continuous)
-                    .fill(Color.black.opacity(visuallyFocused ? 0.48 : 0))
+                    .fillCompat(Color.black.opacity(visuallyFocused ? 0.48 : 0))
             }
             .controllerFocusBoxPresentation(
                 isVisible: visuallyFocused,
@@ -105,7 +105,7 @@ private struct ControllerAccessibilityToolbarFocusVisualModifier: ViewModifier {
                 .frame(minWidth: minimumWidth, minHeight: 36)
                 .background {
                     Capsule(style: .continuous)
-                        .fill(Color.black.opacity(visuallyFocused ? 0.48 : 0))
+                        .fillCompat(Color.black.opacity(visuallyFocused ? 0.48 : 0))
                 }
                 .animation(.linear(duration: 0.08), value: visuallyFocused)
         } else if navigationActive {
