@@ -96,7 +96,7 @@ struct PadLayoutEditView: View {
             let deckHeight = geo.size.height + geo.safeAreaInsets.bottom
             let fold = geo.activeFold(book: false)
             let snapshot = layout.snapshot()
-            let splitKey = [geo.size.width, geo.size.height, fold?.minY, fold?.height, CGFloat(refitGeneration)]
+            let splitKey: [CGFloat?] = [geo.size.width, geo.size.height, fold?.minY, fold?.height, CGFloat(refitGeneration)]
             let liveSplit = !isActuallyLandscape && AppState.shared.hingePresent
                 ? portraitGameSplit(geo, deckHeight: deckHeight, fold: fold, refitting: snapshot, analogStickScale: settings.controller.analogStickScale)
                 : nil

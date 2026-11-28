@@ -53,7 +53,7 @@ extension View {
         message: String = "",
         actions: [ControllerPrompt.Action]
     ) -> some View {
-        onChange(of: isPresented.wrappedValue, initial: true) { _, presented in
+        onChangeTwoCompat(of: isPresented.wrappedValue, initial: true, perform: { _, presented in
             guard presented else { return }
             ControllerPrompt.shared.ask(title, message: message, actions: actions.map { action in
                 var action = action

@@ -1,3 +1,38 @@
+
+#if os(iOS)
+public enum GlassStyleCompat { case regular, clear, identity, circle, rect }
+public enum ContentTransitionCompat {
+    case identity, opacity, interpolate, numericText(countsDown: Bool = false)
+    public static var numericText: ContentTransitionCompat { .numericText(countsDown: false) }
+}
+public enum SymbolEffectCompat { case bounce, pulse, variableColor, scale, appear, disappear }
+public struct RectangleCornerRadiiCompat: Equatable {
+    public var topLeading: CGFloat, bottomLeading: CGFloat, bottomTrailing: CGFloat, topTrailing: CGFloat
+    public init(topLeading: CGFloat = 0, bottomLeading: CGFloat = 0, bottomTrailing: CGFloat = 0, topTrailing: CGFloat = 0) {
+        self.topLeading = topLeading; self.bottomLeading = bottomLeading
+        self.bottomTrailing = bottomTrailing; self.topTrailing = topTrailing
+    }
+}
+private struct OnChangeTwoArgModifier<V: Equatable>: ViewModifier {
+    let value: V
+    let initial: Bool
+    let action: (V, V) -> Void
+    @State private var oldValue: V?
+    func body(content: Content) -> some View {
+        content
+            .onAppear {
+                oldValue = value
+                if initial { action(value, value) }
+            }
+            .onChange(of: value) { newValue in
+                let prev = oldValue ?? newValue
+                oldValue = newValue
+                action(prev, newValue)
+            }
+    }
+}
+#endif
+
 import os
 import SwiftUI
 
@@ -61,10 +96,6 @@ public extension ContentUnavailableView where Label == SwiftUI.Label<Text, Image
         self.description = description
         self.actions = EmptyView()
     }
-}
-
-@available(iOS, deprecated: 16.0)
-
 }
 
 public struct PhotosPickerItemCompat: Hashable {

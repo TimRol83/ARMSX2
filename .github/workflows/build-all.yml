@@ -117,7 +117,7 @@ jobs:
         working-directory: platforms/ios
         run: >
           cmake --build build/device --config Release
-          -- -sdk iphoneos CODE_SIGNING_ALLOWED=NO OTHER_SWIFT_FLAGS="-Xfrontend -solver-expression-time-threshold=3" CODE_SIGNING_REQUIRED=NO
+          -- -sdk iphoneos CODE_SIGNING_ALLOWED=NO SWIFT_COMPILATION_MODE=singlefile CODE_SIGNING_REQUIRED=NO
 
       - name: Package unsigned .ipa
         working-directory: platforms/ios

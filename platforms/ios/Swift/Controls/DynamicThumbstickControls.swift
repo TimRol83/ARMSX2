@@ -263,7 +263,7 @@ private struct DynamicThumbstickVisual: View {
 
     var body: some View {
         ZStack {
-            ForEach(0..<7, id: \.self) { index in
+            ForEach(0..<7) { index in
                 let scale = DynamicThumbstickMath.trailDotScale(index: index, rawDistance: dragDistance, maximumRadius: maximumRadius)
                 let progress = DynamicThumbstickMath.trailDotPositionProgress(index: index, rawDistance: dragDistance, maximumRadius: maximumRadius)
                 if scale > 0 {

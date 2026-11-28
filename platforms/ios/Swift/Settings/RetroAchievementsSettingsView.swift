@@ -478,11 +478,11 @@ private struct RetroAchievementsLoginSheet: View {
             .navigationTitle(settings.localized("RetroAchievements Login"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
+                ToolbarItem(placement: .navigationBarLeading) {
                     Button(settings.localized("Cancel"), action: onCancel)
                         .disabled(loggingIn)
                 }
-                ToolbarItem(placement: .confirmationAction) {
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Button(settings.localized("Log In")) { onLogin(username, password) }
                         .disabled(!canSubmit)
                         .controllerAccessibilityActionTarget(

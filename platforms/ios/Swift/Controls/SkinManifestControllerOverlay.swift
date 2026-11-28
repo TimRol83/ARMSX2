@@ -34,12 +34,14 @@ struct SkinManifestControllerOverlay<InputZones: View>: View {
 
             inputZones
 
-            ForEach(layout.controls) { control in
+            ForEach(layout.controls.indices, id: \.self) { idx in
+                let control = layout.controls[idx]
                 v2ControlView(control, transform: transform, assetsDirectory: assetsDirectory, descriptor: descriptor)
             }
 
             if layout.debug {
-                ForEach(layout.controls) { control in
+                ForEach(layout.controls.indices, id: \.self) { idx in
+                let control = layout.controls[idx]
                     let hit = v2HitRect(control, transform: transform)
                     Rectangle()
                         .strokeCompat(Color.yellow.opacity(0.5), lineWidth: 1)
