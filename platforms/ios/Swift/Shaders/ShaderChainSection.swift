@@ -50,7 +50,7 @@ private struct ShaderPackInstallOptionsView: View {
             }
             .navigationTitle(localized("Install Shader Pack"))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbarCompat {
+            .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button(localized("Cancel")) { dismiss() }
                         .controllerAccessibilityActionTarget(

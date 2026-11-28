@@ -375,7 +375,7 @@ struct GameListView: View {
                 backgroundHidden: hasCustomBackground,
                 embedded: embeddedInMenuNavigation
             )
-            .toolbarCompat {
+            .toolbar {
                 if !embeddedInMenuNavigation || ownsEmbeddedMenuToolbar {
                     GameLibraryToolbar(
                         coordinator: controller,

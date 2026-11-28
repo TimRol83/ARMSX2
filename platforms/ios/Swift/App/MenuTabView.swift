@@ -121,7 +121,7 @@ struct MenuTabView: View {
                                         || (selectedTab == 0 && useGamesLogo)
                                         ? .inline : .large
                                 )
-                                .toolbarCompat {
+                                .toolbar {
                                     if verticalSizeClass == .compact,
                                        !(selectedTab == 0 && hideGamesScreenTitle) {
                                         ToolbarItem(

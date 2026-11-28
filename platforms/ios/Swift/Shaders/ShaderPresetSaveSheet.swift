@@ -39,7 +39,7 @@ struct ShaderPresetSaveSheet: View {
             }
             .navigationTitle(localized("Save Preset"))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbarCompat {
+            .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(localized("Cancel")) { dismiss() }
                 }

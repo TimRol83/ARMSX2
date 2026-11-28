@@ -6,7 +6,7 @@ import Foundation
 
 /// The toast uses the same travel curve as the focus box without adding a
 /// second display link or animating the entire theme transaction.
-private struct ThemePresetFocusAnimation: CustomAnimation {
+private struct ThemePresetFocusAnimation: CustomAnimationCompat {
     let style: ControllerNavigationFocusTravelStyle
 
     func animate<V: VectorArithmetic>(

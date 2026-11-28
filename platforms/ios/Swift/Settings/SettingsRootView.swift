@@ -332,7 +332,7 @@ struct SettingsRootView: View {
         .contentMarginsCompat(.bottom, 0, for: .scrollContent)
         .scrollDisabledCompat(false)
         .scrollBounceBehaviorCompat(.always)
-        .scrollPosition(id: $rootScrollPositionID, anchor: .top)
+        .scrollPositionCompat(id: $rootScrollPositionID, anchor: .top)
         .onChangeCompat(of: rootScrollPositionID, perform: { _, _ in
             // Set by finger and controller scrolling alike, so restoring it ignores input mode.
             rememberRootScrollPositionIfAvailable()
@@ -376,7 +376,7 @@ struct SettingsRootView: View {
                 ? ""
                 : settings.localized("Settings")
         )
-        .toolbarCompat {
+        .toolbar {
             // Not tied to the path: an item put back during the Back animation
             // never shows, and the next page then opens too high.
             if verticalSizeClass == .compact {

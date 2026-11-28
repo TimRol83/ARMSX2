@@ -109,7 +109,7 @@ struct ReportSheet: View {
             .attachmentPickers(of: self)
             .navigationTitle(settings.localized("Report a Problem"))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbarCompat {
+            .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button(settings.localized("Done")) { close() }
                         .disabled(working)
@@ -163,7 +163,7 @@ struct ReportSheet: View {
 
     private func textRow(_ key: String, text: Binding<String>, field: ReportTextField, id: String) -> some View {
         TextField(settings.localized(key), text: text, axis: .vertical)
-            .lineLimit(field == .what ? 3...8 : 1...3)
+            .lineLimitCompat(field == .what ? 3...8 : 1...3)
             .controllerAccessibilityActionTarget(id: id, label: settings.localized(key)) { keyboardField = field }
     }
 

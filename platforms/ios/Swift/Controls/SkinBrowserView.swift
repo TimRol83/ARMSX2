@@ -430,7 +430,7 @@ private struct SkinPreviewSheet: View {
             .padding()
             .navigationTitle(skin.name)
             .navigationBarTitleDisplayMode(.inline)
-            .toolbarCompat {
+            .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(SettingsStore.shared.localized("Done")) { dismiss() }
                 }

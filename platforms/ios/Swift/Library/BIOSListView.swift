@@ -256,7 +256,7 @@ struct BIOSListView: View {
                 backgroundHidden: backgroundActive,
                 embedded: embeddedInMenuNavigation
             )
-            .toolbarCompat {
+            .toolbar {
                 if !embeddedInMenuNavigation || ownsEmbeddedMenuToolbar {
                 ToolbarItem(id: "menu.bootBIOS", placement: .topBarLeading) {
                     Button(action: performBootBIOSAction) {

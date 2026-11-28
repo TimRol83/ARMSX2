@@ -63,7 +63,7 @@ struct SpeedControlPanel: View {
             }
             .scrollContentBackground(onClose == nil ? .automatic : .hidden)
             .navigationTitle(settings.localized("Speed / Fast Forward"))
-            .toolbarCompat {
+            .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button(settings.localized("Done")) {
                         close()

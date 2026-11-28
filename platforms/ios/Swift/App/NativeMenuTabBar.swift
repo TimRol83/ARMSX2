@@ -137,7 +137,7 @@ struct NativeMenuTabBar: UIViewRepresentable {
                 title: layout.showsLabels && titles.indices.contains(index)
                     ? titles[index]
                     : nil,
-                image: itemImage(at: index),
+                image: itemImage.fromURLCompat( index),
                 tag: index
             )
             item.accessibilityLabel = titles.indices.contains(index)
@@ -164,7 +164,7 @@ struct NativeMenuTabBar: UIViewRepresentable {
         guard let items = tabBar.items else { return }
         for index in items.indices {
             let isControllerFocused = controllerFocusedIndex == index
-            let baseImage = itemImage(at: index)
+            let baseImage = itemImage.fromURLCompat( index)
             if isControllerFocused {
                 let focusedImage = baseImage?.withTintColor(
                     accentColor,

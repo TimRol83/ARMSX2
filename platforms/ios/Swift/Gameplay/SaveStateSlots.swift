@@ -228,9 +228,6 @@ enum SaveStateFormat {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.hour, .minute]
         formatter.unitsStyle = .abbreviated
-        var cal = Calendar.current
-        cal.locale = Locale(identifier: settings.languageIdentifier ?? Locale.current.identifier)
-        formatter.calendar = cal
         let text = formatter.string(from: seconds) ?? "\(Int(seconds / 60))m"
         return String(format: settings.localized("%@ played"), text)
     }
