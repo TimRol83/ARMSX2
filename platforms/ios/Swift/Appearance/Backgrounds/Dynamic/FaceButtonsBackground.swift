@@ -127,7 +127,7 @@ struct FaceButtonsBackground: View {
       }
       .ignoresSafeArea()
     }
-    .onChangeCompat(of: theme, perform: { _, newTheme in
+    .onChangeTwoCompat(of: theme, perform: { _, newTheme in
       previousTheme = displayedTheme
       displayedTheme = newTheme
       paletteTransitionStartTime = Date.timeIntervalSinceReferenceDate

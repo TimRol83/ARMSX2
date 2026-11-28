@@ -54,7 +54,7 @@ struct AppearanceBackgroundSections: View, AppearanceSettingsEditing {
                     (id: $0, title: label(for: $0))
                 }
             )
-            .onChangeCompat(of: settings.appearance.backgroundFitMode, perform: { _, _ in
+            .onChangeTwoCompat(of: settings.appearance.backgroundFitMode, perform: { _, _ in
                 UISelectionFeedbackGenerator().selectionChanged()
             })
             .appearanceControllerListRow(
@@ -86,7 +86,7 @@ struct AppearanceBackgroundSections: View, AppearanceSettingsEditing {
                     (id: $0, title: label(for: $0))
                 }
             )
-            .onChangeCompat(of: settings.appearance.backgroundLandscapeFitMode, perform: { _, _ in
+            .onChangeTwoCompat(of: settings.appearance.backgroundLandscapeFitMode, perform: { _, _ in
                 UISelectionFeedbackGenerator().selectionChanged()
             })
             .appearanceControllerListRow(

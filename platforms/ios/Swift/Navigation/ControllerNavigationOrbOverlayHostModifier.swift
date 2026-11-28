@@ -84,7 +84,7 @@ private struct ControllerNavigationMovingOrbOverlay: View {
         .onAppear {
             updateDisplayedTarget(target)
         }
-        .onChangeCompat(of: target, perform: { _, next in
+        .onChangeTwoCompat(of: target, perform: { _, next in
             updateDisplayedTarget(next)
         })
         .onDisappear {

@@ -104,7 +104,7 @@ struct PerGameCategoryList: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .allowsHitTesting(false)
         }
-        .scrollContentBackground(.hidden)
+        .scrollContentBackgroundCompat(.hidden)
     }
 }
 

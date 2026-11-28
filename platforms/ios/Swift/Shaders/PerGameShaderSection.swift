@@ -61,7 +61,7 @@ struct PerGameShaderSection: View {
                         controllerInput: controllerInput
                     )
                 }
-                .presentationDetents([.large])
+                .presentationDetentsCompat([.large])
             }
 
             if chain == 1 {

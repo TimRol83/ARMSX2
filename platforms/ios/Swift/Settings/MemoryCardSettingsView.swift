@@ -43,7 +43,7 @@ struct MemoryCardSettingsView: View {
                     selection: $slot1Card,
                     options: cardPickerOptions
                 )
-                .onChangeCompat(of: slot1Card, perform: { _, newValue in
+                .onChangeTwoCompat(of: slot1Card, perform: { _, newValue in
                     ARMSX2Bridge.setMemoryCard(name: newValue, forSlot: 1, enabled: !newValue.isEmpty)
                 })
 
@@ -58,7 +58,7 @@ struct MemoryCardSettingsView: View {
                     selection: $slot2Card,
                     options: cardPickerOptions
                 )
-                .onChangeCompat(of: slot2Card, perform: { _, newValue in
+                .onChangeTwoCompat(of: slot2Card, perform: { _, newValue in
                     ARMSX2Bridge.setMemoryCard(name: newValue, forSlot: 2, enabled: !newValue.isEmpty)
                 })
 

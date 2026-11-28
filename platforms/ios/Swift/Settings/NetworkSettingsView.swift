@@ -137,7 +137,7 @@ struct NetworkSettingsView: View {
             loadNetworkAdaptersIfNeeded()
             loadHosts()
         }
-        .onChangeCompat(of: hosts, perform: { _, newHosts in
+        .onChangeTwoCompat(of: hosts, perform: { _, newHosts in
             guard hasLoadedHosts, newHosts != lastPersistedHosts else {
                 return
             }

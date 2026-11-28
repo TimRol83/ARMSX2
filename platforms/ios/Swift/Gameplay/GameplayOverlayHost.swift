@@ -32,11 +32,11 @@ struct GameplayOverlayHost: View {
             .allowsHitTesting(false)
             .sheet(isPresented: overlay.childPresentedBinding(.speed)) {
                 SpeedControlPanel(settings: settings)
-                    .presentationDetents([.medium, .large])
+                    .presentationDetentsCompat([.medium, .large])
             }
             .sheet(isPresented: overlay.childPresentedBinding(.retroAchievements)) {
                 RetroAchievementsGamePanel(settings: settings)
-                    .presentationDetents([.medium, .large])
+                    .presentationDetentsCompat([.medium, .large])
             }
             .sheet(isPresented: overlay.childPresentedBinding(.cheats)) {
                 CheatsPatchesManagerView(
@@ -46,11 +46,11 @@ struct GameplayOverlayHost: View {
                     controllerInput: controllerInput,
                     session: overlay.cheatsSession
                 )
-                .presentationDetents([.medium, .large])
+                .presentationDetentsCompat([.medium, .large])
             }
             .sheet(item: overlay.reportRequestBinding) {
                 ReportSheet(request: $0)
-                    .presentationDetents([.medium, .large])
+                    .presentationDetentsCompat([.medium, .large])
             }
             .overlay {
                 runtimeQuickMenuOverlay

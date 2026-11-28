@@ -29,11 +29,11 @@ struct GameplayToastOverlays: View {
             .overlay(alignment: .top) {
                 retroAchievementsToastOverlay
             }
-            .onChangeCompat(of: statusBanner.generation, perform: { oldGeneration, newGeneration in
+            .onChangeTwoCompat(of: statusBanner.generation, perform: { oldGeneration, newGeneration in
                 guard newGeneration > oldGeneration else { return }
                 MenuAudioPackManager.shared.playEvent(.uiToast)
             })
-            .onChangeCompat(of: achievementsBanner.generation, perform: { oldGeneration, newGeneration in
+            .onChangeTwoCompat(of: achievementsBanner.generation, perform: { oldGeneration, newGeneration in
                 guard newGeneration > oldGeneration else { return }
                 MenuAudioPackManager.shared.playEvent(.achievementToast)
             })

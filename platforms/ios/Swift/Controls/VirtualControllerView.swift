@@ -110,32 +110,32 @@ struct VirtualControllerView: View {
             activeTouchActionSession.refreshHardcoreAutomaticFireRestriction()
             configureAuxiliaryInputs()
         }
-        .onChangeCompat(of: skinLibrary.selectedSkinID, perform: { _, _ in
+        .onChangeTwoCompat(of: skinLibrary.selectedSkinID, perform: { _, _ in
             ARMSX2VirtualPadMaskImageCache.prewarm(descriptor: effectiveSkinDescriptor)
         })
-        .onChangeCompat(of: skinDescriptor, perform: { _, _ in
+        .onChangeTwoCompat(of: skinDescriptor, perform: { _, _ in
             ARMSX2VirtualPadMaskImageCache.prewarm(descriptor: effectiveSkinDescriptor)
         })
-        .onChangeCompat(of: dynamicSettings.swipeCamera, perform: { _, _ in
+        .onChangeTwoCompat(of: dynamicSettings.swipeCamera, perform: { _, _ in
             resetDynamicInputs()
             configureAuxiliaryInputs()
         })
-        .onChangeCompat(of: dynamicSettings.gyroscopeCamera, perform: { _, _ in
+        .onChangeTwoCompat(of: dynamicSettings.gyroscopeCamera, perform: { _, _ in
             configureAuxiliaryInputs()
         })
-        .onChangeCompat(of: dynamicSettings.legacyThumbsticks, perform: { _, _ in
+        .onChangeTwoCompat(of: dynamicSettings.legacyThumbsticks, perform: { _, _ in
             resetDynamicInputs()
         })
-        .onChangeCompat(of: dynamicSettings.dynamicThumbsticks, perform: { _, _ in
+        .onChangeTwoCompat(of: dynamicSettings.dynamicThumbsticks, perform: { _, _ in
             resetDynamicInputs()
         })
-        .onChangeCompat(of: dynamicSettings.convertSwipeToDynamicJoystick, perform: { _, _ in
+        .onChangeTwoCompat(of: dynamicSettings.convertSwipeToDynamicJoystick, perform: { _, _ in
             resetDynamicInputs()
         })
-        .onChangeCompat(of: dynamicSettings.leftThumbstickActionsEnabled, perform: { _, _ in
+        .onChangeTwoCompat(of: dynamicSettings.leftThumbstickActionsEnabled, perform: { _, _ in
             resetDynamicInputs()
         })
-        .onChangeCompat(of: dynamicSettings.rightThumbstickActionsEnabled, perform: { _, _ in
+        .onChangeTwoCompat(of: dynamicSettings.rightThumbstickActionsEnabled, perform: { _, _ in
             resetDynamicInputs()
         })
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in

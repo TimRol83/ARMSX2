@@ -132,7 +132,7 @@ struct PerGameSettingsPanel: View {
             // Portrait and landscape are different focus graphs, so a rotation rebuilds the probes
             // and the navigation scope at once and Cross cannot activate a control from the old tree.
             .id(layout)
-            .onChangeCompat(of: layout, perform: { _, newLayout in
+            .onChangeTwoCompat(of: layout, perform: { _, newLayout in
                 guard AppState.shared.hingePresent else {
                     controller.selectedControllerDetail = nil
                     return
@@ -238,12 +238,12 @@ struct PerGameSettingsPanel: View {
         .tint(accentColour)
         .accessibilityElement(children: .contain)
         .accessibilityAction(.escape) { _ = handleSharedControllerBack() }
-        .onChangeCompat(of: draft.hasPendingChanges, perform: { _, pending in
+        .onChangeTwoCompat(of: draft.hasPendingChanges, perform: { _, pending in
             if pending {
                 saveFeedbackVisible = false
             }
         })
-        .onChangeCompat(of: controller.activeControllerAlertKind, perform: { previous, kind in
+        .onChangeTwoCompat(of: controller.activeControllerAlertKind, perform: { previous, kind in
             guard let kind, kind != previous else { return }
             MenuAudioPackManager.shared.playEvent(.uiToast)
         })
@@ -254,11 +254,10 @@ struct PerGameSettingsPanel: View {
         .onChangeCompat(of: draft.perGameLivePreviewFingerprint(), perform: { _, fingerprint in
             livePreview.fingerprintChanged(fingerprint)
         })
-        .onChangeCompat(of: livePreviewDismissRequest, perform: { _, _ in
+        .onChangeTwoCompat(of: livePreviewDismissRequest, perform: { _, _ in
             livePreview.dismissRequested()
         })
-        .onChangeCompat(of: settings.appearance.temporalSaveStateToLivePreviewChanges, perform: {
-            _, enabled in
+        .onChangeTwoCompat(of: settings.appearance.temporalSaveStateToLivePreviewChanges, perform: { _, enabled in
             livePreview.temporalPreviewSettingChanged(enabled)
         })
         .onDisappear {

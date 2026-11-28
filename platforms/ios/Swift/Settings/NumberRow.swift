@@ -244,11 +244,11 @@ struct NumberRow: View {
                 onIncrement: { controllerAdjust(by: 1) },
                 onDecrement: { controllerAdjust(by: -1) }
             )
-            .onChangeCompat(of: store.wrappedValue, perform: { _, _ in
+            .onChangeTwoCompat(of: store.wrappedValue, perform: { _, _ in
                 guard isDragging else { return }
                 activity.update(localizedTitle, displayText, true)
             })
-            .onChangeCompat(of: fieldFocused, perform: { _, focused in
+            .onChangeTwoCompat(of: fieldFocused, perform: { _, focused in
                 if !focused { commit() }
             })
             .onDisappear(perform: release)

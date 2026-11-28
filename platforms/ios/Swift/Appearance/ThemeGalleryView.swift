@@ -107,12 +107,12 @@ struct ThemeGalleryView: View {
             customPreviewSnapshot = gallery.customDraft
             preferences = settings.appearance.dynamicAppearancePreferences
         }
-        .onChangeCompat(of: page, perform: { _, page in
+        .onChangeTwoCompat(of: page, perform: { _, page in
             endPreview()
             if page == .shared { paletteTarget = .shared }
             if page == .ribbons { paletteTarget = .ribbons }
         })
-        .onChangeCompat(of: preferences, perform: { _, updated in
+        .onChangeTwoCompat(of: preferences, perform: { _, updated in
             // A preset synchronizes the binding too; only a user edit differs.
             guard updated != settings.appearance.dynamicAppearancePreferences else { return }
             rememberUndo()
@@ -120,7 +120,7 @@ struct ThemeGalleryView: View {
             settings.appearance.dynamicAppearancePreferences = updated
             preview(page.rawValue)
         })
-        .onChangeCompat(of: livePreview, perform: { _, enabled in
+        .onChangeTwoCompat(of: livePreview, perform: { _, enabled in
             if !enabled { endPreview() }
         })
         .onDisappear {

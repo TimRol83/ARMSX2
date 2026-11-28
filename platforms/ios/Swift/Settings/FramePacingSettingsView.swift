@@ -141,7 +141,7 @@ private struct PresetDetailsSheet: View {
             .navigationTitle(settings.localized(preset.label))
             .navigationBarTitleDisplayMode(.inline)
         }
-        .presentationDetents([.medium])
+        .presentationDetentsCompat([.medium])
     }
 }
 

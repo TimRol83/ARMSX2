@@ -30,7 +30,7 @@ struct TexturePacksView<Options: View>: View {
         Form {
             if serial == nil && !running.isEmpty {
                 Section {
-                    LabeledContent(settings.localized("Now Running"), value: running)
+                    LabeledContentCompat(settings.localized("Now Running"), value: running)
                 }
             }
 
@@ -86,7 +86,7 @@ struct TexturePacksView<Options: View>: View {
         .task { await reload() }
         // Without a declared order, focus would stay on a removed pack's button.
         .controllerAccessibilityTargetOrder(packTargets)
-        .onChangeCompat(of: packTargets, initial: true, perform: { _, targets in controllerTargets = targets })
+        .onChangeTwoCompat(of: packTargets, initial: true, perform: { _, targets in controllerTargets = targets })
         .sheet(isPresented: $showCatalog, onDismiss: { Task { await reload() } }) {
             NavigationView {
                 TextureCatalogView(serial: serial, controllerInput: controllerInput)

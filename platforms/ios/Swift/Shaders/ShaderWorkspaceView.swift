@@ -72,26 +72,26 @@ struct ShaderWorkspaceView: View, ShaderWorkspaceTargetIDs {
             normalizeSelection()
             publishControllerOrder()
         }
-        .onChangeCompat(of: passLibrary.passes, perform: { _, _ in
+        .onChangeTwoCompat(of: passLibrary.passes, perform: { _, _ in
             normalizeSelection()
             publishControllerOrder()
         })
-        .onChangeCompat(of: selectedCategoryID, perform: { _, _ in
+        .onChangeTwoCompat(of: selectedCategoryID, perform: { _, _ in
             publishControllerOrder()
         })
-        .onChangeCompat(of: detailPresented, perform: { _, _ in
+        .onChangeTwoCompat(of: detailPresented, perform: { _, _ in
             publishControllerOrder()
         })
-        .onChangeCompat(of: showsExtra, perform: { _, _ in
+        .onChangeTwoCompat(of: showsExtra, perform: { _, _ in
             publishControllerOrder()
         })
-        .onChangeCompat(of: model.expandedPassIDs, perform: { _, _ in
+        .onChangeTwoCompat(of: model.expandedPassIDs, perform: { _, _ in
             publishControllerOrder()
         })
-        .onChangeCompat(of: model.expandedLayerIDs, perform: { _, _ in
+        .onChangeTwoCompat(of: model.expandedLayerIDs, perform: { _, _ in
             publishControllerOrder()
         })
-        .onChangeCompat(of: params.params, perform: { _, _ in
+        .onChangeTwoCompat(of: params.params, perform: { _, _ in
             publishControllerOrder()
         })
         .onAppear { publishControllerOrder() }
@@ -194,7 +194,7 @@ struct ShaderWorkspaceView: View, ShaderWorkspaceTargetIDs {
                 settings.appearance.controllerTextAppearance.contentColor ?? .white
             )
             .tint(settings.appearance.controllerNavigationAccentColor)
-            .scrollContentBackground(.hidden)
+            .scrollContentBackgroundCompat(.hidden)
             .background {
                 ControllerRightStickScrollTarget(
                     controllerInput: controllerInput,
@@ -205,7 +205,7 @@ struct ShaderWorkspaceView: View, ShaderWorkspaceTargetIDs {
                 )
                 .allowsHitTesting(false)
             }
-            .onChangeCompat(of: model.layerScrollRequest, perform: { _, request in
+            .onChangeTwoCompat(of: model.layerScrollRequest, perform: { _, request in
                 guard let request else { return }
                 Task { @MainActor in
                     // First let Form adopt the expanded row height. The
@@ -406,7 +406,7 @@ struct ShaderWorkspaceView: View, ShaderWorkspaceTargetIDs {
                 }
             }
         }
-        .scrollContentBackground(.hidden)
+        .scrollContentBackgroundCompat(.hidden)
         .background {
             ControllerRightStickScrollTarget(
                 controllerInput: controllerInput,

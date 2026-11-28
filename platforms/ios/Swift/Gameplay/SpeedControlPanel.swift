@@ -61,7 +61,7 @@ struct SpeedControlPanel: View {
                     }
                 }
             }
-            .scrollContentBackground(onClose == nil ? .automatic : .hidden)
+            .scrollContentBackgroundCompat(onClose == nil ? .automatic : .hidden)
             .navigationTitle(settings.localized("Speed / Fast Forward"))
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {

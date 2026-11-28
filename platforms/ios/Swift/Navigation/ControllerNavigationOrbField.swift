@@ -254,7 +254,7 @@ struct ControllerNavigationOrbField: View {
                 )
             ]
         }
-        .onChangeCompat(of: speedMultiplier, perform: { _, newValue in
+        .onChangeTwoCompat(of: speedMultiplier, perform: { _, newValue in
             guard phaseTimeOverride == nil else { return }
             let now = Date.timeIntervalSinceReferenceDate
             speedPrograms.append(
@@ -267,7 +267,7 @@ struct ControllerNavigationOrbField: View {
             )
             trimPrograms(&speedPrograms, limit: 32)
         })
-        .onChangeCompat(of: dispersion, perform: { _, newValue in
+        .onChangeTwoCompat(of: dispersion, perform: { _, newValue in
             guard dispersionOverride == nil else { return }
             let now = Date.timeIntervalSinceReferenceDate
             dispersionPrograms.append(
@@ -280,7 +280,7 @@ struct ControllerNavigationOrbField: View {
             )
             trimPrograms(&dispersionPrograms, limit: 32)
         })
-        .onChangeCompat(of: reaction, perform: { _, newValue in
+        .onChangeTwoCompat(of: reaction, perform: { _, newValue in
             guard reactionStateOverride == nil,
                   let newValue,
                   !reduceMotion else { return }

@@ -110,7 +110,7 @@ struct GameLibraryListLayout: View {
             .contentMarginsCompat(.top, 0, for: .scrollContent)
             .scrollIndicatorsCompat(.hidden)
             .modifier(GameLibraryListTopEdgeEffectModifier())
-            .scrollContentBackground(.hidden)
+            .scrollContentBackgroundCompat(.hidden)
             .scrollDisabledCompat(false)
             .scrollBounceBehaviorCompat(.always)
             .trackGameLibraryScrollPhase(library.gameLibraryActivity)

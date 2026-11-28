@@ -195,7 +195,7 @@ struct QuickMenuView: View {
                     initial: true
                 , perform: { _, now in rememberFoldScope(now) })
         }
-        .onChangeCompat(of: showStopConfirmation, perform: { _, isPresented in
+        .onChangeTwoCompat(of: showStopConfirmation, perform: { _, isPresented in
             guard isPresented else { return }
             MenuAudioPackManager.shared.playEvent(.uiToast)
         })

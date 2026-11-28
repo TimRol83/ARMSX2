@@ -107,7 +107,7 @@ struct AudioSettingsView: View {
             message: audioPackMessage?.detail ?? "",
             actions: [.ok]
         )
-        .onChangeCompat(of: audioPackMessage?.id, perform: { _, messageID in
+        .onChangeTwoCompat(of: audioPackMessage?.id, perform: { _, messageID in
             guard messageID != nil else { return }
             MenuAudioPackManager.shared.playEvent(.uiToast)
             controllerInput?.playTouchHaptics(.contextMenu)
@@ -144,7 +144,7 @@ struct AudioSettingsView: View {
             .disabled(audioPack.isWorking)
 
             if let installedPackName = audioPack.installedPackName {
-                LabeledContent(settings.localized("Installed")) {
+                LabeledContentCompat(settings.localized("Installed")) {
                     Text(installedPackName)
                         .foregroundStyle(.secondary)
                         .lineLimit(1)

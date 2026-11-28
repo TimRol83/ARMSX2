@@ -261,7 +261,7 @@ struct ControllerGameContextMenu: View {
             }
             .frame(maxHeight: maxHeight)
             .scrollIndicatorsCompat(.visible)
-            .onChangeCompat(of: selectedAction, perform: { _, action in
+            .onChangeTwoCompat(of: selectedAction, perform: { _, action in
                 guard let action else { return }
                 withAnimation(.snappy(duration: 0.22)) {
                     proxy.scrollTo(action, anchor: .center)

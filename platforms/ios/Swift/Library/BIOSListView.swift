@@ -22,7 +22,7 @@ private struct BIOSToolbarFocusReporter: ViewModifier {
     @Environment(\.controllerAccessibilityTargetFocused) private var isFocused
 
     func body(content: Content) -> some View {
-        content.onChangeCompat(of: isFocused, initial: true, perform: { _, focused in
+        content.onChangeTwoCompat(of: isFocused, initial: true, perform: { _, focused in
             if focused {
                 focusedID = id
             } else if focusedID == id {
@@ -41,7 +41,7 @@ private struct BIOSPromptCommandListener: View {
             .frame(width: 0, height: 0)
             .allowsHitTesting(false)
             .accessibilityHidden(true)
-            .onChangeCompat(of: controllerInput.latestEvent, perform: { _, event in
+            .onChangeTwoCompat(of: controllerInput.latestEvent, perform: { _, event in
                 guard let event,
                       event.captureOwner
                         == MenuControllerNavigationCaptureOwner.biosPrompt else {
@@ -218,7 +218,7 @@ struct BIOSListView: View {
                     }
                     .contentMarginsCompat(.top, 0, for: .scrollContent)
                     .contentMarginsCompat(.bottom, 0, for: .scrollContent)
-                    .scrollContentBackground(backgroundActive ? .hidden : .automatic)
+                    .scrollContentBackgroundCompat(backgroundActive ? .hidden : .automatic)
                     .scrollBounceBehaviorCompat(.always)
 #if targetEnvironment(macCatalyst)
                     .listStyle(.inset)
@@ -402,12 +402,12 @@ struct BIOSListView: View {
                 scheduleBIOSRefresh(after: .milliseconds(0))
             }
         }
-        .onChangeCompat(of: menuTabIsActive, perform: { _, isActive in
+        .onChangeTwoCompat(of: menuTabIsActive, perform: { _, isActive in
             if isActive {
                 scheduleBIOSRefresh(after: .milliseconds(0))
             }
         })
-        .onChangeCompat(of: activePrompt, perform: { previous, prompt in
+        .onChangeTwoCompat(of: activePrompt, perform: { previous, prompt in
             promptSelectedIndex = 0
             updatePromptCapture()
             guard let prompt, prompt != previous else { return }

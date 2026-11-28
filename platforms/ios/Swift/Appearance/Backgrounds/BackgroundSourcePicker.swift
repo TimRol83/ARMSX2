@@ -129,7 +129,7 @@ private struct PhotoLibraryPickerBridge: ViewModifier {
     func body(content: Content) -> some View {
         content
             .photosPickerCompat(isPresented: $isPresented, selection: $selectedPhotoItem, matching: .any(of: [.images, .videos]))
-            .onChangeCompat(of: selectedPhotoItem, perform: { _, item in
+            .onChangeTwoCompat(of: selectedPhotoItem, perform: { _, item in
                 guard let item else { return }
                 selectedPhotoItem = nil
                 Task { @MainActor in await importPhotoItem(item) }

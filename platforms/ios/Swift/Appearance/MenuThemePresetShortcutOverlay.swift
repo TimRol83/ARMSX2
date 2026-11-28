@@ -119,7 +119,7 @@ struct MenuThemePresetShortcutOverlay: View {
         .allowsHitTesting(pendingChange != nil)
         .accessibilityElement(children: .combine)
         .animation(focusAnimation, value: presentation)
-        .onChangeCompat(of: controllerInput.latestThemePresetRequest, perform: { _, request in
+        .onChangeTwoCompat(of: controllerInput.latestThemePresetRequest, perform: { _, request in
             guard let request, isEnabled, controllerInput.canChangeMainMenuTheme else { return }
             let selections = themeGallery.orderedSelections
             let current = themeGallery.currentSelection(for: settings.appearance)
@@ -149,7 +149,7 @@ struct MenuThemePresetShortcutOverlay: View {
             )
             controllerInput.playFeedback(.contextMenu)
         })
-        .onChangeCompat(of: controllerInput.latestEvent, perform: { _, event in
+        .onChangeTwoCompat(of: controllerInput.latestEvent, perform: { _, event in
             guard let event,
                   event.captureOwner
                     == MenuControllerNavigationCaptureOwner.themePresetShortcut,
@@ -164,7 +164,7 @@ struct MenuThemePresetShortcutOverlay: View {
                 presentation = nil
             } catch { }
         }
-        .onChangeCompat(of: isEnabled, perform: { _, enabled in
+        .onChangeTwoCompat(of: isEnabled, perform: { _, enabled in
             if !enabled {
                 presentation = nil
                 cancelPendingChange(playsFeedback: false)

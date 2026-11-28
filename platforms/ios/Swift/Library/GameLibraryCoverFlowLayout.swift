@@ -323,7 +323,7 @@ struct GameLibraryScrollObserver: View {
             .frame(width: 0, height: 0)
             .allowsHitTesting(false)
             .accessibilityHidden(true)
-            .onChangeCompat(
+            .onChangeTwoCompat(
                 of: restoreState.topRequestSequence,
                 initial: true
             , perform: { _, sequence in
@@ -337,7 +337,7 @@ struct GameLibraryScrollObserver: View {
                     }
                 }
             })
-            .onChangeCompat(
+            .onChangeTwoCompat(
                 of: focusState.selectionScrollRequest,
                 initial: true
             , perform: { _, request in
@@ -388,7 +388,7 @@ struct GameLibraryScrollObserver: View {
                     }
                 }
             })
-            .onChangeCompat(of: favoriteScrollRequest, perform: { _, request in
+            .onChangeTwoCompat(of: favoriteScrollRequest, perform: { _, request in
                 guard let request else { return }
                 DispatchQueue.main.async {
                     // Resolve the destination after the favorite-first sort

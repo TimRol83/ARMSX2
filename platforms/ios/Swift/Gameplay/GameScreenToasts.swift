@@ -118,7 +118,7 @@ struct PerGameLivePreviewExitOverlay: View {
                 priority: 1_000
             )
         }
-        .onChangeCompat(of: controllerInput?.latestEvent, perform: { _, event in
+        .onChangeTwoCompat(of: controllerInput?.latestEvent, perform: { _, event in
             guard let event,
                   event.captureOwner
                     == MenuControllerNavigationCaptureOwner

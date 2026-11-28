@@ -18,7 +18,7 @@ struct DynamicBackgroundSettingsControls: View {
   var body: some View {
     settingsContent
       .onAppear(perform: expandCurrentBackgroundSettings)
-      .onChangeCompat(of: dynamicBackground, perform: { _, _ in
+      .onChangeTwoCompat(of: dynamicBackground, perform: { _, _ in
         expandCurrentBackgroundSettings()
       })
   }

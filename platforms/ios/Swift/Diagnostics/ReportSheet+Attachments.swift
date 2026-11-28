@@ -133,7 +133,7 @@ extension ReportSheet {
                 .init(title: settings.localized("Choose from Files")) { pick(.photo) },
             ])
             .photosPickerCompat(isPresented: $showPhotoPicker, selection: $photoItem, matching: .images)
-            .onChangeCompat(of: photoItem, perform: { _, item in
+            .onChangeTwoCompat(of: photoItem, perform: { _, item in
                 guard let item else { return }
                 photoItem = nil
                 setPhoto { try? await item.loadTransferable(type: Data.self) }

@@ -125,7 +125,7 @@ struct ReportSheet: View {
             }
         }
         .interactiveDismissDisabled(working)
-        .presentationDetents([.medium, .large])
+        .presentationDetentsCompat([.medium, .large])
         .sheet(item: $sharing) { ActivityShareSheet(activityItems: [$0.url]) }
         .fullScreenCover(item: $keyboardField) { field in
             OrbitKeysKeyboardView(

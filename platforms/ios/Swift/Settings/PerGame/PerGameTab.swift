@@ -12,7 +12,7 @@ struct PerGameTab<Content: View>: View {
             content
         }
         .perGameRightStickScroll()
-        .scrollContentBackground(.hidden)
+        .scrollContentBackgroundCompat(.hidden)
         .background(Color.clear)
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)

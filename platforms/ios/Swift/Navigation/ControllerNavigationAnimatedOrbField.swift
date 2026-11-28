@@ -101,24 +101,24 @@ struct ControllerNavigationAnimatedOrbField: View {
         .onChangeCompat(of: MotionTarget(id: targetID, frame: targetFrame), perform: { _, next in
             retarget(to: next)
         })
-        .onChangeCompat(of: tracksTargetFrameDirectly, perform: { _, tracksDirectly in
+        .onChangeTwoCompat(of: tracksTargetFrameDirectly, perform: { _, tracksDirectly in
             guard tracksDirectly else { return }
             retarget(to: MotionTarget(id: targetID, frame: targetFrame))
         })
-        .onChangeCompat(of: resolvedFocusTravelStyle, perform: { _, _ in
+        .onChangeTwoCompat(of: resolvedFocusTravelStyle, perform: { _, _ in
             // Settle an in-flight effect before the new choice takes over.
             // The session still owns any currently scrolling geometry.
             setFrameDirectly(targetFrame, at: Date.timeIntervalSinceReferenceDate)
         })
-        .onChangeCompat(of: reduceMotion, perform: { _, reducesMotion in
+        .onChangeTwoCompat(of: reduceMotion, perform: { _, reducesMotion in
             if reducesMotion {
                 setFrameDirectly(targetFrame, at: Date.timeIntervalSinceReferenceDate)
             }
         })
-        .onChangeCompat(of: showsOrbs, perform: { _, isEnabled in
+        .onChangeTwoCompat(of: showsOrbs, perform: { _, isEnabled in
             updateOrbActivity(isEnabled: isEnabled)
         })
-        .onChangeCompat(of: showsOrbs ? resolvedInteraction : nil, perform: { _, interaction in
+        .onChangeTwoCompat(of: showsOrbs ? resolvedInteraction : nil, perform: { _, interaction in
             guard let interaction else { return }
             react(to: interaction.command)
         })

@@ -77,7 +77,7 @@ private struct ShaderPackInstallOptionsView: View {
                 declaredTargetOrder: targetOrder
             )
         }
-        .presentationDetents([.medium])
+        .presentationDetentsCompat([.medium])
     }
 
     private func installButton(
@@ -221,7 +221,7 @@ struct ShaderChainSection: View {
                         controllerInput: controllerInput
                     )
                 }
-                .presentationDetents([.large])
+                .presentationDetentsCompat([.large])
             }
 
             Button {

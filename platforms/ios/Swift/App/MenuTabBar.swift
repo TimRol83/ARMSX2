@@ -41,14 +41,14 @@ private struct ControllerTabBarOrbOverlay: View {
                                 selectedIndex: selection
                             )
                         }
-                        .onChangeCompat(of: windowFrame, perform: { _, next in
+                        .onChangeTwoCompat(of: windowFrame, perform: { _, next in
                             controllerInput.updateTabBarOrbFocusFrame(
                                 next,
                                 focusedIndex: focusedIndex,
                                 selectedIndex: selection
                             )
                         })
-                        .onChangeCompat(of: selection, perform: { _, next in
+                        .onChangeTwoCompat(of: selection, perform: { _, next in
                             controllerInput.updateTabBarOrbFocusFrame(
                                 windowFrame,
                                 focusedIndex: focusedIndex,

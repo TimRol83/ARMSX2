@@ -234,7 +234,7 @@ private struct DynamicBackgroundStyleCrossfadeView: View {
             .clipped()
         }
         .ignoresSafeArea()
-        .onChangeCompat(of: requestedPresentation, perform: { _, next in
+        .onChangeTwoCompat(of: requestedPresentation, perform: { _, next in
             updatePresentation(to: next)
         })
     }

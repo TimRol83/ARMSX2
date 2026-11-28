@@ -47,7 +47,7 @@ private struct ControllerAccessibilityOptionsPickerModifier<Selection: Hashable>
                     options: options,
                     controllerInput: controllerInput
                 )
-                .presentationDetents([.large])
+                .presentationDetentsCompat([.large])
                 .presentationDragIndicator(.visible)
             }
     }

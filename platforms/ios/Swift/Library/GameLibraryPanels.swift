@@ -128,21 +128,21 @@ struct GameInfoPanel: View {
                 }
 
                 Section(settings.localized("Disc")) {
-                    LabeledContent(settings.localized("Region")) {
+                    LabeledContentCompat(settings.localized("Region")) {
                         Text(regionDisplay)
                     }
-                    LabeledContent(settings.localized("Serial")) {
+                    LabeledContentCompat(settings.localized("Serial")) {
                         Text(metadataValue(.serial))
                             .textSelection(.enabled)
                     }
-                    LabeledContent(settings.localized("CRC")) {
+                    LabeledContentCompat(settings.localized("CRC")) {
                         Text(metadataValue(.crc))
                             .textSelection(.enabled)
                     }
-                    LabeledContent(settings.localized("Format")) {
+                    LabeledContentCompat(settings.localized("Format")) {
                         Text(game.name.pathExtensionLabel)
                     }
-                    LabeledContent(settings.localized("Size")) {
+                    LabeledContentCompat(settings.localized("Size")) {
                         Text(game.sizeLabel)
                     }
                 }
@@ -154,7 +154,7 @@ struct GameInfoPanel: View {
                         .textSelection(.enabled)
                 }
             }
-            .scrollContentBackground(.hidden)
+            .scrollContentBackgroundCompat(.hidden)
             .navigationTitle(settings.localized("Game Info"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -212,7 +212,7 @@ struct DiscLinkPicker: View {
                     }
                 }
             }
-            .scrollContentBackground(.hidden)
+            .scrollContentBackgroundCompat(.hidden)
             .navigationTitle(settings.localized("Disc Path"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

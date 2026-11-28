@@ -14,7 +14,7 @@ private struct RootControllerAlertCommandListener: View {
             .frame(width: 0, height: 0)
             .allowsHitTesting(false)
             .accessibilityHidden(true)
-            .onChangeCompat(of: controllerInput.latestEvent, perform: { _, event in
+            .onChangeTwoCompat(of: controllerInput.latestEvent, perform: { _, event in
                 guard let event,
                       event.captureOwner
                         == MenuControllerNavigationCaptureOwner.rootAlert else {
@@ -325,7 +325,7 @@ struct RootView: View {
             scheduleGameplayControllerHelpIfReady: scheduleGameplayControllerHelpIfReady,
             handleMenuScreenActiveChange: handleMenuScreenActiveChange
         ))
-        .onChangeCompat(of: activeControllerAlertKind, initial: true, perform: { previous, kind in
+        .onChangeTwoCompat(of: activeControllerAlertKind, initial: true, perform: { previous, kind in
             rootControllerAlertSelection = 0
             updateRootAlertNavigationCapture(isPresented: kind != nil)
             guard let kind, kind != previous else { return }
@@ -342,7 +342,7 @@ struct RootView: View {
                 MenuAudioPackManager.shared.playEvent(.uiToast)
             }
         })
-        .onChangeCompat(
+        .onChangeTwoCompat(
             of: session.pendingJITGameBoot != nil,
             initial: true
         , perform: { _, isPresented in

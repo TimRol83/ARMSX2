@@ -105,7 +105,7 @@ struct ShaderCatalogBrowserView: View {
                             row(entry)
                         }
                     } label: {
-                        LabeledContent(group.id, value: "\(group.entries.count)")
+                        LabeledContentCompat(group.id, value: "\(group.entries.count)")
                             .controllerAccessibilityActionTarget(
                                 label: group.id
                             ) {

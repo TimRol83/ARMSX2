@@ -205,7 +205,7 @@ struct SaveStatesPanel: View {
             .presentationBackgroundCompat(.clear)
             .appStatusBarHidden()
         }
-        .onChangeCompat(of: landscape, perform: { _, _ in
+        .onChangeTwoCompat(of: landscape, perform: { _, _ in
             // The menu is anchored to a row that a new layout may have scrolled away.
             if menuSlot != nil { closeMenu() }
         })

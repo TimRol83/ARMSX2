@@ -186,7 +186,7 @@ struct ThemePaletteEditor: View {
       .presentationBackgroundCompat(.clear)
       .presentationDragIndicator(isShowingBackgroundOnly ? .hidden : .visible)
       .onAppear(perform: prepareEditor)
-      .onChangeCompat(of: currentEditorSnapshot, perform: { oldSnapshot, newSnapshot in
+      .onChangeTwoCompat(of: currentEditorSnapshot, perform: { oldSnapshot, newSnapshot in
         handleEditorSnapshotChange(from: oldSnapshot, to: newSnapshot)
       })
       .onDisappear(perform: tearDownEditor)
@@ -242,7 +242,7 @@ struct ThemePaletteEditor: View {
         ScrollView {
           editorSections
         }
-        .onChangeCompat(of: scrollToTopRequest, perform: { _, _ in
+        .onChangeTwoCompat(of: scrollToTopRequest, perform: { _, _ in
           var transaction = Transaction(animation: nil)
           transaction.disablesAnimations = true
           withTransaction(transaction) {

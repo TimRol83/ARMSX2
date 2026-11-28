@@ -525,6 +525,6 @@ private struct RetroAchievementsLoginSheet: View {
             .appStatusBarHidden()
         }
         .interactiveDismissDisabled(loggingIn)
-        .presentationDetents([.medium])
+        .presentationDetentsCompat([.medium])
     }
 }

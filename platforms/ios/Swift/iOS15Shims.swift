@@ -73,7 +73,7 @@ public struct PhotosPickerItemCompat: Hashable {
     public func loadTransferable<T>(type: T.Type) async throws -> T? { return nil }
 }
 
-public struct MagnifyGesture: Gesture {
+public struct MagnifyGestureCompat {
     public struct Value: Equatable {
         public var magnification: CGFloat = 1.0
         public var velocity: CGFloat = 0.0
@@ -81,13 +81,7 @@ public struct MagnifyGesture: Gesture {
         public var startLocation: CGPoint = .zero
     }
     public init(minimumScaleDelta: CGFloat = 0.01) {}
-    public var body: some Gesture {
-        MagnificationGesture().map { scale in
-            var v = Value()
-            v.magnification = scale
-            return v
-        }
-    }
+}
 }
 
 public struct AnimationContext<Value> {
@@ -171,6 +165,25 @@ public extension TextField where Label == Text {
 public extension RectangleCornerRadiiCompat {
     init(_ radii: RectangleCornerRadiiCompat) {
         self = radii
+    }
+}
+#endif
+
+
+#if os(iOS)
+public enum PresentationDetentCompat: Hashable {
+    case medium, large
+    case fraction(CGFloat)
+    case height(CGFloat)
+}
+
+@available(iOS 15.0, *)
+public extension View {
+    @ViewBuilder func presentationDetentsCompat(_ detents: Set<PresentationDetentCompat>) -> some View { self }
+    @ViewBuilder func presentationDetentsCompat(_ detents: Set<PresentationDetentCompat>, selection: Binding<PresentationDetentCompat>) -> some View { self }
+    @ViewBuilder func scrollContentBackgroundCompat(_ visibility: Visibility) -> some View { self }
+    @ViewBuilder func onChangeTwoCompat<V: Equatable>(of value: V, initial: Bool = false, perform action: @escaping (_ oldValue: V, _ newValue: V) -> Void) -> some View {
+        self.modifier(OnChangeTwoArgModifier(value: value, initial: initial, action: action))
     }
 }
 #endif

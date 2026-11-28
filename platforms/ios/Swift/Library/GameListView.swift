@@ -239,7 +239,7 @@ struct GameListView: View {
                             pushControllerContext()
                             controller.handleLibraryContainerAppear(geo: geo)
                         }
-                        .onChangeCompat(of: geo.size, perform: { previousSize, size in
+                        .onChangeTwoCompat(of: geo.size, perform: { previousSize, size in
                             pushControllerContext()
                             controller.handleLibraryContainerSizeChange(previousSize, size)
                         })
@@ -451,7 +451,7 @@ struct GameListView: View {
                 selection: $controller.selectedCoverPhotoItem,
                 matching: .images
             )
-            .onChangeCompat(of: controller.selectedCoverPhotoItem, perform: { _, photoItem in
+            .onChangeTwoCompat(of: controller.selectedCoverPhotoItem, perform: { _, photoItem in
                 guard let photoItem, let gameName = controller.pendingCoverPhotoGameName else { return }
                 controller.selectedCoverPhotoItem = nil
                 controller.pendingCoverPhotoGameName = nil
@@ -608,18 +608,18 @@ struct GameListView: View {
             pushControllerContext()
             controller.handleLibraryAppear()
         }
-        .onChangeCompat(of: controller.renameTarget != nil, initial: true, perform: { _, isPresented in
+        .onChangeTwoCompat(of: controller.renameTarget != nil, initial: true, perform: { _, isPresented in
             onRenamePresentationChanged(isPresented)
         })
-        .onChangeCompat(of: controllerInput?.navigationZone, perform: { _, zone in
+        .onChangeTwoCompat(of: controllerInput?.navigationZone, perform: { _, zone in
             pushControllerContext()
             controller.handleNavigationZoneChange(zone)
         })
-        .onChangeCompat(of: controller.controllerContextMenuState.gameID, perform: { _, gameID in
+        .onChangeTwoCompat(of: controller.controllerContextMenuState.gameID, perform: { _, gameID in
             pushControllerContext()
             controller.handleContextMenuGameChange(gameID)
         })
-        .onChangeCompat(of: controller.controllerToolbarFocusState.selectedAction, perform: { _, _ in
+        .onChangeTwoCompat(of: controller.controllerToolbarFocusState.selectedAction, perform: { _, _ in
             pushControllerContext()
             controller.handleToolbarSelectionChange()
         })
@@ -637,31 +637,31 @@ struct GameListView: View {
         }
 
         return libraryObservers
-        .onChangeCompat(of: library.games, perform: { _, updatedGames in
+        .onChangeTwoCompat(of: library.games, perform: { _, updatedGames in
             pushControllerContext()
             controller.handleGamesChange(updatedGames)
         })
-        .onChangeCompat(of: controller.displayedRunningGameName, perform: { _, runningGame in
+        .onChangeTwoCompat(of: controller.displayedRunningGameName, perform: { _, runningGame in
             pushControllerContext()
             controller.handleRunningGameChange(runningGame)
         })
-        .onChangeCompat(of: controllerInput?.hasConnectedController, perform: { _, connected in
+        .onChangeTwoCompat(of: controllerInput?.hasConnectedController, perform: { _, connected in
             pushControllerContext()
             controller.handleControllerConnectionChange(connected)
         })
-        .onChangeCompat(of: menuTabIsActive, perform: { _, active in
+        .onChangeTwoCompat(of: menuTabIsActive, perform: { _, active in
             pushControllerContext()
             controller.handleMenuTabActiveChange(active)
         })
-        .onChangeCompat(of: controller.manuallyCapturedControllerPresentationActive, perform: { _, active in
+        .onChangeTwoCompat(of: controller.manuallyCapturedControllerPresentationActive, perform: { _, active in
             pushControllerContext()
             controller.handleCapturedPresentationChange(active)
         })
-        .onChangeCompat(of: controller.controllerNavigationPresentationActive, perform: { _, active in
+        .onChangeTwoCompat(of: controller.controllerNavigationPresentationActive, perform: { _, active in
             pushControllerContext()
             controller.handleNavigationPresentationChange(active)
         })
-        .onChangeCompat(of: controller.activeControllerAlertKind, perform: { previous, kind in
+        .onChangeTwoCompat(of: controller.activeControllerAlertKind, perform: { previous, kind in
             pushControllerContext()
             controller.handleAlertKindChange(previous, kind)
         })

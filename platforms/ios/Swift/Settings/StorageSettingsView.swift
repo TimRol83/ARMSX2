@@ -58,7 +58,7 @@ private struct StorageExternalGamesAlertCommandListener: View {
             .frame(width: 0, height: 0)
             .allowsHitTesting(false)
             .accessibilityHidden(true)
-            .onChangeCompat(of: controllerInput.latestEvent, perform: { _, event in
+            .onChangeTwoCompat(of: controllerInput.latestEvent, perform: { _, event in
                 guard let event,
                       event.captureOwner
                         == MenuControllerNavigationCaptureOwner
@@ -301,11 +301,11 @@ struct StorageSettingsView: View {
         ZStack {
             Form {
                 Section(settings.localized("Usage")) {
-                LabeledContent(settings.localized("App Cache"), value: formatBytes(report.appCacheBytes))
-                LabeledContent(settings.localized("Texture Dumps"), value: formatBytes(report.textureDumpBytes))
-                LabeledContent(settings.localized("Diagnostic Logs"), value: formatBytes(report.diagnosticLogBytes))
-                LabeledContent(settings.localized("State Safety Backups"), value: formatBytes(report.stateSafetyBackupBytes))
-                LabeledContent(settings.localized("Generated Total"), value: formatBytes(report.totalGeneratedBytes))
+                LabeledContentCompat(settings.localized("App Cache"), value: formatBytes(report.appCacheBytes))
+                LabeledContentCompat(settings.localized("Texture Dumps"), value: formatBytes(report.textureDumpBytes))
+                LabeledContentCompat(settings.localized("Diagnostic Logs"), value: formatBytes(report.diagnosticLogBytes))
+                LabeledContentCompat(settings.localized("State Safety Backups"), value: formatBytes(report.stateSafetyBackupBytes))
+                LabeledContentCompat(settings.localized("Generated Total"), value: formatBytes(report.totalGeneratedBytes))
 
                 Button {
                     Task { @MainActor in await refreshReport() }
@@ -461,10 +461,10 @@ struct StorageSettingsView: View {
             externalLibrary.reload()
             await refreshReport()
         }
-        .onChangeCompat(of: externalActionMessage, perform: { _, _ in
+        .onChangeTwoCompat(of: externalActionMessage, perform: { _, _ in
             updateExternalGamesAlertCapture()
         })
-        .onChangeCompat(of: controllerInput?.hasConnectedController, perform: { _, _ in
+        .onChangeTwoCompat(of: controllerInput?.hasConnectedController, perform: { _, _ in
             updateExternalGamesAlertCapture()
         })
         .onDisappear {

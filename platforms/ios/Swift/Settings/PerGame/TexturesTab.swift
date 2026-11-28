@@ -28,7 +28,7 @@ struct TexturesTab: View {
             }
         }
         .perGameRightStickScroll()
-        .scrollContentBackground(.hidden)
+        .scrollContentBackgroundCompat(.hidden)
         .toolbarBackgroundCompat(.hidden, for: .navigationBar)
     }
 

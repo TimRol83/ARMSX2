@@ -462,7 +462,7 @@ private struct OrbitKeysSelectionDot: View {
       .onAppear {
         pulse(for: trigger)
       }
-      .onChangeCompat(of: trigger, perform: { _, newValue in
+      .onChangeTwoCompat(of: trigger, perform: { _, newValue in
         pulse(for: newValue)
       })
       .onDisappear {

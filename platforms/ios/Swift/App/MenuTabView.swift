@@ -14,7 +14,7 @@ private struct MenuTabControllerCommandListener: View {
             .frame(width: 0, height: 0)
             .allowsHitTesting(false)
             .accessibilityHidden(true)
-            .onChangeCompat(of: controllerInput.latestEvent, perform: { _, event in
+            .onChangeTwoCompat(of: controllerInput.latestEvent, perform: { _, event in
                 guard let event else { return }
                 onEvent(event)
             })
@@ -517,7 +517,7 @@ struct MenuTabView: View {
                     .onAppear {
                         menuViewportSize = proxy.size
                     }
-                    .onChangeCompat(of: proxy.size, perform: { _, size in
+                    .onChangeTwoCompat(of: proxy.size, perform: { _, size in
                         guard menuViewportSize != size else { return }
                         menuViewportSize = size
                     })
@@ -553,13 +553,13 @@ struct MenuTabView: View {
             backgroundHost.reactivateForMenu(isAvailable: settings.hasCustomBackground)
             backgroundHost.setPresentationVisible(selectedTabShowsBackground)
         }
-        .onChangeCompat(of: settings.hasCustomBackground, perform: { _, hasBackground in
+        .onChangeTwoCompat(of: settings.hasCustomBackground, perform: { _, hasBackground in
             backgroundHost.setMenuBackgroundAvailable(hasBackground)
         })
-        .onChangeCompat(of: settings.appearance.dynamicBackgroundsEnabled, perform: { _, _ in
+        .onChangeTwoCompat(of: settings.appearance.dynamicBackgroundsEnabled, perform: { _, _ in
             backgroundHost.setMenuBackgroundAvailable(settings.hasCustomBackground)
         })
-        .onChangeCompat(of: selectedTabShowsBackground, perform: { _, showsBackground in
+        .onChangeTwoCompat(of: selectedTabShowsBackground, perform: { _, showsBackground in
             backgroundHost.setPresentationVisible(showsBackground)
         })
         .onDisappear {

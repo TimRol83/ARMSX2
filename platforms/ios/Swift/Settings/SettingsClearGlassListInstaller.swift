@@ -403,7 +403,7 @@ struct SettingsDetailClearLiquidGlassModifier: ViewModifier {
                 \.controllerFocusDepthHandledByAncestor,
                 decoratesRows
             )
-            .scrollContentBackground(.hidden)
+            .scrollContentBackgroundCompat(.hidden)
             .controllerFocusDepthBehindGlass(
                 isEnabled: decoratesRows,
                 force: true,

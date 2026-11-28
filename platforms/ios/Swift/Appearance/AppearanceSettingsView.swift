@@ -302,7 +302,7 @@ struct AppearanceSettingsView: View, AppearanceSettingsEditing {
             .allowsHitTesting(false)
             .accessibilityHidden(true)
         }
-        .scrollContentBackground(.hidden)
+        .scrollContentBackgroundCompat(.hidden)
         .background(Color.clear)
         .navigationTitle(settings.localized("Appearance"))
         // Explicit large-title ownership lets NavigationStack inset the Form's
@@ -318,10 +318,10 @@ struct AppearanceSettingsView: View, AppearanceSettingsEditing {
                     dynamicBackground: dynamicPreferences.dynamicBackground,
                     onSaveAppearance: saveDynamicAppearance
                 )
-                .presentationDetents([.large])
+                .presentationDetentsCompat([.large])
             case .gallery:
                 ThemeGalleryView(controllerInput: controllerInput)
-                    .presentationDetents([.large])
+                    .presentationDetentsCompat([.large])
             }
         }
         .fullScreenCover(isPresented: $showsThemeNameKeyboard) {
@@ -372,12 +372,12 @@ struct AppearanceSettingsView: View, AppearanceSettingsEditing {
                     removeControllerCustomColour(for: target)
                 }
             )
-            .presentationDetents([.medium])
+            .presentationDetentsCompat([.medium])
         }
         .onAppear {
             dynamicPreferences = settings.appearance.dynamicAppearancePreferences
         }
-        .onChangeCompat(of: settings.appearance.dynamicAppearancePreferences, perform: { _, preferences in
+        .onChangeTwoCompat(of: settings.appearance.dynamicAppearancePreferences, perform: { _, preferences in
             if presentedEditor == nil { dynamicPreferences = preferences }
         })
         .onDisappear {

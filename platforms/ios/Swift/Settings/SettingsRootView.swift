@@ -333,11 +333,11 @@ struct SettingsRootView: View {
         .scrollDisabledCompat(false)
         .scrollBounceBehaviorCompat(.always)
         .scrollPositionCompat(id: $rootScrollPositionID, anchor: .top)
-        .onChangeCompat(of: rootScrollPositionID, perform: { _, _ in
+        .onChangeTwoCompat(of: rootScrollPositionID, perform: { _, _ in
             // Set by finger and controller scrolling alike, so restoring it ignores input mode.
             rememberRootScrollPositionIfAvailable()
         })
-        .scrollContentBackground(backgroundActive ? .hidden : .automatic)
+        .scrollContentBackgroundCompat(backgroundActive ? .hidden : .automatic)
         .background {
             settingsRightStickScrollTarget(
                 id: "settings.root-scroll",
@@ -395,7 +395,7 @@ struct SettingsRootView: View {
         .safeAreaInset(edge: .top) {
             Color.clear.frame(height: 6)
         }
-        .onChangeCompat(of: menuTabIsActive, perform: { _, isActive in
+        .onChangeTwoCompat(of: menuTabIsActive, perform: { _, isActive in
             if isActive,
                rootScrollPositionID == nil,
                !rememberedRootScrollPositionID.isEmpty {
@@ -428,7 +428,7 @@ struct SettingsRootView: View {
             }
         }
         }
-        .onChangeCompat(of: resetToRootRequest, perform: { _, _ in
+        .onChangeTwoCompat(of: resetToRootRequest, perform: { _, _ in
             guard !navigationPath.isEmpty else { return }
             var transaction = Transaction(animation: nil)
             transaction.disablesAnimations = true
@@ -436,7 +436,7 @@ struct SettingsRootView: View {
                 navigationPath.removeAll()
             }
         })
-        .onChangeCompat(of: navigationPath, perform: { previousPath, currentPath in
+        .onChangeTwoCompat(of: navigationPath, perform: { previousPath, currentPath in
             // Read from the route: the List can drop its focused probe before the session sees
             // the scope change, which could leave Language remembered instead of the pane.
             if previousPath.isEmpty, let selectedPane = currentPath.first {

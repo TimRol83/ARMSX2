@@ -138,7 +138,7 @@ struct DraggableGroup: View {
                 }
         )
         .simultaneousGesture(
-            MagnifyGesture()
+            MagnifyGestureCompat()
                 .onChanged { v in
                     if !hasPushedSnapshot {
                         onBeginEdit()
@@ -312,7 +312,7 @@ struct DraggableButton: View {
                 }
         )
         .simultaneousGesture(
-            MagnifyGesture()
+            MagnifyGestureCompat()
                 .onChanged { v in
                     if !hasPushedSnapshot {
                         onBeginEdit()
