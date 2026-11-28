@@ -93,8 +93,7 @@ struct GameCoverThemeGlowModifier: ViewModifier {
                     withAnimation(.easeInOut(duration: duration)) {
                         phase = .random()
                     }
-                    try? await Task.sleep(
-                        for: .milliseconds(Int(duration * 1_000))
+                    try? await Task.sleep(nanoseconds: UInt64((Int(duration * 1_000) * 1_000_000))
                     )
                 }
             }

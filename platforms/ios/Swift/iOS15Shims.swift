@@ -113,7 +113,6 @@ public struct MagnifyGestureCompat {
     }
     public init(minimumScaleDelta: CGFloat = 0.01) {}
 }
-}
 
 public struct AnimationContext<Value> {
     public var value: Value

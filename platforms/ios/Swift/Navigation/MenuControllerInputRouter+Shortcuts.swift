@@ -53,9 +53,7 @@ extension MenuControllerInputRouter {
                       self.canChangeMainMenuTheme else { return }
                 guard self.publishThemePresetRequest(step: step) else { return }
                 do {
-                    try await Task.sleep(
-                        for: .milliseconds(repeatInterval)
-                    )
+                    try await Task.sleep(nanoseconds: UInt64((repeatInterval) * 1_000_000))
                 } catch {
                     return
                 }
