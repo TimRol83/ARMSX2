@@ -18,7 +18,7 @@ struct VirtualPadCustomSkinSection: View {
         Section(settings.localized("Custom Skin")) {
             controllerToggle(
                 settings.localized("Automatic Download Custom Skin"),
-                isOn: Bindable(settings.controller).automaticDownloadCustomSkin
+                isOn: Binding(get: { settings.controller.automaticDownloadCustomSkin }, set: { settings.controller.automaticDownloadCustomSkin = $0 })
             )
             Text(settings.localized("When a newly added game's serial matches the community catalog, its custom skin and recommended layout are downloaded automatically. You choose whether to apply them when launching the game."))
                 .font(.caption)

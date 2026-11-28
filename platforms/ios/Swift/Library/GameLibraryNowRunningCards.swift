@@ -35,7 +35,7 @@ struct GameLibraryNowRunningSection: View {
                                 isStopping ? criticalTextColour : accentColour
                             )
                             .font(.title)
-                            .contentTransitionSymbolReplace()
+                            .contentTransitionSymbolReplaceCompat()()
 
                         RunningStatusText(
                             isStopping: isStopping,
@@ -55,7 +55,7 @@ struct GameLibraryNowRunningSection: View {
                         HStack(spacing: 6) {
                             Text(controller.settings.localized("Resume"))
                                 .font(.subheadline)
-                                .fontWeight(.medium)
+                                .fontWeightCompat(.medium)
                             Image(systemName: "chevron.right")
                                 .font(.caption)
                                 .foregroundStyle(.tertiary)
@@ -147,7 +147,7 @@ struct GameLibraryNowRunningCard: View {
                     .foregroundStyle(
                         isStopping ? criticalTextColour : accentColour
                     )
-                    .contentTransitionSymbolReplace()
+                    .contentTransitionSymbolReplaceCompat()()
 
                 RunningStatusText(
                     isStopping: isStopping,
@@ -235,7 +235,7 @@ struct GameLibraryNowRunningCoverCard: View {
                     .foregroundStyle(
                         isStopping ? criticalTextColour : accentColour
                     )
-                    .contentTransitionSymbolReplace()
+                    .contentTransitionSymbolReplaceCompat()()
 
                 RunningStatusText(
                     isStopping: isStopping,

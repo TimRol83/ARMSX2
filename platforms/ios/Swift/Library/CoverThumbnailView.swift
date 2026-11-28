@@ -38,7 +38,7 @@ struct CoverThumbnailView: View {
                         .font(.system(size: 24, weight: .medium))
                     Text(gameName.lowercased().hasSuffix(".chd") ? "CHD" : "PS2")
                         .font(.caption2)
-                        .fontWeight(.bold)
+                        .fontWeightCompat(.bold)
                 }
                 .foregroundStyle(.secondary)
             }

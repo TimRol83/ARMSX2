@@ -128,7 +128,7 @@ struct OrbitKeysGridView: View {
             content
               .glassEffectCompat(
                 .regular,
-                in: .rect(cornerRadius: 22)
+                in: GlassStyleCompat.rect(cornerRadius: 22)
               )
               .glassEffectID(position.id, in: glassNamespace)
               .overlay {

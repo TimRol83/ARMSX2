@@ -764,7 +764,7 @@ struct SettingsRootView: View {
                     .foregroundStyle(.secondary)
                 Text(settings.localized("Select a setting"))
                     .font(.title2)
-                    .fontWeight(.semibold)
+                    .fontWeightCompat(.semibold)
                     .foregroundStyle(.secondary)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

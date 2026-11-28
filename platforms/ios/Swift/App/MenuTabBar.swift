@@ -455,7 +455,7 @@ struct CatalystMenuTabBar: View {
                 } label: {
                     Text(settings.localized(tab.1))
                         .font(.callout)
-                        .fontWeight(selectedTab == tab.0 ? .semibold : .regular)
+                        .fontWeightCompat(selectedTab == tab.0 ? .semibold : .regular)
                         .foregroundStyle(.primary)
                         .frame(minWidth: 82)
                         .padding(.vertical, 6)

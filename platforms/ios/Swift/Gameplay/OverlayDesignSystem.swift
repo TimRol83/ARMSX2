@@ -245,7 +245,7 @@ struct OverlayHeader: View {
             VStack(alignment: .leading, spacing: 1) {
                 Text(title)
                     .font(compact ? .headline : .title3)
-                    .fontWeight(.semibold)
+                    .fontWeightCompat(.semibold)
                     .foregroundStyle(
                         textAppearance.normalColor
                             ?? OverlayTheme.textPrimary

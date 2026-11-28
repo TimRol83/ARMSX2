@@ -633,7 +633,7 @@ struct BIOSListView: View {
                 .foregroundStyle(.secondary)
             Text(settings.localized("No BIOS Found"))
                 .font(.title2)
-                .fontWeight(.semibold)
+                .fontWeightCompat(.semibold)
                 .foregroundStyle(contentTextColour)
             Text(settings.localized("Import a PS2 BIOS dump to enable booting."))
                 .font(.body)

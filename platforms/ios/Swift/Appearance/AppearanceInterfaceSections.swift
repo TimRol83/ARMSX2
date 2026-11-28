@@ -85,7 +85,7 @@ struct AppearanceInterfaceSections: View, AppearanceSettingsEditing {
             .appearanceControllerListRow(
                 "settings.appearance.favorite-glowing-effect"
             )
-            Toggle(isOn: Bindable(settings.appearance).gameMenuCoverColoursEnabled) {
+            Toggle(isOn: Binding(get: { settings.appearance.gameMenuCoverColoursEnabled }, set: { settings.appearance.gameMenuCoverColoursEnabled = $0 })) {
                 Label(
                     settings.localized("Cover Colours in Game Menus"),
                     systemImage: "paintpalette"

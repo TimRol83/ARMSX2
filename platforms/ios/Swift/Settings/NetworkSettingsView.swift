@@ -29,7 +29,7 @@ struct NetworkSettingsView: View {
     var body: some View {
         Form {
             Section(settings.localized("PS2 HDD")) {
-                Toggle(settings.localized("Enable DEV9 Virtual HDD"), isOn: Bindable(settings.network).dev9HddEnabled)
+                Toggle(settings.localized("Enable DEV9 Virtual HDD"), isOn: Binding(get: { settings.network.dev9HddEnabled }, set: { settings.network.dev9HddEnabled = $0 }))
                     .controllerAccessibilityTargetID("settings.network.hdd-enabled")
 
                 HStack {
@@ -51,7 +51,7 @@ struct NetworkSettingsView: View {
             }
 
             Section(settings.localized("Online / Ethernet")) {
-                Toggle(settings.localized("Enable DEV9 Ethernet"), isOn: Bindable(settings.network).dev9EthernetEnabled)
+                Toggle(settings.localized("Enable DEV9 Ethernet"), isOn: Binding(get: { settings.network.dev9EthernetEnabled }, set: { settings.network.dev9EthernetEnabled = $0 }))
                     .controllerAccessibilityTargetID("settings.network.ethernet-enabled")
 
                 Group {
@@ -62,7 +62,7 @@ struct NetworkSettingsView: View {
                             .foregroundStyle(.secondary)
                     }
 
-                    Picker(settings.localized("Adapter"), selection: Bindable(settings.network).dev9EthDevice) {
+                    Picker(settings.localized("Adapter"), selection: Binding(get: { settings.network.dev9EthDevice }, set: { settings.network.dev9EthDevice = $0 })) {
                         ForEach(networkAdapters, id: \.self) { adapter in
                             Text(adapter).tag(adapter)
                         }
@@ -70,15 +70,15 @@ struct NetworkSettingsView: View {
                     .controllerAccessibilityOptionsPickerTarget(
                         id: "settings.network.adapter",
                         label: settings.localized("Adapter"),
-                        selection: Bindable(settings.network).dev9EthDevice,
+                        selection: Binding(get: { settings.network.dev9EthDevice }, set: { settings.network.dev9EthDevice = $0 }),
                         options: networkAdapters.map {
                             (id: $0, title: $0)
                         }
                     )
 
-                    Toggle(settings.localized("Log DHCP"), isOn: Bindable(settings.network).dev9EthLogDHCP)
+                    Toggle(settings.localized("Log DHCP"), isOn: Binding(get: { settings.network.dev9EthLogDHCP }, set: { settings.network.dev9EthLogDHCP = $0 }))
                         .controllerAccessibilityTargetID("settings.network.log-dhcp")
-                    Toggle(settings.localized("Log DNS"), isOn: Bindable(settings.network).dev9EthLogDNS)
+                    Toggle(settings.localized("Log DNS"), isOn: Binding(get: { settings.network.dev9EthLogDNS }, set: { settings.network.dev9EthLogDNS = $0 }))
                         .controllerAccessibilityTargetID("settings.network.log-dns")
                 }
                 // Ethernet options may be prepared before the adapter is
@@ -91,8 +91,8 @@ struct NetworkSettingsView: View {
             }
 
             Section(settings.localized("DNS")) {
-                dnsRow("DNS1", id: "settings.network.dns1", mode: Bindable(settings.network).dev9DNS1Mode, address: Bindable(settings.network).dev9DNS1)
-                dnsRow("DNS2", id: "settings.network.dns2", mode: Bindable(settings.network).dev9DNS2Mode, address: Bindable(settings.network).dev9DNS2)
+                dnsRow("DNS1", id: "settings.network.dns1", mode: Binding(get: { settings.network.dev9DNS1Mode }, set: { settings.network.dev9DNS1Mode = $0 }), address: Binding(get: { settings.network.dev9DNS1 }, set: { settings.network.dev9DNS1 = $0 }))
+                dnsRow("DNS2", id: "settings.network.dns2", mode: Binding(get: { settings.network.dev9DNS2Mode }, set: { settings.network.dev9DNS2Mode = $0 }), address: Binding(get: { settings.network.dev9DNS2 }, set: { settings.network.dev9DNS2 = $0 }))
             }
 
             Section(settings.localized("Internal DNS")) {

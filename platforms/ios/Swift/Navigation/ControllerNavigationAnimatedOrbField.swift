@@ -584,10 +584,10 @@ struct ControllerNavigationAnimatedOrbField: View {
         switch resolvedPathShape {
         case .ellipse:
             return CGSize(
-                width: cos(angle) * radiusX
+                width: Foundation.cos(angle) * radiusX
                     + sin(angle * particle.wobbleFrequency + particle.phase) * wobble,
                 height: sin(angle) * radiusY
-                    + cos(angle * (particle.wobbleFrequency + 0.31)) * wobble
+                    + Foundation.cos(angle * (particle.wobbleFrequency + 0.31)) * wobble
             )
         case .roundedRectangle:
             return controllerNavigationRoundedRectangleOffset(

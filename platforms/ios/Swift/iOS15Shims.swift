@@ -196,24 +196,7 @@ public extension View {
     }
 }
 
-@available(iOS 15.0, *)
-private struct OnChangeTwoArgModifier<V: Equatable>: ViewModifier {
-    let value: V
-    let action: (V, V) -> Void
-    @State private var prev: V
-    init(value: V, action: @escaping (V, V) -> Void) {
-        self.value = value
-        self.action = action
-        _prev = State(initialValue: value)
-    }
-    func body(content: Content) -> some View {
-        content.onChange(of: value) { newVal in
-            let oldVal = prev
-            prev = newVal
-            action(oldVal, newVal)
-        }
-    }
-}
+
 
 @propertyWrapper
 public struct Bindable<Value: AnyObject> {
@@ -306,15 +289,47 @@ public extension View {
     @ViewBuilder func scrollDisabledCompat(_ disabled: Bool) -> some View { self }
     @ViewBuilder func scrollBounceBehaviorCompat(_ behavior: ScrollBounceBehaviorCompat, axes: Axis.Set = [.vertical]) -> some View { self }
     @ViewBuilder func persistentSystemOverlaysCompat(_ visibility: Visibility) -> some View { self }
-    @ViewBuilder func contentMarginsCompat(_ edges: Edge.Set = .all, _ length: CGFloat?, for placement: Any? = nil) -> some View { self }
+    @ViewBuilder func contentMarginsCompat(_ edges: Edge.Set = .all, _ length: CGFloat?, for placement: ContentMarginPlacementCompat = .automatic) -> some View { self }
     @ViewBuilder func focusableCompat(_ isFocusable: Bool = true) -> some View { self }
     @ViewBuilder func scrollTargetLayoutCompat(isEnabled: Bool = true) -> some View { self }
     @ViewBuilder func symbolEffectCompat(_ effect: SymbolEffectCompat, options: Any? = nil, value: Any? = nil) -> some View { self }
     @ViewBuilder func scrollEdgeEffectHiddenCompat(_ hidden: Bool = true, for edges: Edge.Set = .all) -> some View { self }
     @ViewBuilder func buttonRepeatBehaviorCompat(_ behavior: ButtonRepeatBehaviorCompat) -> some View { self }
-    @ViewBuilder func glassEffectCompat(_ style: Any? = nil, in shape: Any? = nil) -> some View { self }
+    @ViewBuilder func glassEffectCompat(_ style: GlassStyleCompat = .regular, in shape: Any? = nil) -> some View { self }
     @ViewBuilder func navigationDestinationCompat<D: Hashable, C: View>(for data: D.Type, @ViewBuilder destination: @escaping (D) -> C) -> some View { self }
     @ViewBuilder func navigationDestinationCompat<C: View>(isPresented: Binding<Bool>, @ViewBuilder destination: () -> C) -> some View { self }
     @ViewBuilder func navigationDestinationCompat<V: Hashable, C: View>(item: Binding<V?>, @ViewBuilder destination: @escaping (V) -> C) -> some View { self }
+}
+#endif
+
+
+#if os(iOS)
+public enum ContentMarginPlacementCompat { case automatic, scrollContent, scrollIndicators }
+public enum GlassStyleCompat { case regular, clear, identity, circle, rect }
+public struct _ProposedViewSize {
+    public var width: CGFloat?
+    public var height: CGFloat?
+    public static let unspecified = _ProposedViewSize(width: nil, height: nil)
+    public init(width: CGFloat?, height: CGFloat?) { self.width = width; self.height = height }
+    public func replacingUnspecifiedDimensions(by size: CGSize = CGSize(width: 10, height: 10)) -> CGSize {
+        CGSize(width: width ?? size.width, height: height ?? size.height)
+    }
+}
+public struct PhotosPickerItem: Hashable {
+    public init() {}
+    public func loadTransferable<T>(type: T.Type) async throws -> T? { return nil }
+}
+public struct HStackLayoutCompat {
+    public init(alignment: VerticalAlignment = .center, spacing: CGFloat? = nil) {}
+}
+public struct ZStackLayoutCompat {
+    public init(alignment: Alignment = .center) {}
+}
+@available(iOS 15.0, *)
+public extension View {
+    func strokeCompat<S: ShapeStyle>(_ content: S, lineWidth: CGFloat = 1) -> some View { self }
+    func strokeCompat<S: ShapeStyle>(_ content: S, style: StrokeStyle) -> some View { self }
+    func fontWeightCompat(_ weight: Font.Weight?) -> some View { self }
+    func contentTransitionSymbolReplaceCompat() -> some View { self }
 }
 #endif

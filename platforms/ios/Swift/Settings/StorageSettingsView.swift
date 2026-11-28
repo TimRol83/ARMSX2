@@ -35,7 +35,7 @@ private struct StoragePaths: Sendable {
     static func current() -> StoragePaths {
         let fileManager = FileManager.default
         let documentsURL = URL.documentsDirectoryCompat
-        let systemCachesURL = fileManager.urls(for: .cachesDirectoryCompat, in: .userDomainMask).first
+        let systemCachesURL = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first
         return StoragePaths(
             emulatorCacheURL: documentsURL.appendingPathComponent("cache", isDirectory: true),
             systemCachesURL: systemCachesURL,

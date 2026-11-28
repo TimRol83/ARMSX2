@@ -471,7 +471,7 @@ struct GameLibraryEmptyState: View {
                 .accessibilityHidden(true)
             Text(controller.settings.localized("No Games Found"))
                 .font(.title2)
-                .fontWeight(.semibold)
+                .fontWeightCompat(.semibold)
             Text(controller.settings.localized("Import PS2 disc images to add them here."))
                 .font(.body)
                 .foregroundStyle(.secondary)

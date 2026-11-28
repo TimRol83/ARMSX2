@@ -665,7 +665,7 @@ private struct ControllerCustomColourEditor: View {
                         onSave(colour)
                         dismiss()
                     }
-                    .fontWeight(.semibold)
+                    .fontWeightCompat(.semibold)
                 }
             }
         }

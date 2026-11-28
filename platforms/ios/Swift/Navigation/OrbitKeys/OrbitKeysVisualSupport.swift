@@ -134,7 +134,7 @@ private struct OrbitKeysGlassSurfaceModifier: ViewModifier {
       content
         .glassEffectCompat(
           .regular.tint(tint).interactive(interactive),
-          in: .rect(cornerRadius: cornerRadius)
+          in: GlassStyleCompat.rect(cornerRadius: cornerRadius)
         )
     } else {
       content

@@ -533,7 +533,7 @@ private struct ControllerNavigationGlassOrb: View {
             core
                 .glassEffectCompat(
                     .regular.tint(color.opacity(0.34)),
-                    in: .circle
+                    in: GlassStyleCompat.circle
                 )
                 .opacity(0.78)
         } else if isPlain {

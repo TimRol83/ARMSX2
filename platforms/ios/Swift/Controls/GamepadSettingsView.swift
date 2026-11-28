@@ -145,7 +145,7 @@ struct GamepadSettingsView: View {
             Section {
                 NumberRow(
                     .gameControllerDeadZone,
-                    value: Bindable(settings.controller).gameControllerDeadZone,
+                    value: Binding(get: { settings.controller.gameControllerDeadZone }, set: { settings.controller.gameControllerDeadZone = $0 }),
                     settings: settings
                 )
                 .controllerAccessibilityTargetID("settings.game-controller.dead-zone")
@@ -153,12 +153,12 @@ struct GamepadSettingsView: View {
                 gamepadToggle(
                     "Left Thumbstick Instant Deadzone",
                     id: "settings.game-controller.left-instant-deadzone",
-                    isOn: Bindable(settings.controller).gameControllerLeftInstantDeadzoneEnabled
+                    isOn: Binding(get: { settings.controller.gameControllerLeftInstantDeadzoneEnabled }, set: { settings.controller.gameControllerLeftInstantDeadzoneEnabled = $0 })
                 )
                 if settings.controller.gameControllerLeftInstantDeadzoneEnabled {
                     NumberRow(
                         .gameControllerLeftNegativeDeadzone,
-                        value: Bindable(settings.controller).gameControllerLeftNegativeDeadzone,
+                        value: Binding(get: { settings.controller.gameControllerLeftNegativeDeadzone }, set: { settings.controller.gameControllerLeftNegativeDeadzone = $0 }),
                         settings: settings
                     )
                     .controllerAccessibilityTargetID("settings.game-controller.left-negative-deadzone")
@@ -167,12 +167,12 @@ struct GamepadSettingsView: View {
                 gamepadToggle(
                     "Right Thumbstick Instant Deadzone",
                     id: "settings.game-controller.right-instant-deadzone",
-                    isOn: Bindable(settings.controller).gameControllerRightInstantDeadzoneEnabled
+                    isOn: Binding(get: { settings.controller.gameControllerRightInstantDeadzoneEnabled }, set: { settings.controller.gameControllerRightInstantDeadzoneEnabled = $0 })
                 )
                 if settings.controller.gameControllerRightInstantDeadzoneEnabled {
                     NumberRow(
                         .gameControllerRightNegativeDeadzone,
-                        value: Bindable(settings.controller).gameControllerRightNegativeDeadzone,
+                        value: Binding(get: { settings.controller.gameControllerRightNegativeDeadzone }, set: { settings.controller.gameControllerRightNegativeDeadzone = $0 }),
                         settings: settings
                     )
                     .controllerAccessibilityTargetID("settings.game-controller.right-negative-deadzone")
@@ -186,7 +186,7 @@ struct GamepadSettingsView: View {
             Section {
                 NumberRow(
                     .gameRumbleStrength,
-                    value: Bindable(settings.controller).gameRumbleStrength,
+                    value: Binding(get: { settings.controller.gameRumbleStrength }, set: { settings.controller.gameRumbleStrength = $0 }),
                     settings: settings
                 )
                 .controllerAccessibilityTargetID(
@@ -270,22 +270,22 @@ struct GamepadSettingsView: View {
                 gamepadToggle(
                     "Invert Left Horizontal",
                     id: "settings.game-controller.invert-left-horizontal",
-                    isOn: Bindable(settings.controller).invertLeftStickX
+                    isOn: Binding(get: { settings.controller.invertLeftStickX }, set: { settings.controller.invertLeftStickX = $0 })
                 )
                 gamepadToggle(
                     "Invert Left Vertical",
                     id: "settings.game-controller.invert-left-vertical",
-                    isOn: Bindable(settings.controller).invertLeftStickY
+                    isOn: Binding(get: { settings.controller.invertLeftStickY }, set: { settings.controller.invertLeftStickY = $0 })
                 )
                 gamepadToggle(
                     "Invert Right Horizontal",
                     id: "settings.game-controller.invert-right-horizontal",
-                    isOn: Bindable(settings.controller).invertRightStickX
+                    isOn: Binding(get: { settings.controller.invertRightStickX }, set: { settings.controller.invertRightStickX = $0 })
                 )
                 gamepadToggle(
                     "Invert Right Vertical (Camera)",
                     id: "settings.game-controller.invert-right-vertical",
-                    isOn: Bindable(settings.controller).invertRightStickY
+                    isOn: Binding(get: { settings.controller.invertRightStickY }, set: { settings.controller.invertRightStickY = $0 })
                 )
             } header: {
                 Text(settings.localized("Stick Inversion"))
@@ -374,7 +374,7 @@ struct GamepadSettingsView: View {
                 if isCapturing {
                     Text(settings.localized("Press a button..."))
                         .font(.body)
-                        .fontWeight(.medium)
+                        .fontWeightCompat(.medium)
                         .foregroundStyle(.orange)
                 } else {
                     Text(settings.localized(sdlButtonName(currentSDL)))
@@ -640,7 +640,7 @@ struct LocalMultiplayerSettingsView: View {
     var body: some View {
         Form {
             Section {
-                Picker(settings.localized("Multitap Mode"), selection: Bindable(settings.controller).controllerMultitapMode) {
+                Picker(settings.localized("Multitap Mode"), selection: Binding(get: { settings.controller.controllerMultitapMode }, set: { settings.controller.controllerMultitapMode = $0 })) {
                     ForEach(multitapModes, id: \.id) { mode in
                         Text(settings.localized(mode.title)).tag(mode.id)
                     }
@@ -648,7 +648,7 @@ struct LocalMultiplayerSettingsView: View {
                 .controllerAccessibilityOptionsPickerTarget(
                     id: "settings.local-multiplayer.multitap-mode",
                     label: settings.localized("Multitap Mode"),
-                    selection: Bindable(settings.controller).controllerMultitapMode,
+                    selection: Binding(get: { settings.controller.controllerMultitapMode }, set: { settings.controller.controllerMultitapMode = $0 }),
                     options: multitapModes.map {
                         (id: $0.id, title: settings.localized($0.title))
                     }

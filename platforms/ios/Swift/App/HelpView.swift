@@ -253,7 +253,7 @@ struct HelpView: View {
                         .foregroundStyle(.secondary)
                     Text(settings.localized(item.question))
                         .font(.largeTitle)
-                        .fontWeight(.bold)
+                        .fontWeightCompat(.bold)
                     Text(settings.localized(item.answer))
                         .font(.body)
                         .foregroundStyle(.secondary)
@@ -295,7 +295,7 @@ struct HelpView: View {
                     .foregroundStyle(.secondary)
                 Text(settings.localized("Select a help topic"))
                     .font(.title2)
-                    .fontWeight(.semibold)
+                    .fontWeightCompat(.semibold)
                     .foregroundStyle(.secondary)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

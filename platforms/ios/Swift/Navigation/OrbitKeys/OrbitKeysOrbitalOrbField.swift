@@ -266,10 +266,10 @@ struct OrbitKeysOrbitalOrbField: View {
     let radiusX = mix(normalRadiusX, burstRadiusX, characterFocus)
     let radiusY = mix(normalRadiusY, burstRadiusY, characterFocus)
     let wobbleX = sin(angle * orb.wobbleFrequency + orb.phase) * orb.wobble
-    let wobbleY = cos(angle * (orb.wobbleFrequency + 0.31)) * orb.wobble
+    let wobbleY = Foundation.cos(angle * (orb.wobbleFrequency + 0.31)) * orb.wobble
 
     return CGSize(
-      width: anchorX + cos(angle) * radiusX + wobbleX,
+      width: anchorX + Foundation.cos(angle) * radiusX + wobbleX,
       height: anchorY + sin(angle) * radiusY + wobbleY
     )
   }
@@ -651,7 +651,7 @@ private struct OrbitKeysGlassOrb: View {
   var body: some View {
     if false, usesGlass {
       core
-        .glassEffectCompat(.regular.tint(color.opacity(0.34)), in: .circle)
+        .glassEffectCompat(.regular.tint(color.opacity(0.34)), in: GlassStyleCompat.circle)
         .opacity(0.75)
     } else {
       core

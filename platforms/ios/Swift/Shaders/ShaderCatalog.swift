@@ -178,7 +178,7 @@ final class ShaderCatalog: ObservableObject {
 
     // Caches, not Documents: this is re-fetchable and must not go to iCloud.
     static var cacheDirectory: URL? {
-        FileManager.default.urls(for: .cachesDirectoryCompat, in: .userDomainMask).first?
+        FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?
             .appendingPathComponent("shader-catalogue", isDirectory: true)
     }
 
