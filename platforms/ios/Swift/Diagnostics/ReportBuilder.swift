@@ -24,7 +24,7 @@ enum ReportBuilder {
     private static let gameININame = #"^[A-Z0-9-]+_[0-9A-F]{8}\.ini$"#
 
     static func build(sessionID: String, displayMaxFPS: Int, extras: ReportExtras = ReportExtras(),
-                      documents: URL = .documentsDirectory) async throws -> URL {
+                      documents: URL = .documentsDirectoryCompat) async throws -> URL {
         let files = FileManager.default
         let folder = try sessionFolder(sessionID, documents: documents)
         let running = sessionID == SessionStore.currentID
@@ -46,7 +46,7 @@ enum ReportBuilder {
 
     // summaryText is what Copy Summary pastes, built by the function that writes summary.md so the two cannot differ.
     static func summaryText(sessionID: String, displayMaxFPS: Int, form: ReportForm = ReportForm(),
-                            documents: URL = .documentsDirectory) async throws -> String {
+                            documents: URL = .documentsDirectoryCompat) async throws -> String {
         let folder = try sessionFolder(sessionID, documents: documents)
         await MainActor.run { ARMSX2Bridge.flushINISettings() }
         let gathered = try gather(sessionID: sessionID, folder: folder, running: sessionID == SessionStore.currentID,

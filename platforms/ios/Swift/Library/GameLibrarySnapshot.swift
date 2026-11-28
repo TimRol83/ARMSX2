@@ -31,7 +31,7 @@ final class GameLibrarySnapshot {
 	private var lastLibraryRefresh: Date?
 
 	private static var persistenceURL: URL? {
-		URL.applicationSupportDirectory.appendingPathComponent("LibraryMetadataCache.json")
+		URL.applicationSupportDirectoryCompat.appendingPathComponent("LibraryMetadataCache.json")
 	}
 
 	private init() {}

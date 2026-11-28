@@ -472,7 +472,7 @@ struct QuickMenuView: View {
         @ViewBuilder content: () -> Leaf
     ) -> some View {
         func radius(_ a: Edge, _ b: Edge) -> CGFloat { foldEdge == a || foldEdge == b ? 8 : 26 }
-        let radii = RectangleCornerRadii(
+        let radii = RectangleCornerRadiiCompat(
             topLeading: radius(.top, .leading),
             bottomLeading: radius(.bottom, .leading),
             bottomTrailing: radius(.bottom, .trailing),

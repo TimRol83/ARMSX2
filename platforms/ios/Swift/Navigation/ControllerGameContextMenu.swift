@@ -260,7 +260,7 @@ struct ControllerGameContextMenu: View {
                 }
             }
             .frame(maxHeight: maxHeight)
-            .scrollIndicators(.visible)
+            .scrollIndicatorsCompat(.visible)
             .onChangeCompat(of: selectedAction, perform: { _, action in
                 guard let action else { return }
                 withAnimation(.snappy(duration: 0.22)) {

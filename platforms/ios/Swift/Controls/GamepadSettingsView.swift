@@ -334,7 +334,7 @@ struct GamepadSettingsView: View {
                 presentedPane = pane
             }
         } else {
-            NavigationLink(value: pane) {
+            NavigationLinkCompat(value: pane) {
                 label()
             }
             .controllerAccessibilityActionTarget(

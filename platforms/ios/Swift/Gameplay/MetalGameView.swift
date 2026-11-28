@@ -57,6 +57,6 @@ struct ExternalGameDisplayView: View {
             }
         }
         .ignoresSafeArea()
-        .persistentSystemOverlays(.hidden)
+        .persistentSystemOverlaysCompat(.hidden)
     }
 }

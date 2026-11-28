@@ -24,7 +24,7 @@ enum CrashFileCheck {
     }
 
     // A hang-only payload must not hide the manual .ips steps, so the payload has to name a crash.
-    static func sessionHasPayload(id: String, documents: URL = .documentsDirectory) -> Bool {
+    static func sessionHasPayload(id: String, documents: URL = .documentsDirectoryCompat) -> Bool {
         guard let folder = SessionStore.url(for: id, documents: documents)?.appendingPathComponent("metrickit", isDirectory: true)
         else { return false }
         let needle = Data("crashDiagnostics".utf8)

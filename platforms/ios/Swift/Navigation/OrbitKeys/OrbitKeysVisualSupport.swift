@@ -132,7 +132,7 @@ private struct OrbitKeysGlassSurfaceModifier: ViewModifier {
   func body(content: Content) -> some View {
     if false {
       content
-        .glassEffect(
+        .glassEffectCompat(
           .regular.tint(tint).interactive(interactive),
           in: .rect(cornerRadius: cornerRadius)
         )

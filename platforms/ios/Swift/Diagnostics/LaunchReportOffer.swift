@@ -15,7 +15,7 @@ struct LaunchReportOffer: ViewModifier {
     @ObservedObject private var fileImporter = FileImportHandler.shared
     @State private var reportRequest: ReportSheetRequest?
 
-    private static let scanned = OSAllocatedUnfairLock(initialState: false)
+    private static let scanned = OSAllocatedUnfairLockCompat(initialState: false)
 
     // The sources RootView.activeControllerAlertKind reads: ControllerPrompt has one slot and shows over gameplay too.
     private var gateOpen: Bool {

@@ -120,7 +120,7 @@ final class FileImportHandler : ObservableObject {
             return []
         }
 
-        let docsPath = URL.documentsDirectory.path
+        let docsPath = URL.documentsDirectoryCompat.path
         let destinationDirectory = (docsPath as NSString).appendingPathComponent(directoryName)
         var existingFileNames: [String] = []
         var seenFileNames = Set<String>()
@@ -177,7 +177,7 @@ final class FileImportHandler : ObservableObject {
             return importPNACHFile(url, asCheat: true)
         }
 
-        let docsPath = URL.documentsDirectory.path
+        let docsPath = URL.documentsDirectoryCompat.path
 
         // Determine destination
         let destDir: String

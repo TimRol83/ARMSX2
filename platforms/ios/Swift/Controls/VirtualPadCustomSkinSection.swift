@@ -33,7 +33,7 @@ struct VirtualPadCustomSkinSection: View {
                 showSkinImporter = true
             }
 
-            NavigationLink(value: SettingsPane.skinBrowser) {
+            NavigationLinkCompat(value: SettingsPane.skinBrowser) {
                 Label("Browse Skins", systemImage: "square.grid.2x2")
             }
             .controllerAccessibilityActionTarget(

@@ -421,8 +421,8 @@ struct GameLibraryFavoriteButton: View {
         } label: {
             if style.favoriteGlowEnabled {
                 icon
-                    .contentTransition(.symbolEffect)
-                    .symbolEffect(
+                    .contentTransitionCompat(.symbolEffect)
+                    .symbolEffectCompat(
                         .bounce,
                         value: favoriteBounce
                     )

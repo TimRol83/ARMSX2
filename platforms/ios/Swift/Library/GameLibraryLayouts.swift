@@ -107,12 +107,12 @@ struct GameLibraryListLayout: View {
                         )
                 }
             }
-            .contentMargins(.top, 0, for: .scrollContent)
-            .scrollIndicators(.hidden)
+            .contentMarginsCompat(.top, 0, for: .scrollContent)
+            .scrollIndicatorsCompat(.hidden)
             .modifier(GameLibraryListTopEdgeEffectModifier())
             .scrollContentBackground(.hidden)
-            .scrollDisabled(false)
-            .scrollBounceBehavior(.always)
+            .scrollDisabledCompat(false)
+            .scrollBounceBehaviorCompat(.always)
             .trackGameLibraryScrollPhase(library.gameLibraryActivity)
             .transaction { transaction in
                 if transaction.isContinuous || library.gameLibraryActivity.isScrolling {
@@ -281,10 +281,10 @@ struct GameLibraryGridLayout: View {
                 }
                 .padding(.top, showsPageOwnedLargeTitle ? 0 : 12)
             }
-            .contentMargins(.top, 0, for: .scrollContent)
-            .scrollIndicators(.hidden)
-            .scrollDisabled(false)
-            .scrollBounceBehavior(.always)
+            .contentMarginsCompat(.top, 0, for: .scrollContent)
+            .scrollIndicatorsCompat(.hidden)
+            .scrollDisabledCompat(false)
+            .scrollBounceBehaviorCompat(.always)
             .trackGameLibraryScrollPhase(library.gameLibraryActivity)
             .transaction { transaction in
                 if transaction.isContinuous || library.gameLibraryActivity.isScrolling {
@@ -429,10 +429,10 @@ struct GameLibraryEmptyLayout: View {
                     )
             }
         }
-        .contentMargins(.top, 0, for: .scrollContent)
-        .scrollIndicators(.hidden)
-        .scrollDisabled(false)
-        .scrollBounceBehavior(.always)
+        .contentMarginsCompat(.top, 0, for: .scrollContent)
+        .scrollIndicatorsCompat(.hidden)
+        .scrollDisabledCompat(false)
+        .scrollBounceBehaviorCompat(.always)
         .background(
             Group {
                 if hasCustomBackground {

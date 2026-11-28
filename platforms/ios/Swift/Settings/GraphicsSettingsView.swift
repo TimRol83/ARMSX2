@@ -543,7 +543,7 @@ struct GraphicsSettingsView: View {
         }
         .navigationTitle(settings.localized("Graphics"))
         .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(isPresented: $showingShaderSettings) {
+        .navigationDestinationCompat(isPresented: $showingShaderSettings) {
             ShaderSettingsView()
         }
         .onAppear { settings.refreshGraphicsHackStatus() }
@@ -571,7 +571,7 @@ struct GraphicsSettingsView: View {
 
     /// Empties Documents/cache: achievement images, plus the VU program cache when that is turned on.
     private func clearShaderCache() {
-        let cacheURL = URL.documentsDirectory.appendingPathComponent("cache", isDirectory: true)
+        let cacheURL = URL.documentsDirectoryCompat.appendingPathComponent("cache", isDirectory: true)
         let fileManager = FileManager.default
         var isDirectory: ObjCBool = false
         guard fileManager.fileExists(atPath: cacheURL.path, isDirectory: &isDirectory), isDirectory.boolValue else {

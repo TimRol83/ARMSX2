@@ -126,7 +126,7 @@ struct OrbitKeysGridView: View {
         if model.usesLegacyTheme {
           if false, usesLegacyLiquidGlass {
             content
-              .glassEffect(
+              .glassEffectCompat(
                 .regular,
                 in: .rect(cornerRadius: 22)
               )
@@ -349,10 +349,10 @@ private struct OrbitKeysCellView: View {
       .scaleEffect(isPressed ? 1.17 : 1)
       .zIndex(isPressed ? 1 : 0)
       .animation(.spring(duration: 0.24, bounce: 0.62), value: isPressed)
-      .contentTransition(.numericText())
+      .contentTransitionCompat(.numericText())
     }
     .buttonStyle(.plain)
-    .buttonRepeatBehavior(isSelected ? .enabled : .disabled)
+    .buttonRepeatBehaviorCompat(isSelected ? .enabled : .disabled)
     .accessibilityLabel("\(face.rawValue), \(key.label)")
     .accessibilityHint("Selects \(key.label) in the \(position.spokenName) group")
   }

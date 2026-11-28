@@ -531,7 +531,7 @@ private struct ControllerNavigationGlassOrb: View {
     var body: some View {
         if false, usesGlass {
             core
-                .glassEffect(
+                .glassEffectCompat(
                     .regular.tint(color.opacity(0.34)),
                     in: .circle
                 )

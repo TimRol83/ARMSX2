@@ -182,13 +182,13 @@ struct BIOSListView: View {
                                     )
                             }
                         }
-                        .contentMargins(.top, 0, for: .scrollContent)
+                        .contentMarginsCompat(.top, 0, for: .scrollContent)
                         // The persistent tab bar already shortens this
                         // viewport through safeAreaInset. Do not inherit the
                         // menu-wide bottom scroll margin as an additional
                         // controller-navigable blank region.
-                        .contentMargins(.bottom, 0, for: .scrollContent)
-                        .scrollBounceBehavior(.always)
+                        .contentMarginsCompat(.bottom, 0, for: .scrollContent)
+                        .scrollBounceBehaviorCompat(.always)
                     }
                 } else {
                     List {
@@ -216,10 +216,10 @@ struct BIOSListView: View {
                             .gameCardTintMenuBackgroundListRow(backgroundActive)
                         }
                     }
-                    .contentMargins(.top, 0, for: .scrollContent)
-                    .contentMargins(.bottom, 0, for: .scrollContent)
+                    .contentMarginsCompat(.top, 0, for: .scrollContent)
+                    .contentMarginsCompat(.bottom, 0, for: .scrollContent)
                     .scrollContentBackground(backgroundActive ? .hidden : .automatic)
-                    .scrollBounceBehavior(.always)
+                    .scrollBounceBehaviorCompat(.always)
 #if targetEnvironment(macCatalyst)
                     .listStyle(.inset)
 #endif

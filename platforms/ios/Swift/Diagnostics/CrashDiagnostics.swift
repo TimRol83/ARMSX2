@@ -7,7 +7,7 @@ import os
 
 final class CrashDiagnostics: Sendable {
     static let shared = CrashDiagnostics()
-    private let started = OSAllocatedUnfairLock(initialState: false)
+    private let started = OSAllocatedUnfairLockCompat(initialState: false)
     private let subscriber = Subscriber()
 
     func start() {

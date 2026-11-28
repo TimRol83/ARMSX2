@@ -184,7 +184,7 @@ extension View {
 public extension View {
     @ViewBuilder
     func onChangeCompat<V: Equatable>(of value: V, perform action: @escaping (_ oldValue: V, _ newValue: V) -> Void) -> some View {
-        self.modifier(OnChangeTwoArgModifier(value: value, action: action))
+        self.modifier(OnChangeTwoArgModifier(value: value, initial: false, action: action))
     }
     @ViewBuilder
     func onChangeCompat<V: Equatable>(of value: V, perform action: @escaping (_ newValue: V) -> Void) -> some View {
@@ -192,7 +192,7 @@ public extension View {
     }
     @ViewBuilder
     func onChangeCompat<V: Equatable>(of value: V, initial: Bool = false, _ action: @escaping (_ oldValue: V, _ newValue: V) -> Void) -> some View {
-        self.modifier(OnChangeTwoArgModifier(value: value, action: action))
+        self.modifier(OnChangeTwoArgModifier(value: value, initial: false, action: action))
     }
 }
 
@@ -233,22 +233,88 @@ public struct Bindable<Value: AnyObject> {
 
 
 #if os(iOS)
+public enum ToolbarPlacementCompat { case navigationBar, tabBar, bottomBar, windowToolbar }
+public enum ScrollIndicatorVisibilityCompat { case automatic, visible, hidden, never }
+public enum ScrollBounceBehaviorCompat { case automatic, always, basedOnSize }
+public enum ContentTransitionCompat {
+    case identity, opacity, interpolate, numericText(countsDown: Bool = false)
+    public static var numericText: ContentTransitionCompat { .numericText(countsDown: false) }
+}
+public enum SymbolEffectCompat { case bounce, pulse, variableColor, scale, appear, disappear }
+public enum ButtonRepeatBehaviorCompat { case automatic, enabled, disabled }
+public struct RectangleCornerRadiiCompat: Equatable {
+    public var topLeading: CGFloat, bottomLeading: CGFloat, bottomTrailing: CGFloat, topTrailing: CGFloat
+    public init(topLeading: CGFloat = 0, bottomLeading: CGFloat = 0, bottomTrailing: CGFloat = 0, topTrailing: CGFloat = 0) {
+        self.topLeading = topLeading; self.bottomLeading = bottomLeading
+        self.bottomTrailing = bottomTrailing; self.topTrailing = topTrailing
+    }
+}
+public final class OSAllocatedUnfairLockCompat<State> {
+    private var state: State; private let lock = NSLock()
+    public init(initialState: State) { self.state = initialState }
+    public func withLock<R>(_ body: (inout State) throws -> R) rethrows -> R {
+        lock.lock(); defer { lock.unlock() }; return try body(&state)
+    }
+}
+public struct GlassEffectContainer<Content: View>: View {
+    let content: Content
+    public init(spacing: CGFloat? = nil, @ViewBuilder content: () -> Content) { self.content = content() }
+    public var body: some View { content }
+}
+public struct AnyLayoutCompat {
+    public init<L>(_ layout: L) {}
+    public func callAsFunction<Content: View>(@ViewBuilder _ content: () -> Content) -> some View { content() }
+}
+public struct NavigationLinkCompat<Label: View>: View {
+    let label: Label
+    public init<P: Hashable>(value: P?, @ViewBuilder label: () -> Label) { self.label = label() }
+    public var body: some View { label }
+}
+@available(iOS 15.0, *)
+public extension URL {
+    static var applicationSupportDirectoryCompat: URL {
+        FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first ?? URL(fileURLWithPath: NSTemporaryDirectory())
+    }
+    static var documentsDirectoryCompat: URL {
+        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first ?? URL(fileURLWithPath: NSTemporaryDirectory())
+    }
+    static var cachesDirectoryCompat: URL {
+        FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first ?? URL(fileURLWithPath: NSTemporaryDirectory())
+    }
+    static var temporaryDirectoryCompat: URL { URL(fileURLWithPath: NSTemporaryDirectory()) }
+}
+@available(iOS 15.0, *)
+public extension Shape {
+    func fillCompat<S: ShapeStyle>(_ content: S, style: FillStyle = FillStyle()) -> some View { self.fill(content, style: style) }
+    func strokeCompat<S: ShapeStyle>(_ content: S, lineWidth: CGFloat = 1) -> some View { self.stroke(content, lineWidth: lineWidth) }
+    func strokeCompat<S: ShapeStyle>(_ content: S, style: StrokeStyle) -> some View { self.stroke(content, style: style) }
+}
 @available(iOS 15.0, *)
 public extension View {
-    @ViewBuilder
-    func toolbarBackgroundCompat(_ visibility: Visibility, for bars: ToolbarPlacementCompat...) -> some View {
-        self
-    } else {
-            self
-        }
+    @ViewBuilder func toolbarBackgroundCompat(_ visibility: Visibility, for bars: ToolbarPlacementCompat...) -> some View { self }
+    @ViewBuilder func presentationBackgroundCompat<S: ShapeStyle>(_ style: S) -> some View {
+        if #available(iOS 16.4, *) { self.presentationBackground(style) } else { self }
     }
-    @ViewBuilder
-    func presentationBackgroundCompat<S: ShapeStyle>(_ style: S) -> some View {
-        if #available(iOS 16.4, *) {
-            self.presentationBackground(style)
-        } else {
-            self
-        }
+    @ViewBuilder func onChangeCompat<V: Equatable>(of value: V, initial: Bool, perform action: @escaping (_ oldValue: V, _ newValue: V) -> Void) -> some View {
+        self.modifier(OnChangeTwoArgModifier(value: value, initial: initial, action: action))
     }
+    @ViewBuilder func onChangeCompat<V: Equatable>(of value: V, initial: Bool, perform action: @escaping (_ newValue: V) -> Void) -> some View {
+        self.onChange(of: value, perform: action)
+    }
+    @ViewBuilder func scrollIndicatorsCompat(_ visibility: ScrollIndicatorVisibilityCompat, axes: Axis.Set = [.vertical, .horizontal]) -> some View { self }
+    @ViewBuilder func contentTransitionCompat(_ transition: ContentTransitionCompat) -> some View { self }
+    @ViewBuilder func scrollDisabledCompat(_ disabled: Bool) -> some View { self }
+    @ViewBuilder func scrollBounceBehaviorCompat(_ behavior: ScrollBounceBehaviorCompat, axes: Axis.Set = [.vertical]) -> some View { self }
+    @ViewBuilder func persistentSystemOverlaysCompat(_ visibility: Visibility) -> some View { self }
+    @ViewBuilder func contentMarginsCompat(_ edges: Edge.Set = .all, _ length: CGFloat?, for placement: Any? = nil) -> some View { self }
+    @ViewBuilder func focusableCompat(_ isFocusable: Bool = true) -> some View { self }
+    @ViewBuilder func scrollTargetLayoutCompat(isEnabled: Bool = true) -> some View { self }
+    @ViewBuilder func symbolEffectCompat(_ effect: SymbolEffectCompat, options: Any? = nil, value: Any? = nil) -> some View { self }
+    @ViewBuilder func scrollEdgeEffectHiddenCompat(_ hidden: Bool = true, for edges: Edge.Set = .all) -> some View { self }
+    @ViewBuilder func buttonRepeatBehaviorCompat(_ behavior: ButtonRepeatBehaviorCompat) -> some View { self }
+    @ViewBuilder func glassEffectCompat(_ style: Any? = nil, in shape: Any? = nil) -> some View { self }
+    @ViewBuilder func navigationDestinationCompat<D: Hashable, C: View>(for data: D.Type, @ViewBuilder destination: @escaping (D) -> C) -> some View { self }
+    @ViewBuilder func navigationDestinationCompat<C: View>(isPresented: Binding<Bool>, @ViewBuilder destination: () -> C) -> some View { self }
+    @ViewBuilder func navigationDestinationCompat<V: Hashable, C: View>(item: Binding<V?>, @ViewBuilder destination: @escaping (V) -> C) -> some View { self }
 }
 #endif

@@ -47,7 +47,7 @@ struct GameScreenStatusToastOverlay: View {
                 .foregroundStyle(.white)
                 // The same Text remains mounted while its number rolls in the direction of the
                 // adjustment. This avoids repeatedly transitioning an entire toast in and out.
-                .contentTransition(
+                .contentTransitionCompat(
                     .numericText(
                         countsDown: livePreview?.status?.countsDown ?? false
                     )

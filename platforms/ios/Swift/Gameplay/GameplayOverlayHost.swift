@@ -101,7 +101,7 @@ struct GameplayOverlayHost: View {
                     gameTitle: session.currentRuntimeGameName(gameMenuAvailable: gameMenuAvailable),
                     variant: metrics.variant,
                     returningFrom: overlay.pauseMenuChild,
-                    foldMemory: Bindable(overlay).pauseCardFoldMemory,
+                    foldMemory: Binding(get: { overlay.pauseCardFoldMemory }, set: { overlay.pauseCardFoldMemory = $0 }),
                     activePadLayoutName: activePadLayoutDisplayName,
                     activeControllerSkinName:
                         effectivePadSkinDescriptor.displayName,

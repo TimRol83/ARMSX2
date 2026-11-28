@@ -651,7 +651,7 @@ private struct OrbitKeysGlassOrb: View {
   var body: some View {
     if false, usesGlass {
       core
-        .glassEffect(.regular.tint(color.opacity(0.34)), in: .circle)
+        .glassEffectCompat(.regular.tint(color.opacity(0.34)), in: .circle)
         .opacity(0.75)
     } else {
       core

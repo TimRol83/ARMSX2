@@ -278,8 +278,8 @@ final class GameLibraryAppearance : ObservableObject {
 
     func activeHideGamesScreenTitleBinding(isLandscape: Bool) -> Binding<Bool> {
         Self.orientationBoolBinding(
-            portrait: Bindable(self).portraitHideGamesScreenTitle,
-            landscape: Bindable(self).landscapeHideGamesScreenTitle,
+            portrait: Binding(get: { self.portraitHideGamesScreenTitle }, set: { self.portraitHideGamesScreenTitle = $0 }),
+            landscape: Binding(get: { self.landscapeHideGamesScreenTitle }, set: { self.landscapeHideGamesScreenTitle = $0 }),
             fallback: legacyHideGamesScreenTitle,
             isLandscape: isLandscape
         )
@@ -287,8 +287,8 @@ final class GameLibraryAppearance : ObservableObject {
 
     func activeUseGamesLogoBinding(isLandscape: Bool) -> Binding<Bool> {
         Self.orientationBoolBinding(
-            portrait: Bindable(self).portraitUseGamesLogo,
-            landscape: Bindable(self).landscapeUseGamesLogo,
+            portrait: Binding(get: { self.portraitUseGamesLogo }, set: { self.portraitUseGamesLogo = $0 }),
+            landscape: Binding(get: { self.landscapeUseGamesLogo }, set: { self.landscapeUseGamesLogo = $0 }),
             fallback: true,
             isLandscape: isLandscape
         )
@@ -296,8 +296,8 @@ final class GameLibraryAppearance : ObservableObject {
 
     func activeHideGameNameBinding(isLandscape: Bool) -> Binding<Bool> {
         Self.orientationBoolBinding(
-            portrait: Bindable(self).portraitHideGameName,
-            landscape: Bindable(self).landscapeHideGameName,
+            portrait: Binding(get: { self.portraitHideGameName }, set: { self.portraitHideGameName = $0 }),
+            landscape: Binding(get: { self.landscapeHideGameName }, set: { self.landscapeHideGameName = $0 }),
             fallback: legacyHideGameName,
             isLandscape: isLandscape
         )
@@ -305,8 +305,8 @@ final class GameLibraryAppearance : ObservableObject {
 
     func activeHideGameInfoBinding(isLandscape: Bool) -> Binding<Bool> {
         Self.orientationBoolBinding(
-            portrait: Bindable(self).portraitHideGameInfo,
-            landscape: Bindable(self).landscapeHideGameInfo,
+            portrait: Binding(get: { self.portraitHideGameInfo }, set: { self.portraitHideGameInfo = $0 }),
+            landscape: Binding(get: { self.landscapeHideGameInfo }, set: { self.landscapeHideGameInfo = $0 }),
             fallback: legacyHideGameInfo,
             isLandscape: isLandscape
         )
@@ -314,8 +314,8 @@ final class GameLibraryAppearance : ObservableObject {
 
     func activeHideFavoriteButtonBinding(isLandscape: Bool) -> Binding<Bool> {
         Self.orientationBoolBinding(
-            portrait: Bindable(self).portraitHideFavoriteButton,
-            landscape: Bindable(self).landscapeHideFavoriteButton,
+            portrait: Binding(get: { self.portraitHideFavoriteButton }, set: { self.portraitHideFavoriteButton = $0 }),
+            landscape: Binding(get: { self.landscapeHideFavoriteButton }, set: { self.landscapeHideFavoriteButton = $0 }),
             fallback: legacyHideFavoriteButton,
             isLandscape: isLandscape
         )
@@ -323,8 +323,8 @@ final class GameLibraryAppearance : ObservableObject {
 
     func activeHideRegionFlagBinding(isLandscape: Bool) -> Binding<Bool> {
         Self.orientationBoolBinding(
-            portrait: Bindable(self).portraitHideRegionFlag,
-            landscape: Bindable(self).landscapeHideRegionFlag,
+            portrait: Binding(get: { self.portraitHideRegionFlag }, set: { self.portraitHideRegionFlag = $0 }),
+            landscape: Binding(get: { self.landscapeHideRegionFlag }, set: { self.landscapeHideRegionFlag = $0 }),
             fallback: legacyHideRegionFlag,
             isLandscape: isLandscape
         )
@@ -332,8 +332,8 @@ final class GameLibraryAppearance : ObservableObject {
 
     func activeSingleLineGameNamesBinding(isLandscape: Bool) -> Binding<Bool> {
         Self.orientationBoolBinding(
-            portrait: Bindable(self).portraitSingleLineGameNames,
-            landscape: Bindable(self).landscapeSingleLineGameNames,
+            portrait: Binding(get: { self.portraitSingleLineGameNames }, set: { self.portraitSingleLineGameNames = $0 }),
+            landscape: Binding(get: { self.landscapeSingleLineGameNames }, set: { self.landscapeSingleLineGameNames = $0 }),
             fallback: legacySingleLineGameNames,
             isLandscape: isLandscape
         )
@@ -341,8 +341,8 @@ final class GameLibraryAppearance : ObservableObject {
 
     func activeHideRunningIndicatorBinding(isLandscape: Bool) -> Binding<Bool> {
         Self.orientationBoolBinding(
-            portrait: Bindable(self).portraitHideRunningIndicator,
-            landscape: Bindable(self).landscapeHideRunningIndicator,
+            portrait: Binding(get: { self.portraitHideRunningIndicator }, set: { self.portraitHideRunningIndicator = $0 }),
+            landscape: Binding(get: { self.landscapeHideRunningIndicator }, set: { self.landscapeHideRunningIndicator = $0 }),
             fallback: legacyHideRunningIndicator,
             isLandscape: isLandscape
         )
@@ -350,112 +350,112 @@ final class GameLibraryAppearance : ObservableObject {
 
     func activeGameCardScaleBinding(isLandscape: Bool) -> Binding<Double> {
         Self.orientationDoubleBinding(
-            portrait: Bindable(self).portraitGameCardScale,
-            landscape: Bindable(self).landscapeGameCardScale,
+            portrait: Binding(get: { self.portraitGameCardScale }, set: { self.portraitGameCardScale = $0 }),
+            landscape: Binding(get: { self.landscapeGameCardScale }, set: { self.landscapeGameCardScale = $0 }),
             isLandscape: isLandscape
         )
     }
 
     func activeGameCardWidthScaleBinding(isLandscape: Bool) -> Binding<Double> {
         Self.orientationDoubleBinding(
-            portrait: Bindable(self).portraitGameCardWidthScale,
-            landscape: Bindable(self).landscapeGameCardWidthScale,
+            portrait: Binding(get: { self.portraitGameCardWidthScale }, set: { self.portraitGameCardWidthScale = $0 }),
+            landscape: Binding(get: { self.landscapeGameCardWidthScale }, set: { self.landscapeGameCardWidthScale = $0 }),
             isLandscape: isLandscape
         )
     }
 
     func activeGameCardHeightScaleBinding(isLandscape: Bool) -> Binding<Double> {
         Self.orientationDoubleBinding(
-            portrait: Bindable(self).portraitGameCardHeightScale,
-            landscape: Bindable(self).landscapeGameCardHeightScale,
+            portrait: Binding(get: { self.portraitGameCardHeightScale }, set: { self.portraitGameCardHeightScale = $0 }),
+            landscape: Binding(get: { self.landscapeGameCardHeightScale }, set: { self.landscapeGameCardHeightScale = $0 }),
             isLandscape: isLandscape
         )
     }
 
     func activeGameLibraryVerticalPositionBinding(isLandscape: Bool) -> Binding<Double> {
         Self.orientationDoubleBinding(
-            portrait: Bindable(self).portraitGameLibraryVerticalPosition,
-            landscape: Bindable(self).landscapeGameLibraryVerticalPosition,
+            portrait: Binding(get: { self.portraitGameLibraryVerticalPosition }, set: { self.portraitGameLibraryVerticalPosition = $0 }),
+            landscape: Binding(get: { self.landscapeGameLibraryVerticalPosition }, set: { self.landscapeGameLibraryVerticalPosition = $0 }),
             isLandscape: isLandscape
         )
     }
 
     func activeGameCardGapScaleBinding(isLandscape: Bool) -> Binding<Double> {
         Self.orientationDoubleBinding(
-            portrait: Bindable(self).portraitGameCardGapScale,
-            landscape: Bindable(self).landscapeGameCardGapScale,
+            portrait: Binding(get: { self.portraitGameCardGapScale }, set: { self.portraitGameCardGapScale = $0 }),
+            landscape: Binding(get: { self.landscapeGameCardGapScale }, set: { self.landscapeGameCardGapScale = $0 }),
             isLandscape: isLandscape
         )
     }
 
     func activeGameCardContentPaddingScaleBinding(isLandscape: Bool) -> Binding<Double> {
         Self.orientationDoubleBinding(
-            portrait: Bindable(self).portraitGameCardContentPaddingScale,
-            landscape: Bindable(self).landscapeGameCardContentPaddingScale,
+            portrait: Binding(get: { self.portraitGameCardContentPaddingScale }, set: { self.portraitGameCardContentPaddingScale = $0 }),
+            landscape: Binding(get: { self.landscapeGameCardContentPaddingScale }, set: { self.landscapeGameCardContentPaddingScale = $0 }),
             isLandscape: isLandscape
         )
     }
 
     func activeGameCardVerticalPaddingScaleBinding(isLandscape: Bool) -> Binding<Double> {
         Self.orientationDoubleBinding(
-            portrait: Bindable(self).portraitGameCardVerticalPaddingScale,
-            landscape: Bindable(self).landscapeGameCardVerticalPaddingScale,
+            portrait: Binding(get: { self.portraitGameCardVerticalPaddingScale }, set: { self.portraitGameCardVerticalPaddingScale = $0 }),
+            landscape: Binding(get: { self.landscapeGameCardVerticalPaddingScale }, set: { self.landscapeGameCardVerticalPaddingScale = $0 }),
             isLandscape: isLandscape
         )
     }
 
     func activeGameCardTextSpacingScaleBinding(isLandscape: Bool) -> Binding<Double> {
         Self.orientationDoubleBinding(
-            portrait: Bindable(self).portraitGameCardTextSpacingScale,
-            landscape: Bindable(self).landscapeGameCardTextSpacingScale,
+            portrait: Binding(get: { self.portraitGameCardTextSpacingScale }, set: { self.portraitGameCardTextSpacingScale = $0 }),
+            landscape: Binding(get: { self.landscapeGameCardTextSpacingScale }, set: { self.landscapeGameCardTextSpacingScale = $0 }),
             isLandscape: isLandscape
         )
     }
 
     func activeGameNameTextScaleBinding(isLandscape: Bool) -> Binding<Double> {
         Self.orientationDoubleBinding(
-            portrait: Bindable(self).portraitGameNameTextScale,
-            landscape: Bindable(self).landscapeGameNameTextScale,
+            portrait: Binding(get: { self.portraitGameNameTextScale }, set: { self.portraitGameNameTextScale = $0 }),
+            landscape: Binding(get: { self.landscapeGameNameTextScale }, set: { self.landscapeGameNameTextScale = $0 }),
             isLandscape: isLandscape
         )
     }
 
     func activeGameInfoTextScaleBinding(isLandscape: Bool) -> Binding<Double> {
         Self.orientationDoubleBinding(
-            portrait: Bindable(self).portraitGameInfoTextScale,
-            landscape: Bindable(self).landscapeGameInfoTextScale,
+            portrait: Binding(get: { self.portraitGameInfoTextScale }, set: { self.portraitGameInfoTextScale = $0 }),
+            landscape: Binding(get: { self.landscapeGameInfoTextScale }, set: { self.landscapeGameInfoTextScale = $0 }),
             isLandscape: isLandscape
         )
     }
 
     func activeGameCardCornerRadiusBinding(isLandscape: Bool) -> Binding<Double> {
         Self.orientationDoubleBinding(
-            portrait: Bindable(self).portraitGameCardCornerRadius,
-            landscape: Bindable(self).landscapeGameCardCornerRadius,
+            portrait: Binding(get: { self.portraitGameCardCornerRadius }, set: { self.portraitGameCardCornerRadius = $0 }),
+            landscape: Binding(get: { self.landscapeGameCardCornerRadius }, set: { self.landscapeGameCardCornerRadius = $0 }),
             isLandscape: isLandscape
         )
     }
 
     func activeGameCoverCornerRadiusBinding(isLandscape: Bool) -> Binding<Double> {
         Self.orientationDoubleBinding(
-            portrait: Bindable(self).portraitGameCoverCornerRadius,
-            landscape: Bindable(self).landscapeGameCoverCornerRadius,
+            portrait: Binding(get: { self.portraitGameCoverCornerRadius }, set: { self.portraitGameCoverCornerRadius = $0 }),
+            landscape: Binding(get: { self.landscapeGameCoverCornerRadius }, set: { self.landscapeGameCoverCornerRadius = $0 }),
             isLandscape: isLandscape
         )
     }
 
     func activeGameCoverShadowStrengthBinding(isLandscape: Bool) -> Binding<Double> {
         Self.orientationDoubleBinding(
-            portrait: Bindable(self).portraitGameCoverShadowStrength,
-            landscape: Bindable(self).landscapeGameCoverShadowStrength,
+            portrait: Binding(get: { self.portraitGameCoverShadowStrength }, set: { self.portraitGameCoverShadowStrength = $0 }),
+            landscape: Binding(get: { self.landscapeGameCoverShadowStrength }, set: { self.landscapeGameCoverShadowStrength = $0 }),
             isLandscape: isLandscape
         )
     }
 
     func activeGameCoverOpacityBinding(isLandscape: Bool) -> Binding<Double> {
         Self.orientationDoubleBinding(
-            portrait: Bindable(self).portraitGameCoverOpacity,
-            landscape: Bindable(self).landscapeGameCoverOpacity,
+            portrait: Binding(get: { self.portraitGameCoverOpacity }, set: { self.portraitGameCoverOpacity = $0 }),
+            landscape: Binding(get: { self.landscapeGameCoverOpacity }, set: { self.landscapeGameCoverOpacity = $0 }),
             isLandscape: isLandscape
         )
     }

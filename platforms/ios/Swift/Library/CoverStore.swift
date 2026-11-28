@@ -93,7 +93,7 @@ final class CoverStore : ObservableObject {
     }
 
     var primaryCoverDirectory: URL {
-        let docs = URL.documentsDirectory
+        let docs = URL.documentsDirectoryCompat
         let dir = docs.appendingPathComponent("armsx2_covers", isDirectory: true)
         try? fileManager.createDirectory(at: dir, withIntermediateDirectories: true)
         return dir
@@ -111,7 +111,7 @@ final class CoverStore : ObservableObject {
 
     func makeLibraryCoverLookupIndex(gamePaths: [URL]) -> CoverLibraryLookupIndex {
         let managedDirectories = managedCoverDirectories()
-        let docs = URL.documentsDirectory
+        let docs = URL.documentsDirectoryCompat
         let iso = URL(fileURLWithPath: ARMSX2Bridge.isoDirectory(), isDirectory: true)
         let fallbackDirectories = uniqueURLs([iso, docs])
         let gameDirectories = gamePaths.map { $0.deletingLastPathComponent() }
@@ -396,7 +396,7 @@ final class CoverStore : ObservableObject {
     }
 
     private func managedCoverDirectories() -> [URL] {
-        let docs = URL.documentsDirectory
+        let docs = URL.documentsDirectoryCompat
         let primary = primaryCoverDirectory
         let legacy = docs.appendingPathComponent("covers", isDirectory: true)
         try? fileManager.createDirectory(at: legacy, withIntermediateDirectories: true)
@@ -404,7 +404,7 @@ final class CoverStore : ObservableObject {
     }
 
     private func coverSearchDirectories(gamePath: URL?) -> [URL] {
-        let docs = URL.documentsDirectory
+        let docs = URL.documentsDirectoryCompat
         let iso = URL(fileURLWithPath: ARMSX2Bridge.isoDirectory(), isDirectory: true)
         var dirs = managedCoverDirectories()
         if let gamePath {

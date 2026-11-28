@@ -61,14 +61,14 @@ struct EmulationOnlyGameView: View {
                 .accessibilityElement(children: .ignore)
                 .accessibilityLabel(Text("Game display"))
                 .accessibilityAddTraits(.isImage)
-                .persistentSystemOverlays(
+                .persistentSystemOverlaysCompat(
                     settings.appearance.hideGameplayStatusBar ? .hidden : .automatic
                 )
                 .onAppear(perform: preparePresentation)
                 .onDisappear(perform: releasePresentation)
         } else {
             retainedGameplayView
-                .persistentSystemOverlays(
+                .persistentSystemOverlaysCompat(
                     settings.appearance.hideGameplayStatusBar ? .hidden : .automatic
                 )
                 .onAppear(perform: preparePresentation)

@@ -110,7 +110,7 @@ struct GameLibraryCoverFlowLayout: View {
                             )
                     }
                     }
-                    .scrollTargetLayout()
+                    .scrollTargetLayoutCompat()
                     .frame(
                         minWidth: max(0, containerSize.width - (horizontalPadding * 2)),
                         minHeight: max(0, availableHeight - (metrics.verticalPadding * 2)),
@@ -140,9 +140,9 @@ struct GameLibraryCoverFlowLayout: View {
                         }
                     }
                 }
-                .scrollIndicators(.hidden)
-                .scrollDisabled(false)
-                .scrollBounceBehavior(.always, axes: .horizontal)
+                .scrollIndicatorsCompat(.hidden)
+                .scrollDisabledCompat(false)
+                .scrollBounceBehaviorCompat(.always, axes: .horizontal)
                 .trackGameLibraryScrollPhase(library.gameLibraryActivity)
                 .transaction { transaction in
                     if transaction.isContinuous {

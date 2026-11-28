@@ -7,7 +7,7 @@ import os
 enum SessionStore {
     static let buildingMarkerName = "building"
     private static let idPattern = #"^\d{8}T\d{6}Z(-\d+)?$"#
-    private static let running = OSAllocatedUnfairLock<String?>(initialState: nil)
+    private static let running = OSAllocatedUnfairLockCompat<String?>(initialState: nil)
 
     // Stop and clear code runs detached, and fixture folders can carry future names,
     // so the running id is held here instead of being read as the newest folder.
@@ -17,7 +17,7 @@ enum SessionStore {
         running.withLock { $0 = id }
     }
 
-    static func root(documents: URL = .documentsDirectory) -> URL {
+    static func root(documents: URL = .documentsDirectoryCompat) -> URL {
         documents.appendingPathComponent("logs/sessions", isDirectory: true)
     }
 
@@ -44,12 +44,12 @@ enum SessionStore {
         id.range(of: idPattern, options: .regularExpression) != nil
     }
 
-    static func url(for id: String, documents: URL = .documentsDirectory) -> URL? {
+    static func url(for id: String, documents: URL = .documentsDirectoryCompat) -> URL? {
         guard isValidID(id) else { return nil }
         return root(documents: documents).appendingPathComponent(id, isDirectory: true)
     }
 
-    static func list(documents: URL = .documentsDirectory) -> [String] {
+    static func list(documents: URL = .documentsDirectoryCompat) -> [String] {
         let keys: [URLResourceKey] = [.isDirectoryKey]
         let entries = (try? FileManager.default.contentsOfDirectory(
             at: root(documents: documents), includingPropertiesForKeys: keys)) ?? []
@@ -60,7 +60,7 @@ enum SessionStore {
     }
 
     // The launch that was running last, which is where its logs go at the next launch.
-    static func previousID(documents: URL = .documentsDirectory) -> String? {
+    static func previousID(documents: URL = .documentsDirectoryCompat) -> String? {
         let pointer = root(documents: documents).appendingPathComponent(".current")
         guard let text = try? String(contentsOf: pointer, encoding: .utf8) else { return nil }
         let id = text.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -69,11 +69,11 @@ enum SessionStore {
         return id
     }
 
-    static func writeCurrentPointer(_ id: String, documents: URL = .documentsDirectory) {
+    static func writeCurrentPointer(_ id: String, documents: URL = .documentsDirectoryCompat) {
         try? Data(id.utf8).write(to: root(documents: documents).appendingPathComponent(".current"), options: .atomic)
     }
 
-    static func writeSessionJSON(id: String, started: Date = Date(), documents: URL = .documentsDirectory) {
+    static func writeSessionJSON(id: String, started: Date = Date(), documents: URL = .documentsDirectoryCompat) {
         guard let folder = url(for: id, documents: documents) else { return }
         try? FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
         let json = "{\"schema\":1,\"started\":\"\(started.formatted(.iso8601))\"}"
@@ -81,7 +81,7 @@ enum SessionStore {
     }
 
     // A move, never a copy: the live log can be tens of megabytes.
-    static func rotate(into id: String, documents: URL = .documentsDirectory) {
+    static func rotate(into id: String, documents: URL = .documentsDirectoryCompat) {
         guard let folder = url(for: id, documents: documents) else { return }
         let files = FileManager.default
         try? files.createDirectory(at: folder, withIntermediateDirectories: true)
@@ -96,7 +96,7 @@ enum SessionStore {
         }
     }
 
-    static func prune(keeping: Int = 10, current: String, documents: URL = .documentsDirectory) {
+    static func prune(keeping: Int = 10, current: String, documents: URL = .documentsDirectoryCompat) {
         var remaining = list(documents: documents).count
         for id in list(documents: documents) where remaining > keeping && id != current {
             guard let folder = url(for: id, documents: documents) else { continue }
@@ -106,7 +106,7 @@ enum SessionStore {
     }
 
     // The first launch after an upgrade has a log and no pointer; its folder takes the file's own time.
-    static func adoptStaleLog(documents: URL = .documentsDirectory) -> String? {
+    static func adoptStaleLog(documents: URL = .documentsDirectoryCompat) -> String? {
         let log = documents.appendingPathComponent("pcsx2_log.txt")
         guard let modified = (try? log.resourceValues(forKeys: [.contentModificationDateKey]))?.contentModificationDate
         else { return nil }
@@ -115,7 +115,7 @@ enum SessionStore {
         return id
     }
 
-    static func startedDate(of id: String, documents: URL = .documentsDirectory) -> Date? {
+    static func startedDate(of id: String, documents: URL = .documentsDirectoryCompat) -> Date? {
         if let folder = url(for: id, documents: documents),
            let data = try? Data(contentsOf: folder.appendingPathComponent("session.json")),
            let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
@@ -129,7 +129,7 @@ enum SessionStore {
     }
 
     // A window runs from one launch to the next, and the newest one has no end.
-    static func sessionID(containing date: Date, documents: URL = .documentsDirectory) -> String? {
+    static func sessionID(containing date: Date, documents: URL = .documentsDirectoryCompat) -> String? {
         list(documents: documents)
             .compactMap { id in startedDate(of: id, documents: documents).map { (id, $0) } }
             .sorted { $0.1 < $1.1 }
@@ -138,7 +138,7 @@ enum SessionStore {
 
     // The end of the payload's own window picks the session; a payload with no session is dropped.
     @discardableResult
-    static func persistPayload(_ json: Data, begin: Date, end: Date, documents: URL = .documentsDirectory) -> Bool {
+    static func persistPayload(_ json: Data, begin: Date, end: Date, documents: URL = .documentsDirectoryCompat) -> Bool {
         guard let id = sessionID(containing: end, documents: documents), let folder = url(for: id, documents: documents) else {
             return false
         }
@@ -154,7 +154,7 @@ enum SessionStore {
     }
 
     // Reads the whole session log once, off the launch path, for what the folder list should show.
-    static func finalize(id: String, documents: URL = .documentsDirectory) {
+    static func finalize(id: String, documents: URL = .documentsDirectoryCompat) {
         guard let folder = url(for: id, documents: documents) else { return }
         var game: [String: String]?
         var booted = false
@@ -180,7 +180,7 @@ enum SessionStore {
     }
 
     // Only entries older than this launch go, so a report this very process is building stays.
-    static func sweepStaleTemporaries(launchedAt: Date, documents: URL = .documentsDirectory,
+    static func sweepStaleTemporaries(launchedAt: Date, documents: URL = .documentsDirectoryCompat,
                                       temporary: URL = URL(fileURLWithPath: NSTemporaryDirectory())) {
         let files = FileManager.default
         let reports = documents.appendingPathComponent("Reports", isDirectory: true)
@@ -196,7 +196,7 @@ enum SessionStore {
     }
 
     // Never touches the live pcsx2_log.txt, logs/emulog.txt, the running folder or the pointer.
-    static func clearPast(documents: URL = .documentsDirectory) -> [String] {
+    static func clearPast(documents: URL = .documentsDirectoryCompat) -> [String] {
         let files = FileManager.default
         var failures: [String] = []
         func remove(_ url: URL) {

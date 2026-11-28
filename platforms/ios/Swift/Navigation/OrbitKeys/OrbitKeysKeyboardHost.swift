@@ -279,8 +279,8 @@ struct OrbitKeysKeyboardView: View {
       )
 
       let upperLayout = bookFold == nil
-        ? AnyLayout(HStackLayout(spacing: usesTabletLayout ? 18 : 12))
-        : AnyLayout(ZStackLayout())
+        ? AnyLayoutCompat(HStackLayout(spacing: usesTabletLayout ? 18 : 12))
+        : AnyLayoutCompat(ZStackLayout())
 
       ZStack(alignment: .bottom) {
         fullQwertyDeck(
@@ -340,8 +340,8 @@ struct OrbitKeysKeyboardView: View {
       )
 
       let layout = bookFold == nil
-        ? AnyLayout(HStackLayout(alignment: .center, spacing: 16))
-        : AnyLayout(ZStackLayout())
+        ? AnyLayoutCompat(HStackLayout(alignment: .center, spacing: 16))
+        : AnyLayoutCompat(ZStackLayout())
 
       layout {
         VStack(spacing: 8) {

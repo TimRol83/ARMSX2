@@ -727,7 +727,7 @@ final class PadLayoutPresetStore : ObservableObject {
     }
 
     private static func defaultLibraryURL() -> URL {
-        let base = URL.applicationSupportDirectory
+        let base = URL.applicationSupportDirectoryCompat
         return base
             .appendingPathComponent("ARMSX2", isDirectory: true)
             .appendingPathComponent("VPadLayouts.json")

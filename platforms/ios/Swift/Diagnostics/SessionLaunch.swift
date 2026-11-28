@@ -6,7 +6,7 @@ import Foundation
 @objc public final class SessionLaunch: NSObject {
     @objc public static func begin() {
         let launchedAt = Date()
-        let documents = URL.documentsDirectory
+        let documents = URL.documentsDirectoryCompat
         let sessions = SessionStore.root(documents: documents)
         try? FileManager.default.createDirectory(at: sessions, withIntermediateDirectories: true)
         let previous = SessionStore.previousID(documents: documents) ?? SessionStore.adoptStaleLog(documents: documents)

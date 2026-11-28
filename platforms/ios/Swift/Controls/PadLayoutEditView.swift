@@ -181,7 +181,7 @@ struct PadLayoutEditView: View {
         .navigationBarHidden(true)
         .statusBarHidden()
         .statusColumnDisabled()
-        .persistentSystemOverlays(.hidden)
+        .persistentSystemOverlaysCompat(.hidden)
         .onDisappear {
             rollbackUnsavedChanges()
         }

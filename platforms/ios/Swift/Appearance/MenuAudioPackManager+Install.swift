@@ -177,7 +177,7 @@ extension MenuAudioPackManager {
     }
 
     private nonisolated static var storageRootURL: URL {
-        let base = URL.applicationSupportDirectory
+        let base = URL.applicationSupportDirectoryCompat
         return base.appendingPathComponent("ARMSX2", isDirectory: true)
             .appendingPathComponent("UIAudioPack", isDirectory: true)
     }

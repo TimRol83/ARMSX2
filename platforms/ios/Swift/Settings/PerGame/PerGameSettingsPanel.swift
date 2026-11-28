@@ -354,7 +354,7 @@ struct PerGameSettingsPanel: View {
                         controller.controllerColumn == .detail
                             || controller.controllerAlertSuppressesContentTargets
                     )
-                    .navigationDestination(for: PerGameSettingsCategory.self) { category in
+                    .navigationDestinationCompat(for: PerGameSettingsCategory.self) { category in
                         categoryDetail(category)
                             // A pushed portrait Form can put an opaque or empty navigation backing over
                             // the panel's glass, so the page gets its own regular Liquid Glass layer.

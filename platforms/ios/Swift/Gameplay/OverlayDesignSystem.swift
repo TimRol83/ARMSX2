@@ -144,10 +144,10 @@ extension EnvironmentValues {
 struct OverlayPanelScaffold<Content: View>: View {
     private let content: Content
     private let usesRegularGlass: Bool
-    private let cornerRadii: RectangleCornerRadii?
+    private let cornerRadii: RectangleCornerRadiiCompat?
     @Environment(\.uiAccentColour) private var accentColour
 
-    init(usesRegularGlass: Bool = false, cornerRadii: RectangleCornerRadii? = nil, @ViewBuilder content: () -> Content) {
+    init(usesRegularGlass: Bool = false, cornerRadii: RectangleCornerRadiiCompat? = nil, @ViewBuilder content: () -> Content) {
         self.usesRegularGlass = usesRegularGlass
         self.cornerRadii = cornerRadii
         self.content = content()

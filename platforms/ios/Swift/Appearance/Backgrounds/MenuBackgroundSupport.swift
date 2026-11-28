@@ -103,7 +103,7 @@ struct EmbeddedMenuLargeTitle: View {
             Text(title)
                 .font(.system(size: 38, weight: .bold))
                 .foregroundStyle(titleTextColour)
-                .contentTransition(.interpolate)
+                .contentTransitionCompat(.interpolate)
                 .accessibilityAddTraits(.isHeader)
         }
     }
@@ -149,7 +149,7 @@ struct EmbeddedMenuCompactTitle: View {
                 .font(.headline)
                 .foregroundStyle(titleTextColour)
                 .lineLimit(1)
-                .contentTransition(.interpolate)
+                .contentTransitionCompat(.interpolate)
         }
     }
 }

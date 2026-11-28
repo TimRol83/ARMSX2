@@ -93,7 +93,7 @@ enum EndingParser {
         }
     }
 
-    static func verdict(of id: String, documents: URL = .documentsDirectory) -> SessionVerdict {
+    static func verdict(of id: String, documents: URL = .documentsDirectoryCompat) -> SessionVerdict {
         guard let folder = SessionStore.url(for: id, documents: documents) else {
             return SessionVerdict(ending: .noGame, facts: SessionFacts())
         }

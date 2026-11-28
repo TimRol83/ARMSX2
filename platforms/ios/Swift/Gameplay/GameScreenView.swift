@@ -329,7 +329,7 @@ struct GameScreenView: View {
         .onReceive(NotificationCenter.default.publisher(for: .ARMSX2RetroAchievements)) { _ in
             feedback.consumePendingRetroAchievementsToast()
         }
-        .persistentSystemOverlays(.hidden)
+        .persistentSystemOverlaysCompat(.hidden)
     }
 
     @ViewBuilder

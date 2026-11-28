@@ -331,6 +331,6 @@ struct TextureReplacementSettings: View {
 
 extension TexturePackLibrary {
     static var root: URL {
-        URL.documentsDirectory.appendingPathComponent("textures", isDirectory: true)
+        URL.documentsDirectoryCompat.appendingPathComponent("textures", isDirectory: true)
     }
 }

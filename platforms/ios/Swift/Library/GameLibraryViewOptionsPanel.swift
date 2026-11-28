@@ -348,7 +348,7 @@ struct GameLibraryViewOptionsPanel: View {
                     }
                     .padding(.vertical, 2)
                 }
-                .scrollIndicators(.visible)
+                .scrollIndicatorsCompat(.visible)
 
                 actionBar
             }

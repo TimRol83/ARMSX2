@@ -288,7 +288,7 @@ struct AppearanceSettingsView: View, AppearanceSettingsEditing {
         .controllerAccessibilityTargetOrder(Self.controllerTargetOrder)
         // On the Form itself, which reliably reaches its private UIKit list. The
         // pushed-page spacer already clears the tab bar.
-        .contentMargins(.bottom, 0, for: .scrollContent)
+        .contentMarginsCompat(.bottom, 0, for: .scrollContent)
         .background {
             ControllerRightStickScrollTarget(
                 controllerInput: controllerInput,

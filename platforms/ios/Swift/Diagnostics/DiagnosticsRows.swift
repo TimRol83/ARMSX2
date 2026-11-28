@@ -20,7 +20,7 @@ enum DiagnosticsRows {
         return [current] + rest
     }
 
-    static func load(id: String, isNow: Bool, documents: URL = .documentsDirectory) -> SessionRow {
+    static func load(id: String, isNow: Bool, documents: URL = .documentsDirectoryCompat) -> SessionRow {
         let folder = SessionStore.url(for: id, documents: documents)
         let info = folder.flatMap { try? Data(contentsOf: $0.appendingPathComponent("session.json")) }
             .flatMap { try? JSONSerialization.jsonObject(with: $0) as? [String: Any] }
