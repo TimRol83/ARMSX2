@@ -26,7 +26,7 @@ final class GameLibraryControllerCoordinator : ObservableObject {
     @Published var existingGameImportFileNames: [String] = []
     @Published var pendingCoverGameName: String?
     @Published var pendingCoverPhotoGameName: String?
-    @Published var selectedCoverPhotoItem: PhotosPickerItem?
+    @Published var selectedCoverPhotoItem: PhotosPickerItemCompat?
     @Published var gameInfoTarget: ISOEntry?
     @Published var gameSettingsTarget: ISOEntry?
     var gameSettingsStartsInShaders = false

@@ -100,7 +100,7 @@ struct PadLayoutEditView: View {
             let liveSplit = !isActuallyLandscape && AppState.shared.hingePresent
                 ? portraitGameSplit(geo, deckHeight: deckHeight, fold: fold, refitting: snapshot, analogStickScale: settings.controller.analogStickScale)
                 : nil
-            let split = heldSplit?.key == splitKey ? heldSplit : liveSplit.map { (key: splitKey, gameHeight: $0.gameHeight, fit: $0.fit) }
+            let split = heldSplit?.key == splitKey ? heldSplit : liveSplit.map { (splitKey, $0.gameHeight, $0.fit) }
             let portraitGameHeight = split.map { $0.gameHeight + (fold?.height ?? 0) } ?? min(geo.size.width * 3 / 4, geo.size.height * 0.55)
             let editAreaW = geo.size.width
             let editAreaH = isActuallyLandscape ? geo.size.height : (split == nil ? geo.size.height : deckHeight) - portraitGameHeight
@@ -156,7 +156,7 @@ struct PadLayoutEditView: View {
             }
             .frame(width: geo.size.width, height: geo.size.height, alignment: .top)
             .onChangeCompat(of: splitKey, initial: true, perform: {
-                heldSplit = liveSplit.map { (key: splitKey, gameHeight: $0.gameHeight, fit: $0.fit) }
+                heldSplit = liveSplit.map { (splitKey, $0.gameHeight, $0.fit) }
             })
             .onAppear {
                 if originalSnapshot == nil {

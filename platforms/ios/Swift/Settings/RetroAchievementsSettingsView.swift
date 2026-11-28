@@ -477,7 +477,7 @@ private struct RetroAchievementsLoginSheet: View {
             }
             .navigationTitle(settings.localized("RetroAchievements Login"))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
+            .toolbarCompat {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(settings.localized("Cancel"), action: onCancel)
                         .disabled(loggingIn)

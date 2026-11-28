@@ -225,10 +225,13 @@ enum SaveStateFormat {
 
     /// "4 h 12 min played".
     static func played(_ seconds: Double, settings: SettingsStore) -> String {
-        let duration = Duration.seconds(Int64(seconds.rounded()))
-        let text = duration.formatted(
-            .units(allowed: [.hours, .minutes], width: .abbreviated).locale(locale(settings))
-        )
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute]
+        formatter.unitsStyle = .abbreviated
+        var cal = Calendar.current
+        cal.locale = Locale(identifier: settings.languageIdentifier ?? Locale.current.identifier)
+        formatter.calendar = cal
+        let text = formatter.string(from: seconds) ?? "\(Int(seconds / 60))m"
         return String(format: settings.localized("%@ played"), text)
     }
 }

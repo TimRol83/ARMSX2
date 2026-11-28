@@ -157,7 +157,7 @@ struct GameInfoPanel: View {
             .scrollContentBackground(.hidden)
             .navigationTitle(settings.localized("Game Info"))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
+            .toolbarCompat {
                 ToolbarItem(placement: .confirmationAction) {
                     Button(settings.localized("Done")) {
                         dismiss()
@@ -215,7 +215,7 @@ struct DiscLinkPicker: View {
             .scrollContentBackground(.hidden)
             .navigationTitle(settings.localized("Disc Path"))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
+            .toolbarCompat {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(settings.localized("Cancel")) { dismiss() }
                 }

@@ -376,7 +376,7 @@ struct SettingsRootView: View {
                 ? ""
                 : settings.localized("Settings")
         )
-        .toolbar {
+        .toolbarCompat {
             // Not tied to the path: an item put back during the Back animation
             // never shows, and the next page then opens too high.
             if verticalSizeClass == .compact {
@@ -764,7 +764,7 @@ struct SettingsRootView: View {
                     .foregroundStyle(.secondary)
                 Text(settings.localized("Select a setting"))
                     .font(.title2)
-                    .fontWeightCompat(.semibold)
+                    .fontWeight(.semibold)
                     .foregroundStyle(.secondary)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

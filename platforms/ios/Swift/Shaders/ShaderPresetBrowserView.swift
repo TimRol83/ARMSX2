@@ -399,7 +399,7 @@ private struct ShaderDownloadManagerView: View {
         }
         .navigationTitle(localized("Manage Downloaded Shaders"))
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
+        .toolbarCompat {
             ToolbarItem(placement: .cancellationAction) {
                 Button(localized("Done")) { dismiss() }
             }

@@ -61,7 +61,7 @@ final class CoverStore : ObservableObject {
     private init() {}
 
     /// True when the photo became the game's cover, so the caller reloads the library.
-    func importCoverPhoto(_ photoItem: PhotosPickerItem, forGameNamed gameName: String) async -> Bool {
+    func importCoverPhoto(_ photoItem: PhotosPickerItemCompat, forGameNamed gameName: String) async -> Bool {
         do {
             guard let data = try await photoItem.loadTransferable(type: Data.self) else {
                 lastCoverMessage = "The selected photo could not be loaded."

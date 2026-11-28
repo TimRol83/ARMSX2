@@ -379,7 +379,7 @@ struct GameplayOverlayHost: View {
                     description: Text(settings.localized("Start a game before changing per-game settings."))
                 )
                 .navigationTitle(settings.localized("Per-Game Settings"))
-                .toolbar {
+                .toolbarCompat {
                     ToolbarItem(placement: .confirmationAction) {
                         Button(settings.localized("Done")) {
                             overlay.closePerGameSettingsOverlay()

@@ -376,7 +376,7 @@ struct PerGameSettingsPanel: View {
                             )
                             .navigationBarTitleDisplayMode(.inline)
                             .navigationBarBackButtonHidden(true)
-                            .toolbar {
+                            .toolbarCompat {
                                 ToolbarItem(placement: .topBarLeading) {
                                     perGameDetailBackButton
                                 }

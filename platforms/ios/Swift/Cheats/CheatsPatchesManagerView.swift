@@ -87,7 +87,7 @@ struct CheatsPatchesManagerView: View {
             }
             .navigationTitle(settings.localized("Cheats & Patches"))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
+            .toolbarCompat {
                 ToolbarItem(placement: .cancellationAction) {
                     Button { dismissWithReturnSound() } label: {
                         Text(settings.localized("Done"))

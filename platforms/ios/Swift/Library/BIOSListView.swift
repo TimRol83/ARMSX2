@@ -256,7 +256,7 @@ struct BIOSListView: View {
                 backgroundHidden: backgroundActive,
                 embedded: embeddedInMenuNavigation
             )
-            .toolbar {
+            .toolbarCompat {
                 if !embeddedInMenuNavigation || ownsEmbeddedMenuToolbar {
                 ToolbarItem(id: "menu.bootBIOS", placement: .topBarLeading) {
                     Button(action: performBootBIOSAction) {
@@ -633,7 +633,7 @@ struct BIOSListView: View {
                 .foregroundStyle(.secondary)
             Text(settings.localized("No BIOS Found"))
                 .font(.title2)
-                .fontWeightCompat(.semibold)
+                .fontWeight(.semibold)
                 .foregroundStyle(contentTextColour)
             Text(settings.localized("Import a PS2 BIOS dump to enable booting."))
                 .font(.body)
@@ -647,7 +647,7 @@ struct BIOSListView: View {
                 )
             }
             .buttonStyle(.plain)
-            .focusable(false)
+            .focusableCompat(false)
             .focusEffectDisabledCompat()
             .accessibilityElement(children: .combine)
             .accessibilityLabel(settings.localized("Import BIOS"))

@@ -93,7 +93,7 @@ struct OrbitKeysGridView: View {
 
   private func grid(usesLegacyLiquidGlass: Bool) -> some View {
     LazyVGrid(columns: columns, spacing: 8) {
-      ForEach(OrbitKeysGridPosition.allCases) { position in
+      ForEach(OrbitKeysGridPosition.allCases, id: \.self) { position in
         let isSelected = position == model.selectedPosition
         let content = OrbitKeysCellView(
           position: position,

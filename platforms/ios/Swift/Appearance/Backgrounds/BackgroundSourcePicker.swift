@@ -124,11 +124,11 @@ private struct PhotoLibraryPickerBridge: ViewModifier {
     let existingAsset: () -> BackgroundAsset?
     let onImport: (BackgroundAsset?) -> Void
 
-    @State private var selectedPhotoItem: PhotosPickerItem?
+    @State private var selectedPhotoItem: PhotosPickerItemCompat?
 
     func body(content: Content) -> some View {
         content
-            .photosPicker(isPresented: $isPresented, selection: $selectedPhotoItem, matching: .any(of: [.images, .videos]))
+            .photosPickerCompat(isPresented: $isPresented, selection: $selectedPhotoItem, matching: .any(of: [.images, .videos]))
             .onChangeCompat(of: selectedPhotoItem, perform: { _, item in
                 guard let item else { return }
                 selectedPhotoItem = nil
@@ -136,7 +136,7 @@ private struct PhotoLibraryPickerBridge: ViewModifier {
             })
     }
 
-    private func importPhotoItem(_ item: PhotosPickerItem) async {
+    private func importPhotoItem(_ item: PhotosPickerItemCompat) async {
         do {
             guard let data = try await item.loadTransferable(type: Data.self) else {
                 showLoadError = true

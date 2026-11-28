@@ -71,7 +71,7 @@ struct TextureCatalogView: View {
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         .navigationTitle(settings.localized("Download Texture Packs"))
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
+        .toolbarCompat {
             ToolbarItem(placement: .confirmationAction) {
                 Button(settings.localized("Done")) { dismiss() }
                     .disabled(active != nil)

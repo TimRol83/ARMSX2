@@ -384,7 +384,7 @@ struct NumberRow: View {
                         .fillCompat(Color.secondary.opacity(style == .field ? 0.12 : 0))
                 )
                 .frame(minHeight: rowStyle.readoutMinHeight)
-                .toolbar {
+                .toolbarCompat {
                     // Declared inside the editing branch, so the bar can only come from the row
                     // you are actually in rather than from all 275 at once.
                     ToolbarItemGroup(placement: .keyboard) {

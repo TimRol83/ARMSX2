@@ -109,7 +109,7 @@ func controllerNavigationRoundedRectangleOffset(
         let progress = cornerLength > 0 ? distance / cornerLength : 0
         let currentAngle = startAngle + Double(progress) * .pi / 2
         return CGSize(
-            width: centerX + CGFloat(cos(currentAngle)) * cornerRadius,
+            width: centerX + CGFloat(Foundation.cos(currentAngle)) * cornerRadius,
             height: centerY + CGFloat(sin(currentAngle)) * cornerRadius
         )
     }
@@ -435,10 +435,10 @@ struct ControllerNavigationOrbField: View {
         switch pathShape {
         case .ellipse:
             return CGSize(
-                width: cos(angle) * radiusX
+                width: Foundation.cos(angle) * radiusX
                     + sin(angle * particle.wobbleFrequency + particle.phase) * wobble,
                 height: sin(angle) * radiusY
-                    + cos(angle * (particle.wobbleFrequency + 0.31)) * wobble
+                    + Foundation.cos(angle * (particle.wobbleFrequency + 0.31)) * wobble
             )
         case .roundedRectangle:
             return controllerNavigationRoundedRectangleOffset(

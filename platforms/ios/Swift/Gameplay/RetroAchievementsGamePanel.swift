@@ -73,7 +73,7 @@ struct RetroAchievementsGamePanel: View {
             // Hosted beside the fold, the panel's glass shows through as it does in Cheats.
             .scrollContentBackground(onClose == nil ? .automatic : .hidden)
             .navigationTitle(settings.localized("RetroAchievements"))
-            .toolbar {
+            .toolbarCompat {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(settings.localized("Done")) {
                         close()

@@ -32,7 +32,7 @@ struct ReportSheet: View {
     @State var showImporter = false
     @State var photoChoice = false
     @State var showPhotoPicker = false
-    @State var photoItem: PhotosPickerItem?
+    @State var photoItem: PhotosPickerItemCompat?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.menuControllerInputRouter) private var controllerInput
 
@@ -109,7 +109,7 @@ struct ReportSheet: View {
             .attachmentPickers(of: self)
             .navigationTitle(settings.localized("Report a Problem"))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
+            .toolbarCompat {
                 ToolbarItem(placement: .confirmationAction) {
                     Button(settings.localized("Done")) { close() }
                         .disabled(working)

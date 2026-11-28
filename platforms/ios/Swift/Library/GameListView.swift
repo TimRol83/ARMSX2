@@ -375,7 +375,7 @@ struct GameListView: View {
                 backgroundHidden: hasCustomBackground,
                 embedded: embeddedInMenuNavigation
             )
-            .toolbar {
+            .toolbarCompat {
                 if !embeddedInMenuNavigation || ownsEmbeddedMenuToolbar {
                     GameLibraryToolbar(
                         coordinator: controller,
@@ -446,7 +446,7 @@ struct GameListView: View {
                     }
                 }
             }
-            .photosPicker(
+            .photosPickerCompat(
                 isPresented: $controller.showCoverPhotoPicker,
                 selection: $controller.selectedCoverPhotoItem,
                 matching: .images

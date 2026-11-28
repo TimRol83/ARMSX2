@@ -466,7 +466,7 @@ private struct GamepadLinkedSettingsSheet: View {
                     EmptyView()
                 }
             }
-            .toolbar {
+            .toolbarCompat {
                 ToolbarItem(placement: .confirmationAction) {
                     Button(settings.localized("Done")) {
                         close()

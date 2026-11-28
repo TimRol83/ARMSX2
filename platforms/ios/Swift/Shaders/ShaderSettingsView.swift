@@ -28,7 +28,7 @@ struct ShaderSettingsView: View {
         .navigationTitle(settings.localized("Shaders"))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(detailPresented)
-        .toolbar {
+        .toolbarCompat {
             ToolbarItem(placement: .topBarLeading) {
                 if detailPresented {
                     Button {

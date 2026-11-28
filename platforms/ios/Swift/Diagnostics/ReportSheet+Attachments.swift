@@ -132,7 +132,7 @@ extension ReportSheet {
                 .init(title: settings.localized("Choose from Photos")) { showPhotoPicker = true },
                 .init(title: settings.localized("Choose from Files")) { pick(.photo) },
             ])
-            .photosPicker(isPresented: $showPhotoPicker, selection: $photoItem, matching: .images)
+            .photosPickerCompat(isPresented: $showPhotoPicker, selection: $photoItem, matching: .images)
             .onChangeCompat(of: photoItem, perform: { _, item in
                 guard let item else { return }
                 photoItem = nil

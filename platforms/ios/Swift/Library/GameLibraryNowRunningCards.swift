@@ -35,7 +35,7 @@ struct GameLibraryNowRunningSection: View {
                                 isStopping ? criticalTextColour : accentColour
                             )
                             .font(.title)
-                            .contentTransitionSymbolReplaceCompat()()
+                            .contentTransitionSymbolReplaceCompat()
 
                         RunningStatusText(
                             isStopping: isStopping,
@@ -147,7 +147,7 @@ struct GameLibraryNowRunningCard: View {
                     .foregroundStyle(
                         isStopping ? criticalTextColour : accentColour
                     )
-                    .contentTransitionSymbolReplaceCompat()()
+                    .contentTransitionSymbolReplaceCompat()
 
                 RunningStatusText(
                     isStopping: isStopping,
@@ -235,7 +235,7 @@ struct GameLibraryNowRunningCoverCard: View {
                     .foregroundStyle(
                         isStopping ? criticalTextColour : accentColour
                     )
-                    .contentTransitionSymbolReplaceCompat()()
+                    .contentTransitionSymbolReplaceCompat()
 
                 RunningStatusText(
                     isStopping: isStopping,

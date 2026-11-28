@@ -422,7 +422,7 @@ extension GameLibraryControllerCoordinator {
         existingGameImportFileNames = []
     }
 
-    func importCoverPhoto(_ photoItem: PhotosPickerItem, forGameNamed gameName: String) {
+    func importCoverPhoto(_ photoItem: PhotosPickerItemCompat, forGameNamed gameName: String) {
         Task { @MainActor in
             if await coverStore.importCoverPhoto(photoItem, forGameNamed: gameName) {
                 library.loadGames()
